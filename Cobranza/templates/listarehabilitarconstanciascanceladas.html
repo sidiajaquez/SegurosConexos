@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de constancias que sobrepasaron su periodo de 30 dias de gracia para pago y aún estan dentro de los proximos 5 dias para poder rehabilitarlas {% endcomment %}
+
+{% block titulo %} Listado constancias canceladas para rehabilitación {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ListaCobroConstancias.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Rehabilitación de Constancias Canceladas</strong>
+	<form class="form-horizontal " id="formulario_listado_cobro_constancias" method="post" action="" accept-charset="utf-8">
+		<legend></legend>
+		<a href="/ListadoCobroConstancias/" role="button" class="btn btn-success">$ Cobro de Constancias</a>
+		<p></p>
+		<div id="lovely-things-list">
+			<input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarConstancia" placeholder="Buscar Constancia Cancelada" /> <b>Ordenar por:</b>
+            <a role="button" class="sort btn btn-warning" data-sort="PersonaConstancia"><i class="icon-user icon-white"></i> Nombre</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-list icon-white"></i> Folio</a>
+            <a role="button" class="sort btn btn-warning" data-sort="VigenciaConstancia"><i class="icon-time icon-white"></i> Fecha</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+		</div>
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListaRehabilitarConstanciasCanceladas.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>	
+{% endblock scriptjs %}

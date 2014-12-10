@@ -1,0 +1,267 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar cotizador {% endcomment %}
+
+{% block titulo %} Cotizador {% endblock titulo %}
+
+ {% block scriptcss %} 
+ <link rel="stylesheet" href="/static/css/Cotizador.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Cotizador</strong>
+<form class="form-horizontal " id="formulario_cotizador" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para los programas de aseguramiento. -->
+{% csrf_token %}
+	<input type='hidden' name='varIdCotizador' id="varIdCotizador" value='{{ idCotizador }}' />
+	<input type='hidden' name='varIdPrograma' id="varIdPrograma" value='{{ programa.IdPrograma }}' />
+	<input type='hidden' name='varFolioCotizador' id="varFolioCotizador" value='{{ cotizador.FolioCotizador }}' />
+	<input type='hidden' name='varIdProgramaAnterior' id="varIdProgramaAnterior" value='{{ programa.IdPrograma }}' />
+	<input type='hidden' name='varTotalTarifa' id="varTotalTarifa" value='{{ cotizador.TotalTarifa }}' />
+	<fieldset>
+	
+	<div class="row">
+		<div class="span6">
+					<!-- Text input tipo seguro-->
+			<div class="control-group">
+		  		<label class="control-label">Tipo Seguro</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtTipoSeguro" id="txtTipoSeguro" value="{{ tipoSeguro }}" readonly>
+		    		<a href="#modal_Buscar_Programa_Cotizador" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPrograma"><i class="icon-search icon-white"></i></a>
+		  		</div>
+			</div> 	<!-- Fin text input tipo seguro -->
+		</div>
+		<div class="span5">
+					<!-- Text input sub tipo seguro-->
+			<div class="control-group">
+		   		<label class="control-label">Sub Tipo Seguro</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtSubTipoSeguro" id="txtSubTipoSeguro" value="{{ subTipoSeguro }}" readonly>
+		  		</div>
+			</div> 	<!-- Fin text input sub tipo seguro -->
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+					<!-- Text input moneda-->
+			<div class="control-group">
+		  		<label class="control-label">Moneda</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtMoneda" id="txtMoneda" value="{{ moneda }}" readonly>
+		  		</div>
+			</div> 	<!-- Fin text input moneda -->
+		</div>
+		<div class="span5">
+					<!-- Text input folio-->
+			<div class="control-group">
+		   		<label class="control-label">Folio de Programa</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtFolio" id="txtFolio" value="{{ programa.FolioPrograma }}" readonly>
+		  		</div>
+			</div> 	<!-- Fin text input folio -->
+		</div>
+	</div>		
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label">Vigencia </label>
+				<div class="controls">
+						{% if readOnly == 1 %}
+							<select class="input-large" id="cmdVigencia" name="cmdVigencia" readonly>
+						{% else %}
+							<select class="input-large" id="cmdVigencia" name="cmdVigencia">
+						{% endif %}
+						<option value="" selected="selected">---------</option>						
+						{% for causa in catalogoVigencia %} 
+							{% if causa.Descripcion == cotizador.Vigencia %}						
+								<option value="{{causa.Descripcion}}" selected>{{causa.Descripcion}}</option>
+							{% else %}
+								<option value="{{causa.Descripcion}}">{{causa.Descripcion}}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+						<!-- Text input porcentaje fondo-->
+			<div class="control-group">
+		  		<label class="control-label">Fondo</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+		  				{% if readOnly == 1 %}
+			    			<input class="input-small" type="text" name="PorcentajeFondo" id="PorcentajeFondo" value="{{ cotizador.PorcentajeFondo }}" readonly>
+			    		{% else %}
+			    			<input class="input-small" type="text" name="PorcentajeFondo" id="PorcentajeFondo" value="{{ cotizador.PorcentajeFondo }}">
+			    		{% endif %}
+			    		<span class="input-group-addon">%</span>
+		    		</div>
+		  		</div>
+			</div> <!-- Fin text input porcentaje fondo -->
+		</div>
+		<div class="span5">
+					<!-- Text input prcentaje reaseguro-->
+			<div class="control-group">
+		   		<label class="control-label">Reaseguro</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+		  				{% if readOnly == 1 %}
+		  					<input class="input-small" type="text" name="PorcentajeReaseguro" id="PorcentajeReaseguro" value="{{ cotizador.PorcentajeReaseguro }}" readonly>
+		  				{% else %}
+		  					<input class="input-small" type="text" name="PorcentajeReaseguro" id="PorcentajeReaseguro" value="{{ cotizador.PorcentajeReaseguro }}">
+		  				{% endif %}
+			    		<span class="input-group-addon">%</span>
+			    	</div>
+		  		</div>
+			</div> <!-- Fin text input porcentaje reaseguro -->
+		</div>
+	</div>
+	
+	<div class="row">
+		<label class="control-label">Prima</label><br>
+		<div class="span6">			
+		
+			{% if readOnly == 1 %}
+				<label class="radio">				
+					{% if cotizador.Prima == 1 %}			
+						<input type="radio" name="optionsRadios" id="optionMillar" value="1" checked readonly>
+					{% else %}
+						<input type="radio" name="optionsRadios" id="optionMillar" value="1" readonly>
+					{% endif %}
+				  	Millar
+				</label>
+				<label class="radio">
+					{% if cotizador.Prima == 2 %}			
+						<input type="radio" name="optionsRadios" id="optionMillar" value="2" checked readonly>
+					{% else %}
+						<input type="radio" name="optionsRadios" id="optionMillar" value="2" readonly>
+					{% endif %}
+				  	Porcentaje
+				</label>
+			{% else %}
+				<label class="radio">				
+					{% if cotizador.Prima == 1 %}			
+						<input type="radio" name="optionsRadios" id="optionMillar" value="1" checked>
+					{% else %}
+						<input type="radio" name="optionsRadios" id="optionMillar" value="1">
+					{% endif %}
+				  	Millar
+				</label>
+				<label class="radio">
+					{% if cotizador.Prima == 2 %}			
+						<input type="radio" name="optionsRadios" id="optionMillar" value="2" checked>
+					{% else %}
+						<input type="radio" name="optionsRadios" id="optionMillar" value="2">
+					{% endif %}
+				  	Porcentaje
+				</label>
+			{% endif %}
+		</div>
+	</div>	
+			
+	<table class="table tabla_cobertura_programa table-striped">  <!-- Se genera la tabla para agregar las coberturas del programa seleccionado. -->
+		<thead>
+			<tr id='encabezado'>	
+				<th style="display: none;">IdCoberturaPrograma</th>		
+				<th style="text-align:center;">Cobertura</th>
+				<th style="text-align:center;">Tarifa</th>
+				<th style="text-align:center;">Fondo</th>
+				<th style="text-align:center;">Reaseguro</th>
+				<th style="display: none;">IdCotizadorCobertura</th>
+				<th style="text-align:center;">Deducible</th>
+				<th style="text-align:center;">Part. a Perdida</th>				
+				{% if esRemocion == 1 %}			
+					<th style="text-align:center;">% Remocion</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for cobertura in coberturas %}
+				<tr>
+					<td style="display:none;">{{ cobertura.IdCoberturaPrograma }}</td>			
+					<td>{{ cobertura.Descripcion }}</td>
+					{% if readOnly == 1 %}
+						<td><input type="text" class="input-mini" value="{{ cobertura.Tarifa }}" readonly></td>
+					{% else %}
+						<td><input type="text" class="input-mini" value="{{ cobertura.Tarifa }}"></td>
+					{% endif %}
+					<td>{{ cobertura.Fondo }}</td>
+					<td>{{ cobertura.Reaseguro }}</td>
+					<td style="display:none;">{{ cobertura.IdCotizadorCobertura }}</td>
+					{% if readOnly == 1 %}
+						<td><input type="text" class="input-mini" value="{{ cobertura.Deducible }}" readonly></td>
+						<td><input type="text" class="input-mini" value="{{ cobertura.ParticipacionAPerdida }}" readonly></td>
+					{% else %}
+						<td><input type="text" class="input-mini" value="{{ cobertura.Deducible }}" ></td>
+						<td><input type="text" class="input-mini" value="{{ cobertura.ParticipacionAPerdida }}" ></td>
+					{% endif %}
+					{% if cobertura.IdCobertura == 3 %}
+						{% if readOnly == 1 %}	
+							<td><input type="text" class="input-mini" value="{{ cobertura.Remocion }}" readonly></td>
+						{% else %}
+							<td><input type="text" class="input-mini" value="{{ cobertura.Remocion }}"></td>
+						{% endif %}
+					{% endif %}
+				</tr>
+			{% endfor %}
+			<tr>
+				<td style="display:none;">''</td>
+				<td>Total Tarifa</td>
+				<td><input type="text" class="input-mini" value="{{ varTotalTarifa }}" readonly></td>
+				<td><input type="text" class="input-mini" value="{{ varTotalFondo }}" readonly></td>
+				<td><input type="text" class="input-mini" value="{{ varTotalReaseguro }}" readonly></td>
+			</tr>
+		</tbody>
+	</table> <!-- Fin de la generación de la tabla para agregar coberturas. -->
+			
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnVistaPreviaCotizador" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Vista Previa</a>
+	  			{% if readOnly == 0 %}
+	  				<a id="btnGuardarCotizador" name="btnGuardarCotizador" class="btn btn-success" >Guardar</a>
+	  			{% endif %}
+	  			<a role="button" class="sort btn btn-warning" id="btnListadoCotizador"><i class="icon-list icon-white"></i> Listado Cotizador</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	
+	<div id="modal_Buscar_Programa_Cotizador" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <!-- Modal buscar programa para el cotizador. -->
+		<div class="modal-header"> 
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Buscar Programa</h3>
+	    </div>
+	    <div class="modal-body">
+			<table class="table tabla_buscar_programa table-striped">
+				<thead>
+					<tr>	
+						<th style="display: none;">IdPrgrama</th>		
+						<th>Tipo Seguro</th>
+						<th>Sub Tipo Seguro</th>
+						<th>Moneda</th>
+						<th>Folio</th>
+					</tr>
+				</thead>
+				<tbody>	
+				</tbody>
+			</table>	
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+			</div>
+		</div>
+	</div>		
+	</fieldset>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/Cotizador.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

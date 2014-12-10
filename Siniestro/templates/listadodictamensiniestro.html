@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de Actas de Siniestro para Dictaminar {% endcomment %}
+
+{% block titulo %} Listado Dictaminación de Siniestros {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ListaDictamenSiniestro.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Listado Dictamen Siniestros</strong>
+	<form class="form-horizontal" id ="formulario_listado_dictamen_siniestro">
+		<legend></legend>
+		<p></p>
+        <div id="lovely-things-list">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarActaSiniestro" placeholder="Buscar Acta de Siniestro" /> Ordenar Por:
+            <a role="button" class="sort btn btn-warning" data-sort="Asegurado"><i class="icon-user icon-white"></i> Asegurado</a>
+            <a role="button" class="sort btn btn-warning" data-sort="ActaSiniestro"><i class="icon-list icon-white"></i> Acta Siniestro</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-file icon-white"></i> Constancia</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>		
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListadoDictamenSiniestro.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %}

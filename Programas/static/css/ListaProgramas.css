@@ -1,0 +1,85 @@
+body{
+	background-color: #0097AA;
+}
+strong{
+	background-color: rgba(255,255,255,0.2);
+	color: #111111;
+	display: block;
+	font-size: 2em;
+	padding: 20px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.3)
+}
+ul {
+	list-style:none;
+	margin:0;
+}
+#formulario_listado_programas{
+	background-color: white;
+	box-shadow:2px 2px 6px rgba(0,0,0,0.4);
+	padding: 10px;
+}
+#list_programas {
+	margin-bottom:60px;	
+}
+#list_programas .thumb {
+    width:60px;
+    height:60px;
+    float:left;
+    margin-right:20px;
+    border:solid 1px #333;
+}
+#list_programas .list {
+    clear:both;
+    margin-bottom:10px;    
+}
+#list_programas .list li {
+    padding:20px;
+}
+#list_programas .list li .row{
+    padding-left:20px;    
+}
+#list_programas li:nth-child(2n+1) {
+    background-color:#E0FFFF;
+    border:solid 1px rgba(255,255,255,.1);
+    border-radius:10px;
+}
+#list_programas li:nth-child(2n+1) .thumb {
+    border:solid 1px #666;
+}
+#list_programas .tituloPrincipal{
+    color:black;
+    font-weight:bold;
+    font-size:16px;
+    margin-bottom:6px;
+    margin-left:0;
+}
+#list_programas .Subtitulo{
+    color:red;
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:6px;
+    margin-left:0;
+}
+#list_programas .Observaciones{
+    margin-left:0;
+}
+#list_programas .accionesPrograma{
+	margin-left:10px;
+}
+#list_programas p {
+    font:normal 14px/1.3 'helvetica neue', helvetica, arial;
+    color:#aaa;
+    text-align: left;
+}
+#list_programas .sort-by {
+    margin-bottom:10px;
+    width:100%;
+    float:left;
+    clear:both;
+}
+#list_programas .filter {
+    margin-bottom:10px;
+    width:100%;
+    float:left;
+    clear:both;
+}

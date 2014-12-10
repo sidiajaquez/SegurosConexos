@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0; 
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">	
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>ENDOSO DE CANCELACIÓN</span><br/> 	
+	</div>			
+	   
+	<div class = "linea">
+		 <span><hr size="2"></span>
+	</div>
+	
+	<div class = "datosGenerales">	
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>		
+					<th>CONSTANCIA</th>									
+					<th>SOLICITUD DE ENDOSO</th>
+					<th>FOLIO SOLICITUD DE ENDOSO</th>
+					<th>EJERCICIO</th>	
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ datosConstancia.0.0 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.1 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.2 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.10 }}</td>
+				</tr>		
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>		
+					<th rowspan="2">MONEDA</th>									
+					<th rowspan="2">FECHA SOLICITUD DE ENDOSO</th>
+					<th colspan="2">VIGENCIA DE CONSTANCIA</th>
+				</tr>
+				<tr>
+					<th>DESDE</th>
+					<th>HASTA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ datosConstancia.0.3 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.4 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.5 }}</td>
+					<td style="text-align: center;">{{ datosConstancia.0.6 }}</td>				
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>		
+					<th colspan="2">ASEGURADO</th>									
+					<th>RFC</th>
+					<th>TELEFONO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2" style="text-align: center;">{{ Asegurado.0.NombrePersona }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.RfcPersona }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.TelefonoPersona }}</td>			
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>		
+					<th>DIRECCION</th>									
+					<th>COLONIA</th>
+					<th>CP</th>
+					<th>ESTADO</th>
+					<th>MUNICIPIO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ Asegurado.0.DireccionPersona|upper }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.AsentamientoPersona|upper }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.CPPersona }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.MunicipioPersona|upper }}</td>
+					<td style="text-align: center;">{{ Asegurado.0.EstadoPersona|upper }}</td>		
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<br>
+	<table class="table tblDescripcionDetalladaBien table-striped">
+		<thead>
+			<th style="display:none;">idEquipo</th>
+			<th>Nombre</th>
+			<th>Marca</th>
+			<th>Modelo</th>
+			<th>No. Serie</th>
+			<th>Documentación</th>
+			<th>Fecha</th>
+			<th>Cantidad</th>
+			<th>Valor Unitario</th>
+			<th>Suma Asegurada</th>
+		</thead>			
+		<tbody>
+			{% for descripcionBien in descripcionBienes %}
+				<tr>
+					<td style="display:none;"></td>
+					<td>{{ descripcionBien.NombreEquipo }}</td>
+					<td>{{ descripcionBien.Marca }}</td>
+					<td>{{ descripcionBien.Modelo }}</td>
+					<td>{{ descripcionBien.Serie }}</td>
+					<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+					<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+					<td>{{ descripcionBien.Cantidad }}</td>
+					<td>{{ descripcionBien.ValorUnitario }}</td>
+					<td>{{ descripcionBien.SumaAsegurada }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	<br>
+	{% if TipoEndoso == 'DT' %}
+		<table class="table tblDeclaracionTransporte table-striped">
+			<thead>
+				<th>Cantidad de Fletes</th>
+				<th>Suma Asegurada Unitaria</th>
+				<th>Suma Asegurada Total</th>
+				<th>Cuota</th>
+				<th>Importe de la Cuota Devengada</th>
+			</thead>			
+			<tbody>
+				<tr>
+					<td>{{ CantidadFletes }}</td>
+					<td>{{ SumaAseguradaUnitaria }}</td>
+					<td>{{ SumaAseguradaTotal }}</td>
+					<td>{{ Cuota }}</td>	
+					<td>{{ montoAPagar }}</td>
+				</tr>
+			</tbody>
+		</table>
+	{% endif %}
+	
+	{% if TipoEndoso == 'DD' %}
+		<table class="table tblDeclaracion table-striped">
+			<thead>
+				<th>Promedio Diario</th>
+				<th>Precio</th>
+				<th>Valor Existencia Periodo</th>
+				<th>Tarifa Mensual</th>
+				<th>Cuota del Periodo</th>
+				<th>Tarifa Del Periodo</th>
+			</thead>			
+			<tbody>
+				<tr>
+					<td>{{ PromedioDiario }}</td>
+					<td>{{ Precio }}</td>
+					<td>{{ Valor }}</td>
+					<td>{{ TarifaMensual }}</td>
+					<td>{{ Cuota }}</td>
+					<td>{{ montoAPagar }}</td>
+				</tr>
+			</tbody>
+		</table>
+	{% endif %}	
+	
+	{% if TipoEndoso == 'CA' %}
+		<table class="table tblDeclaracionAnual table-striped">
+			<thead>
+				<th>Dias Totales</th>
+				<th>Dias Devengados</th>
+				<th>Porcentaje a Regresar</th>
+				<th>Cuota Total</th>
+				<th>Cuota Devengada</th>
+			</thead>
+			<tbody>
+				<tr>	
+					<td>{{ DiasTotales }}</td>
+					<td>{{ DiasDevengados }}</td>
+					<td>{{ Porcentaje }}</td>
+					<td>{{ CuotaAnual }}</td>
+					<td>{{ montoAPagar }}</td>
+				</tr>
+			</tbody>
+		</table>		
+	{% endif %}		
+</body>
+</html>

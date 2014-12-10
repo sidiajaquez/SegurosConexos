@@ -1,0 +1,219 @@
+{% extends 'index.html' %}o
+
+{% comment %} Formulario para ingresar el endoso por transporte {% endcomment %}
+
+{% block titulo %} Endoso por Transporte {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/EndosoTransporte.css">   
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Endoso de Transporte</strong>
+<form class="form-horizontal " id="formulario_endoso_transporte" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para el endoso de transporte. -->
+{% csrf_token %}		
+	<input type="hidden" name="varIdDeclaracionTransporte" id="varIdDeclaracionTransporte" value="{{ informacionTrasporte.IdDeclaracionTransporte }}" />
+	<input type="hidden" name="varIdEndosoTransporte" id="varIdEndosoTransporte" value="{{ idEndoso }}" />
+	<fieldset>
+			
+	<div class="alert alert-block">
+		<h4>Datos de la Solicitud</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">								
+			<div class="control-group">	
+		   		<label class="control-label">Endoso</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtEndoso" id="txtEndoso" value="{{ informacionTrasporte.IdDeclaracionTransporte }}">			    		
+			    	</div>
+		  		</div>
+			</div>
+		</div>			
+			
+		<div class="span5">												
+			<div class="control-group">	  	
+		  		<label class="control-label">Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtConstancia" id="txtConstancia" value="{{ informacionConstancia.FolioConstancia }}">			    		
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Moneda</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtMoneda" id="txtMoneda" value="{{ descripcionMoneda }}">
+			    	</div>
+		  		</div>
+			</div>
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		   		<label class="control-label">Vigencia</label>
+		  		<div class="controls">
+					<input type="text" class="input-small" id="txtVigenciaInicio" name="txtVigenciaInicio" value='{{ informacionConstancia.VigenciaInicio|date:"d/m/Y" }}' readonly />				
+					<input type="text" class="input-small" id="txtVigenciaFin" name="txtVigenciaFin" value='{{ informacionConstancia.VigenciaFin|date:"d/m/Y" }}' readonly />
+				</div>
+			</div>
+		</div>		
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		  		<label class="control-label">Tipo</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSeguro" id="txtSeguro" value="{{ tipoSeguro }}">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Sub Tipo</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSubSeguro" id="txtSubSeguro" value="{{ subTipoSeguro }}">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Socio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSocio" id="txtSocio" value="{{ socio.NombrePersona }}">
+			    	</div>
+		  		</div>
+			</div>
+		</div>		
+		
+		<div class="span5">
+			<div class="control-group">
+		   		<label class="control-label">Domicilio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtDomicilio" id="txtDomicilio" value="{{ socio.DireccionPersona }}">
+			    	</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="alert alert-block">
+		<h4>Constancia</h4>
+	</div>
+	
+	<table class="table tbl_constancia">
+		<thead>
+			<tr>		
+				<th>Bienes Asegurados</th>	
+				<th>Suma Asegurada</th>
+				<th>Fondo %</th>
+				<th>Fondo Importe</th>
+				<th>Reaseguro %</th>
+				<th>Reaseguro Importe</th>
+				<th>Total %</th>
+				<th>Total Importe</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ constanciaBienesAsegurados }}</td><td>{{ constanciaSumaAsegurada }}</td>
+				<td>{{ constanciaFondoPorcentaje }}</td><td>{{ constanciaFondoImporte }}</td><td>{{ constanciaReaseguroPorcentaje }}</td><td>{{ constanciaReaseguroImporte }}</td>
+				<td>{{ constanciaTotalPorcentaje }}</td><td>{{ constanciaTotalImporte }}</td>
+			</tr>		
+		</tbody>
+	</table>    
+	
+	<div class="alert alert-block">
+		<h4>Endoso</h4>
+	</div>
+	
+	<table class="table tbl_endoso">
+		<thead>
+			<tr>		
+				<th>Bienes Asegurados</th>	
+				<th>Suma Asegurada</th>
+				<th>Fondo %</th>
+				<th>Fondo Importe</th>
+				<th>Reaseguro %</th>
+				<th>Reaseguro Importe</th>
+				<th>Total %</th>
+				<th>Total Importe</th>
+			</tr>
+		</thead>
+		<tbody>
+			<td>{{ endosoBienesAsegurados }}</td><td>{{ endosoSumaAsegurada }}</td>
+			<td>{{ constanciaFondoPorcentaje }}</td><td>{{ endosoFondoImporte }}</td><td>{{ constanciaReaseguroPorcentaje }}</td><td>{{ endosoReaseguroImporte }}</td>
+			<td>{{ constanciaTotalPorcentaje }}</td><td>{{ endosoTotalImporte }}</td>
+		</tbody>
+	</table>
+	
+	<div class="alert alert-block">
+		<h4>Constancia Actualizada</h4>
+	</div>
+	
+	<table class="table tbl_constancia_actualizada">
+		<thead>
+			<tr>		
+				<th>Bienes Asegurados</th>	
+				<th>Suma Asegurada</th>
+				<th>Fondo %</th>
+				<th>Fondo Importe</th>
+				<th>Reaseguro %</th>
+				<th>Reaseguro Importe</th>
+				<th>Total %</th>
+				<th>Total Importe</th>
+			</tr>
+		</thead>
+		<tbody>				
+			{% if informacionTransportes %}
+				{% for endoso in informacionTransportes %}
+					<tr>
+						<td>{{ endoso.BienesAsegurados }}</td><td>{{ endoso.SumaAsegurada }}</td><td>{{ endoso.PorcentajeFondo }}</td>
+						<td>{{ endoso.ImporteFondo }}</td><td>{{ endoso.PorcentajeReaseguro }}</td><td>{{ endoso.ImporteReaseguro }}</td>
+						<td>{{ endoso.PorcentajeTotal }}</td><td>{{ endoso.ImporteTotal }}</td>
+					</tr>
+				{% endfor %}
+			{% endif %}	
+		</tbody>
+	</table>
+	</fieldset>	
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			{% if idEndosoTransporte == "" %}
+	  				<button id="btnGuardarEndoso" name="btnGuardarEndoso" class="btn btn-success">Guardar</button>
+	  			{% endif %}
+	  			<a id="btnVistaPrevia" name="btnVistaPrevia" class="btn btn-success"><i class="icon-file icon-white"></i> Vista Previa</a>
+	    		<a role="button" class="sort btn btn-warning" id="btnListadoEndoso" href="/ListadoDeclaracionTransporte/"><i class="icon-list icon-white"></i> Listado Endoso</a>
+	    		<button id="btnCancelarEndoso" name="btnCancelarEndoso" class="btn btn-danger">Cancelar</button>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>	
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/EndosoTransporte.js"></script> 
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

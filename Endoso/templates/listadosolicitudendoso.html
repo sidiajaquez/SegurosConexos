@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de Constancias para solicitud de Endoso {% endcomment %}
+
+{% block titulo %} Listado Solicitud de Endoso {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ListaSolicitudEndoso.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Listado Solicitud de Endoso</strong>
+	<form class="form-horizontal " id="formulario_listado_solicitud_endoso">
+		<legend></legend>
+		<p></p>
+        <div id="lovely-things-list">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarConstancia" placeholder="Buscar Constancia" /> <b>Ordenar por:</b>
+            <a role="button" class="sort btn btn-warning" data-sort="PersonaConstancia"><i class="icon-user icon-white"></i> Nombre</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-list icon-white"></i> Folio</a>
+            <a role="button" class="sort btn btn-warning" data-sort="VigenciaConstancia"><i class="icon-time icon-white"></i> Fecha</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>		
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListaSolicitudEndoso.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %}

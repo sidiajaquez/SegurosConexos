@@ -1,0 +1,253 @@
+{% extends 'index.html' %}
+
+{% comment %} Generación el pago de las constancias anuales que cuentan con un endoso de cancelación. {% endcomment %}
+
+{% block titulo %} Pago de endoso de cancelación {% endblock %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/PagoEndosoCancelacion.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Pago de Endoso Cancelación</strong>
+<form class="form-horizontal " id="formulario_pago_endoso_cancelacion" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<input type='hidden' name='varIdConstancia' id="varIdConstancia" value='{{ datosEndoso.0.3 }}' />
+	<input type='hidden' name='varIdPagoEndosoCancelacion' id="varIdPagoEndosoCancelacion" value='' />
+	<input type='hidden' name='varMontoAPagar' id="varMontoAPagar" value='{{ datosEndoso.0.10 }}' />
+	<legend></legend>
+	<div class="row">
+		<div class="span4">
+			<div class="control-group">			
+				<label class="control-label">Constancia</label> 			<!-- Text input Folio Constancia -->
+				<div class="controls">
+					<input type="text" class="input-small" value="{{ datosEndoso.0.18 }}" disabled />
+				</div> 															<!-- Fin Folio Constancia -->
+			</div>			
+		</div>	
+		<div class="span4">
+			<div class="control-group">			
+				<label class="control-label">Endoso</label> 			<!-- Text input Endoso de cancelación -->
+				<div class="controls">
+					<input type="text" class="input-small" value ="{{ datosEndoso.0.2 }}" disabled/>				
+				</div> 															<!-- Fin Endoso de cancelación -->
+			</div>			
+		</div>
+		<div class="span3">
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">Vigencia</th>
+					</tr>
+					<tr>
+						<th>Desde</th>
+						<th>Hasta</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" class="input-small" id="VigenciaInicio" name="VigenciaInicio" value='{{ datosEndoso.0.4 }}' readonly /></td>
+						<td><input type="text" class="input-small" id="VigenciaFinal" name="VigenciaFinal" value='{{ datosEndoso.0.5 }}' readonly /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+	</div>
+	<div class="row">
+		<div class="span4">
+			<div class="control-group">						       <!-- Text input Contrato de Reaseguro --> 
+				<label class="control-label">Contrato de Reaseguro</label>
+				<div class="controls">
+					<input class="input-medium" type="text" value="{{ datosEndoso.0.14 }}" disabled>
+				</div>
+			</div>												  <!-- Fin Text input Contrato de Reaseguro --> 
+		</div>
+		<div class="span4">
+			<div class="control-group">			
+				<label class="control-label">Moneda</label> 			<!-- Text input Moneda -->
+				<div class="controls">
+					<input type="text" class="input-small" value ="{{ datosEndoso.0.12 }}" disabled/>				
+				</div> 															<!-- Fin Moneda -->
+			</div>			
+		</div>
+	</div>
+	<div class="alert alert-success">
+		<h4>Datos del Asegurado</h4>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">						       <!-- Text input Nombre --> 
+				<label class="control-label">Asegurado</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" value="{{ Asegurado.0.NombrePersona }}" disabled>
+				</div>
+			</div>												  <!-- Fin Text input Nombre --> 
+		</div>
+		<div class="span5">
+			<div class="control-group">						      <!-- Text input Rfc --> 
+				<label class="control-label">RFC</label>
+				<div class="controls">
+					<input type="text" class="input-medium" value="{{ Asegurado.0.RfcPersona }}" disabled>
+				</div>
+			</div>												  <!-- Fin Text input Rfc --> 	
+		</div>		
+	</div>
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">						       				<!-- Text input Domicilio --> 
+				<label class="control-label">Domicilio</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" value="{{ Asegurado.0.DireccionPersona }}" disabled>
+				</div>
+			</div>												  				<!-- Fin Text input Domicilio --> 
+		</div>	
+		<div class="span5">
+			<div class="control-group">						       				<!-- Text input CP --> 
+				<label class="control-label">C.P.</label>
+				<div class="controls">
+					<input type="text" class="input-small" value="{{ Asegurado.0.CPPersona }}" disabled>
+				</div>
+			</div>												  				<!-- Fin Text input CP --> 
+		</div>			
+	</div>
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">						       				<!-- Text input Municipio --> 
+				<label class="control-label">Municipio</label>
+				<div class="controls">
+					<input type="text" class="input-medium" value="{{ Asegurado.0.MunicipioPersona }}" disabled>
+				</div>
+			</div>												  				<!-- Fin Text input Municipio --> 
+		</div>	
+		<div class="span5">
+			<div class="control-group">						       				<!-- Text input Estado --> 
+				<label class="control-label">Estado</label>
+				<div class="controls">
+					<input type="text" class="input-medium" value="{{ Asegurado.0.EstadoPersona }}" disabled>
+				</div>
+			</div>												  				<!-- Fin Text input Estado --> 
+		</div>			
+	</div>
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">						      				<!-- Text input Telefono --> 
+				<label class="control-label">Teléfono</label>
+				<div class="controls">
+					<input type="text" class="input-medium" value="{{ Asegurado.0.TelefonoPersona }}" disabled>
+				</div>
+			</div>												  				<!-- Fin Text input Telefono --> 	
+		</div>	
+	</div>	
+	<div class="alert alert-success">
+		<h4>Descripción Detallada de los Bienes</h4>
+	</div>
+	<input type='hidden' name='SumaAseguradaTotal' id="SumaAseguradaTotal" value='' />
+    <input type='hidden' name='CuotaNeta' id="CuotaNeta" value='' />		
+	<table class="table table-striped">
+		<thead>
+			<th style="display:none;">idEquipo</th>
+			<th>Nombre</th>
+			<th>Marca</th>
+			<th>Modelo</th>
+			<th>No. Serie</th>
+			<th>Documentación</th>
+			<th>Fecha</th>
+			<th style="text-align:center;">Cantidad</th>
+			<th style="text-align:center;">Valor Unitario</th>
+			<th style="text-align:center;">Suma Asegurada</th>
+		</thead>
+		<tfoot>
+			<tr>
+				<th colspan="8" style="text-align:right;">Suma Asegurada:</th>
+				<th style="text-align:right;"><input type="text" id="SumaAseguradaBienes" readonly value="{{ SumaAseguradaBienes }}" style="text-align:right;"></th>
+			</tr>
+		</tfoot>
+		<tbody>
+			{% if DescripcionBienes %}
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+					<td style="display:none;">{{ descripcionBien.IdBien }}</td>
+					<td>{{ descripcionBien.NombreEquipo }}</td>
+					<td>{{ descripcionBien.Marca }}</td>
+					<td>{{ descripcionBien.Modelo }}</td>
+					<td>{{ descripcionBien.Serie }}</td>
+					<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+					<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+					<td style="text-align:right;">{{ descripcionBien.Cantidad }}</td>
+					<td style="text-align:right;">{{ descripcionBien.ValorUnitario }}</td>
+					<td style="text-align:right;">{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}					
+			{% endif %}
+		</tbody>
+	</table>
+	<div class="alert alert-success">
+		<h4>Coberturas</h4>
+	</div>
+	<table class="table table-striped tblCoberturas">
+		<thead>
+			<tr>
+				<th style="display:none;">IdCobertura</th>
+				<th>Cobertura</th>
+				<th>Tarifa</th>
+				<th style="text-align:center;">Tarifa Fondo</th>
+				<th style="text-align:center;">Tarifa Reaseguro</th>
+				<th style="text-align:center;">Fondo</th>
+				<th style="text-align:center;">Reaseguro</th>
+				<th style="text-align:center;">Subtotal</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Total:</th>
+				<td>{{ TotalTarifa }}</td>
+				<td style="text-align:right;">{{ TotalTarifaFondo }}</td>
+				<td style="text-align:right;">{{ TotalTarifaReaseguro }}</td>
+				<th colspan="3" style="text-align:right;">
+					Prima en Deposito:
+				<input type="text" id="Cuota" readonly value="{{ CuotaNeta }}" style="text-align:right;"></th>			
+			</tr>	
+				
+			<tr>
+				<th colspan="4"></th>
+				<th colspan="3" style="text-align:right;">
+					Monto a Pagar:
+				<input type="text" id="MontoAPagar" readonly value="{{ MontoAPagar }}" style="text-align:right;"></th>
+			</tr>	
+		</tfoot>
+		<tbody>
+			{% for cobertura in Coberturas %}
+				<tr>
+					<td style="display:none;">{{ cobertura.IdCobertura }}</td>
+					<td>{{ cobertura.Descripcion }}</td>
+					<td>{{ cobertura.Tarifa }}</td>
+					<td style="text-align:right;">{{ cobertura.TarifaFondo }}</td>
+					<td style="text-align:right;">{{ cobertura.TarifaReaseguro }}</td>
+					<td style="display:none;">{{ cobertura.FondoCuota }}</td>
+					<td style="display:none;">{{ cobertura.ReaseguroCuota }}</td>					
+					<td style="text-align:right;">{{ cobertura.Fondo }}</td>
+					<td style="text-align:right;">{{ cobertura.Reaseguro }}</td>
+					<td style="text-align:right;">{{ cobertura.SubTotal }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+		
+	<hr />
+	<div class="row">	
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnGuardarPagoEndoso" name="btnGuardarPagoEndoso" class="btn btn-success">Guardar</a>
+	  			<a id="btnVistaPrevia" name="btnVistaPrevia" class="btn btn-success" disabled><i class="icon-file icon-white"></i> Vista Previa</a>
+	    		<a role="button" class="sort btn btn-warning" id="btnPagoListado" href="/ListadoPagoEndosoCancelacionAnual/"><i class="icon-list icon-white"></i> Listado Pago de Endosos Cancelados</a>
+	    	</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>	
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/PagoEndosoCancelacion.js"></script>
+{% endblock scriptjs %}

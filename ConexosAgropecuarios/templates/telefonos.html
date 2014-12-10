@@ -1,0 +1,48 @@
+<!-- Generación de los campos de teléfono -->
+ <!-- Modal -->
+<div id="agregarTelefonoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Teléfono de la persona</h3>
+    </div>
+    <div class="modal-body">
+
+		<div class="control-group">
+			<!-- Text input tipo de teléfono -->
+			<label class="control-label">Tipo Teléfono</label>
+			<div class="controls">
+				{{ formularioTelefonos.TipoTelefono }}
+			</div> <!-- Fin tipo de teléfono -->
+		</div>
+	
+		<div class="control-group">
+			<!-- Text input número teléfonico -->
+			<label class="control-label">Número</label>
+			<div class="controls">
+				{{ formularioTelefonos.Numero }} 
+			</div> <!-- Fin número teléfonico -->
+		</div>
+	</div> <!-- Fin de la generación de campos de teléfono -->
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+		<a class="btn btn-primary" id="btnAgregarTelefono"><i class="icon-plus icon-white"></i> Agregar Teléfono</a>
+	</div>
+</div>	
+		
+<!-- Button to trigger modal -->
+<a href="#agregarTelefonoModal" role="button" class="btn btn-primary" data-toggle="modal" id="btnAgregarTelefono"><i class="icon-plus icon-white"></i> Agregar Teléfono</a>
+		
+<p></p>	
+<!-- Generación de tablas de teléfonos -->
+<table class="table telefonos_tabla table-striped">
+	<thead>						
+		<tr>	
+			<th style="display: none;">Id</th>		
+			<th>Tipo Teléfono</th>
+			<th>Número</th>
+			<th></th>
+		</tr>
+	</thead>
+   	<tbody>
+	</tbody>
+</table> <!-- Fin de la generación de la tabla -->

@@ -1,0 +1,107 @@
+<!-- Button to trigger modal -->
+<a href="#direcciones" role="button" class="btn btn-primary" data-toggle="modal" id="btnAgregarDireccion"><i class="icon-home icon-white"></i> Agregar Dirección</a>
+ 
+<!-- Modal -->
+<div id="direcciones" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Direcciones" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Direcciones del Socio</h3>
+		<br />
+
+			<!-- Select Basic Tipo Direccion -->
+			<div class="control-group">
+			  <label class="control-label">Tipo de Dirección:</label>
+			  <div class="controls">
+			  	{{ formularioDirecciones.TipoDireccion }}
+			  </div>
+			</div> <!-- Fin Tipo Direccion -->
+
+
+			<!-- Text input Calle -->
+			<div class="control-group">
+			  <label class="control-label">Calle:</label>
+			  <div class="controls">
+			    {{ formularioDirecciones.Calle }}
+			  </div>
+			</div> <!-- Fin Calle -->
+			
+			<!-- Text input Detalle -->
+			<div class="control-group">
+			  <label class="control-label">Detalle:</label>
+			  <div class="controls">
+			    {{ formularioDirecciones.Detalle }}
+			  </div>
+			</div> <!-- Fin Detalle -->
+
+			<!-- Text input Numero Exterior -->
+			<div class="control-group">
+			  <label class="control-label">Número Exterior:</label>
+			  <div class="controls">
+			    {{ formularioDirecciones.NumeroExterior }}
+			  </div>
+			</div> <!-- Fin Numero Exterior -->
+
+			<!-- Text input Numero Interior -->
+			<div class="control-group">
+			  <label class="control-label">Número Interior:</label>
+			  <div class="controls">
+			    {{ formularioDirecciones.NumeroInterior }}
+			  </div>
+			</div> <!-- Fin Numero Interior -->
+			
+			<!-- Datos ocultos -->
+			<input type='hidden' id='SepomexId' />
+			<input type='hidden' id='SepomexCp' />
+			<input type='hidden' id='SepomexColonia' />
+			<input type='hidden' id='SepomexEstado' />
+			<input type='hidden' id='SepomexMunicipio' />
+			<input type='hidden' id='SepomexCiudad' />
+						
+			<!-- Fin datos ocultos -->
+
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarSepomex" placeholder="Catálogo SEPOMEX">
+			<button type="submit" class="btn" id="btnBuscarSepomex">Buscar</button>
+		
+	</div>
+	<div class="modal-body">
+		<table class="table busquedaSepomex table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>#</th>
+					<th>C.P.</th>
+					<th>Asentamiento</th>
+					<th>Ciudad</th>
+					<th>Municipio</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+		
+			</tbody>
+		</table>		
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+		<a class="btn btn-primary" id="btnAceptarDireccion"><i class="icon-plus icon-white"></i> Agregar Dirección</a>
+	</div>
+</div><!-- Fin modal -->
+
+<p></p>
+<table class="table direccionesPersonaMoral">
+	<thead>
+		<tr>		
+			<th style="display: none;">Id</th>	
+			<th>Calle</th>
+			<th>C.P.</th>
+			<th>Colonia</th>
+			<th>Ciudad</th>
+			<th>Municipio</th>
+			<th>Estado</th>
+			<th>Tipo Dirección</th>
+			<th></th>			
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>

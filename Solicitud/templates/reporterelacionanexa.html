@@ -1,0 +1,168 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para imprimir relación anexa {% endcomment %}
+
+{% block titulo %} Relación Anexa de la Solicitud {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ReporteRelacionAnexa.css">  
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<input type='hidden' name='varIdSolicitud' id="varIdSolicitud" value='{{ InformacionSolicitud.IdSolicitud }}' />
+	<div class="row" align="center">
+	
+		<div class="span2">  
+			<img src="/static/img/fondo.jpg" height="50" width="90" align = "left">
+		</div>
+		
+		<div class="control-group span8">
+			<p>RELACION ANEXA A LA SOLICITUD</p>		
+			<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+			<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+			<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+		</div>
+	</div>
+	
+	<table>
+		<thead>
+			<tr>													
+				<th>FECHA</th>
+				<th>SOLICITUD</th>				
+				<th>MONEDA</th>				
+				<th>EJERCICIO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">{{ FechaActual|date:"d/m/y" }}</td>			
+				<td style="text-align: center;">{{ InformacionSolicitud.FolioSolicitud }}</td>
+				<td style="text-align: center;">{{ Moneda }}</td>				
+				<td style="text-align: center;">{{ Ejercicio }}</td>
+			</tr>		
+		</tbody>
+	</table>
+	<br />
+	<table class="table">
+		<thead>
+			<tr>													
+				<th>ASEGURADO</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ Asegurado.0.NombrePersona }}</td>
+				<td style="text-align: center;">{{ Asegurado.0.RfcPersona }}</td>
+				<td style="text-align: center;">{{ Asegurado.0.DireccionPersona }}</td>
+				<td style="text-align: center;">{{ Asegurado.0.TelefonoPersona }}</td>
+			</tr>		
+		</tbody>
+		<thead>
+			<tr>													
+				<th>CONTRATANTE</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ Contratante.0.NombrePersona }}</td>
+				<td style="text-align: center;">{{ Contratante.0.RfcPersona }}</td>
+				<td style="text-align: center;">{{ Contratante.0.DireccionPersona }}</td>
+				<td style="text-align: center;">{{ Contratante.0.TelefonoPersona }}</td>
+			</tr>
+		</tbody>		
+	</table>
+	
+	<table class="table">
+		<thead>
+			<th>NOMBRE</th>
+			<th>MARCA</th>
+			<th>MODELO</th>
+			<th>NO. SERIE</th>
+			<th>DOCUMENTACION</th>
+			<th>FECHA</th>
+			<th>CANTIDAD</th>
+			<th>VALOR UNITARIO</th>
+			<th>SUMA ASEGURADA</th>
+		</thead>
+		<tfoot>
+			<tr>
+				<th id="tituloSumaAsegurada" colspan="8" style="text-align:right;font-size: 1.5em;">Suma Asegurada Solicitada:</th>
+				<th style="text-align: right;font-size: 1.5em;">{{ SumaAseguradaBienes }}</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			{% if DescripcionBienes %}
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td style="text-align: center;">{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td style="text-align: right;">{{ descripcionBien.Cantidad }}</td>
+						<td style="text-align: right;">{{ descripcionBien.ValorUnitario }}</td>
+						<td style="text-align: right;">{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}					
+			{% endif %}
+		</tbody>
+	</table>
+		
+	<table class="table tblUbicacionBien">
+		<thead>
+			<tr>													
+				<th>UBICACION LATITUD</th>
+				<th>UBICACION LONGITUD</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">{{ informacionRelacionAnexa.UbicacionBienLat }}</td>
+				<td style="text-align: center;">{{ informacionRelacionAnexa.UbicacionBienLng }}</td>
+			</tr>
+		</tbody>
+	</table>
+			
+	<div class="row">
+  		<div id="map"></div>
+	</div>
+	<br />
+	<table class="table">
+		<thead>
+			<tr>													
+				<th>OBSERVACIONES</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ informacionRelacionAnexa.ObservacionesSolicitante }}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<center>
+		<br /><br /><span>______________________________</span><br />									
+		<span>{{ Asegurado.0.NombrePersona }}</span>
+	</center>
+	
+	<div class="row">
+		<div class="pull-right">
+			<button id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</button>
+			<button id="btnRegresar" name="btnRegresar" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i> Regresar</button>
+		</div>
+	</div>
+		
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ReporteRelacionAnexa.js"></script> 
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="/static/js/lib/gmaps.js"></script> 	
+{% endblock scriptjs %} 

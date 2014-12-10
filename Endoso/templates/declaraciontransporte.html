@@ -1,0 +1,376 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar la declaración de transporte {% endcomment %}
+
+{% block titulo %} Declaración de Transporte {% endblock titulo %}
+
+ {% block scriptcss %} 
+ <link rel="stylesheet" href="/static/css/DeclaracionTransporte.css">   
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Declaración del transporte</strong>
+<form class="form-horizontal " id="formulario_transporte" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para los endosos. -->
+{% csrf_token %}
+	<input type="hidden" name="varIdDeclaracionTransporte" id="varIdDeclaracionTransporte" value="{{ declaraciontransporte.IdDeclaracionTransporte }}" />
+	<input type="hidden" name="varIdConstancia" id="varIdConstancia" value="{{ datosconstancia.0.4 }}" />
+	<input type="hidden" name="varIdPersona" id="varIdPersona" value="{{ datosconstancia.0.10 }}" />
+	<input type="hidden" name="varTotalTarifa" id="varTotalTarifa" value="{{ datosconstancia.0.6 }}" />
+	<input type="hidden" name="varPrima" id="varPrima" value="{{ datosconstancia.0.7 }}" />
+	<input type="hidden" name="varCantidadFletes" id="varCantidadFletes" value="{{ cantidadfletes }}" />
+	<input type="hidden" name="varSumaAseguradaUnitaria" id="varSumaAseguradaUnitaria" value="{{ sumaaseguradaunitaria }}" />
+	<input type="hidden" name="varSumaAseguradaTotal" id="varSumaAseguradaTotal" value="{{ sumaaseguradatotal }}" />	 
+	<input type="hidden" name="varImporteCuota" id="varImporteCuota" value="{{ importecuota }}" />	
+	<input type="hidden" name="varIdDeclaracionTransporteAnterior" id="varIdDeclaracionTransporteAnterior" value="{{ idEndosoAnterior }}" />
+	<input type="hidden" name="varUltimaFechaIngresada" id="varUltimaFechaIngresada" value='{{ ultimaFechaIngresada|date:"d/m/Y" }}' />
+	
+	<fieldset>			
+	<div class="alert alert-block">
+		<h4>Datos de la Constancia</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">								
+			<div class="control-group">	
+		   		<label class="control-label">Folio de Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtFolioConstancia" id="txtFolioConstancia" value="{{ datosconstancia.0.5 }}">
+			    		{% if idEndosoAnterior == "" or not idEndosoAnterior %}
+			    			<a href="#modal_buscar_constancia" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarConstanciaModal"><i class="icon-search icon-white"></i></a>
+			    		{% endif %}
+			    	</div>
+		  		</div>
+			</div>		
+		</div>					
+			
+		<div class="span5">												
+			<div class="control-group">	  	
+		  		<label class="control-label">Número de Solicitud</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtNumeroSolicitud" id="txtNumeroSolicitud" value="{{ datosconstancia.0.1 }}">			    		
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Moneda</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtMoneda" id="txtMoneda" value="{{ moneda }}">
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Ejercicio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtEjercicio" id="txtEjercicio" value="{{ datosconstancia.0.3 }}">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Vigencia</label>
+		  		<div class="controls">
+					<input type="text" class="input-small" id="txtVigenciaInicio" name="txtVigenciaInicio" value='{{ datosconstancia.0.8 }}' readonly />				
+					<input type="text" class="input-small" id="txtVigenciaFin" name="txtVigenciaFin" value='{{ datosconstancia.0.9 }}' readonly />
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="alert alert-block">
+		<h4>Datos del Socio Asegurado</h4>
+	</div>
+	
+	<div class="row">	
+		<div class="span6">					
+			<div class="control-group">
+		   		<label class="control-label">Rfc</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtRfc" id="txtRfc" value="{{ datosconstancia.0.12 }}">
+		  		</div>
+			</div> 	
+		</div>
+		<div class="span5">											
+			<div class="control-group">
+		  		<label class="control-label">Nombre</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtNombre" id="txtNombre" value="{{ datosconstancia.0.11 }}">
+		    	</div>
+			</div> 	
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		  		<label class="control-label">Domicilio</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtDomicilio" id="txtDomicilio" value="{{ datosconstancia.0.13 }}">
+		  		</div>
+			</div> 	
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Teléfono</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtTelefono" id="txtTelefono" value="{{ datosconstancia.0.14 }}">
+		  		</div>
+			</div> 	
+		</div>
+	</div>	
+	
+	<div class="alert alert-block">
+		<h4>Datos de la Declaracion de Transporte</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Periodo declaración</label>
+		  		<div class="controls">
+					<input type="text" class="input-small" id="dtpPeriodoInicio" name="dtpPeriodoInicio" value='{{ periodoInicio|date:"d/m/Y" }}'/>				
+					<input type="text" class="input-small" id="dtpPeriodoFin" name="dtpPeriodoFin" value='{{ periodoFin|date:"d/m/Y" }}'/>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">		
+		<div class="span6">								
+			<div class="control-group">
+		  		<label class="control-label">Fecha</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="dtpFecha" id="dtpFecha" value="">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Romaneaje</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtRomaneaje" id="txtRomaneaje" value="">
+		    		</div>
+		  		</div>
+			</div>
+		</div>		
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			 <div class="control-group">
+		  		<label class="control-label">Origen</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtOrigen" id="txtOrigen" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">											
+			<div class="control-group">
+		  		<label class="control-label">Destino</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtDestino" id="txtDestino" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>			
+	</div>
+	
+	<div class="row">		
+		<div class="span6">											
+			<div class="control-group">
+		  		<label class="control-label">Cantidad</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtCantidad" id="txtCantidad" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>		
+		
+		<div class="span5">
+			 <div class="control-group">
+		  		<label class="control-label">Suma Asegurada Unitaria</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSumaAseguradaUnitaria" id="txtSumaAseguradaUnitaria" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>		
+	</div>	
+	
+	<div class="row">		
+		<div class="span6">											
+			<div class="control-group">
+		  		<label class="control-label">Suma Asegurada Total</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSumaAseguradaTotal" id="txtSumaAseguradaTotal" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>
+				
+		<div class="span5">
+			 <div class="control-group">
+		  		<label class="control-label">Descripción del Bien</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<textarea type="text" name="txtDescripcionBienAsegurado" id="txtDescripcionBienAsegurado">{{ declaraciontransporte.DescripcionBienAsegurado }}</textarea>
+		    		</div>
+		  		</div>
+			</div> 
+		</div>			
+	</div>	
+		
+	<a id="btnAgregar" name="btnAgregar" class="btn btn-success" > Agregar</a>
+	<table class="table tabla_declaracion_transporte table-striped">  <!-- Se genera la tabla para agregar los calculos de los endosos. -->
+		<thead>
+			<tr>	
+				<th style="display: none;">IdDeclaracionTransporte</th>		
+				<th>Romaneaje</th>
+				<th>Fecha</th>
+				<th>Cantidad</th>
+				<th>Suma Asegurada Unitaria</th>
+				<th>Suma Asegurada Total</th>
+				<th>Origen</th>
+				<th>Destino</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>	
+			{% if declaracionestransportepordia %}
+				{% for declaraciontransporte in declaracionestransportepordia %}
+					<tr>
+						<td style="display: none;">{{ declaraciontransporte.IdDeclaracionTransportePorUnidad }}</td><td>{{ declaraciontransporte.Romaneaje }}</td>
+						<td>{{ declaraciontransporte.Fecha|date:"d/m/Y" }}</td>
+						<td>{{ declaraciontransporte.Cantidad }}</td><td>{{ declaraciontransporte.SumaAseguradaUnitaria }}</td>
+						<td>{{ declaraciontransporte.SumaAseguradaTotal }}</td><td>{{ declaraciontransporte.Origen }}</td><td>{{ declaraciontransporte.Destino }}</td>
+						<td><a href='#' title='Actualizar' onclick='actualizarTablaDeclaracionUnidad($(this));'><i class='icon-refresh'></i></a></td>
+						<td><a href='#' title='Eliminar' onclick='eliminarFilaUnidadPorDia($(this));'><i class='icon-remove-circle'></i></a></td>
+					</tr>
+				{% endfor %}
+			{% endif %}					
+		</tbody>
+	</table>
+	
+	<table class="table tabla_endoso_totales table-striped">  <!-- Se genera la tabla para agregar los calculos de los endosos. -->
+		<thead>
+			<tr>
+				<th></th>
+				<th>Cantidad de Fletes</th>
+				<th>Suma Asegurada Unitaria</th>
+				<th>Suma Asegurada Total</th>
+				<th>Cuota</th>
+				<th>Importe de la cuota devengada</th>
+			</tr>	
+		</thead>
+		<tbody>		
+			{% if declaracionestransportepordia %}
+			<tr>
+				<td></td><td>{{ cantidadfletes }}</td><td>{{ sumaaseguradaunitaria }}</td><td>{{ sumaaseguradatotal }}</td><td>{{ datosconstancia.0.6 }}</td>
+				<td>{{ importecuota }}</td>
+			<tr>
+			{% endif %}
+		</tbody>
+	</table>	<!-- Fin de la generación de la tabla para agregar coberturas. -->
+	
+	<div class="alert alert-block">
+		<h4>Observaciones</h4>
+	</div>
+	
+	<div class="row">
+		<div class="control-group">
+	  		<div class="controls">
+	  			<div clascriptjsss="input-prepend">
+		    		<textarea class="span9 input-xlarge" type="text" name="txtObservaciones" id="txtObservaciones">{{ declaraciontransporte.Observaciones }}</textarea>  
+	    		</div>
+	  		</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnLimpiarTabla" role="button" class="btn btn-success"><i class="icon-list-alt icon-white"></i> Limpiar</a>
+	  			<a id="btnVistaPreviaDeclaracion" role="button" class="btn btn-success" disabled><i class="icon-file icon-white"></i> Vista Previa</a>
+	  			<a id="btnGuardarDeclaracion" name="btnGuardarDeclaracion" class="btn btn-success" >Guardar</a>
+		    	<a id="btnCerrarPeriodo" name="btnCerrarPeriodo" class="btn btn-inverse" >Cerrar Periodo </a>  
+	  			<a role="button" class="sort btn btn-warning" id="btnListadoDeclaracion"><i class="icon-list icon-white"></i> Listado de Declaraciones</a>
+	  			<a id="btnCancelarDeclaracion" name="btnCancelarDeclaracion" class="btn btn-danger"> Cancelar</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	
+	<div id="modal_buscar_constancia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las constancias -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Constancias</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarConstancia">
+			<button type="submit" class="btn" id="btnBuscarConstancia"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_constancia">
+				<thead>
+					<tr>
+						<th>Constancia</th>						
+						<th>Solicitud</th>
+						<th>Moneda</th>	
+						<th>Ejercicio</th>							
+					    <th style="display: none;">IdConstancia</th>
+					    <th style="display: none;">TotalTarifa</th>
+					    <th style="display: none;">Prima</th>						
+						<th style="display: none;">IdSolicitud</th>			
+						<th style="display: none;">Nombre</th>
+						<th style="display: none;">Rfc</th>
+						<th style="display: none;">Domicilio</th>
+						<th style="display: none;">Telefono</th>
+						<th>Inicio</th>
+						<th>Fin</th>	
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div> 																    
+		<div class="modal-footer">
+			<button id ="btnCerrarModalBuscarConstancia" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>	
+	</fieldset>
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/DeclaracionTransporte.js"></script> 
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

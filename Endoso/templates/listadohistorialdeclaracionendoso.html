@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar el listado que contiene el historial de las declaraciones de endoso. {% endcomment %}
+
+{% block titulo %} Historial de las declaraciones de endoso {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/ListadoHistoricoDeclaracionEndoso.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Historial Declaracion Endoso</strong>
+<form class="form-horizontal" id="formulario_listado_historial_declaracion" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<!-- Listado donde se cargara la información general de la declaración de endoso. -->	
+	<fieldset>
+		<input type="hidden" name="varIdConstancia" id="varIdConstancia" value="{{ informacionConstancia.IdConstancia }}" />		
+		<legend></legend>
+	 	<a href="#modal_buscar_constancia" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarConstanciaModal" name="btnBuscarConstanciaModal" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Buscar Constancia</a>  
+		<p></p>          		
+        <div id="list_declaraciones">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarEndoso" placeholder="Buscar Declaración" />
+            <a role="button" class="sort btn btn-warning" data-sort="Mes"><i class="icon-user icon-white"></i> Ordenar por mes</a>  
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+        
+	</fieldset>	<!-- Se termina la generación de los endosos. -->
+	
+	<div id="modal_buscar_constancia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las constancias -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Constancias</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarConstancia">
+			<button type="submit" class="btn" id="btnBuscarConstancia"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_constancia">
+				<thead>
+					<tr>
+					    <th style="display: none;">IdConstancia</th>
+						<th>Constancia</th>
+						<th>Solicitud</th>
+						<th>Moneda</th>
+						<th>Ejercicio</th>							
+						<th>Inicio</th>
+						<th>Fin</th>	
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div>
+		<div class="modal-footer">
+			<button id ="btnCerrarModal" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>	
+	</div>										
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %}
+ 	<script src="/static/js/jquery.validate.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+	<script src="/static/js/ListadoHistoricoDeclaracionEndoso.js"></script> 
+{% endblock scriptjs %}

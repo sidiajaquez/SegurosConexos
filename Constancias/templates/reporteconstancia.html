@@ -1,0 +1,168 @@
+{% extends 'index.html' %}
+
+{% comment %} Impresion de la Constancia {% endcomment %}
+
+{% block titulo %} Constancia {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ReporteConstancia.css">
+{% endblock scriptcss %}
+ 
+{% block contenido %}
+	<div class="row" align="center">	
+		<div class="span2">  
+			<img src="/static/img/fondo.jpg" height="50" width="90" align = "left">
+		</div>
+		<div class="control-group span8">
+			<p>CONSTANCIA</p>
+			<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+			<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+			<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+		</div>
+	</div>
+
+	<table class="table impresionConstancia">
+		<thead>
+			<tr>
+				<th>Solicitud</th>
+				<th>Constancia</th>
+				<th>Número de Contrato de Reaseguro</th>
+				<th>Moneda</th>
+				<th>Fecha Emisión</th>
+				<th colspan="2">Vigencia</th>
+			</tr>			
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:center;">{{ InformacionSolicitud.FolioSolicitud }}</td>
+				<td style="text-align:center;">{{ InformacionConstancia.FolioConstancia }}</td>
+				<td style="text-align:center;">{{ NumeroContrato }}</td>
+				<td style="text-align:center;">{{ Moneda }}</td>
+				<td style="text-align:center;">{{ InformacionConstancia.FechaEmision|date:"d/m/Y" }}</td>
+				<td>Desde: {{ InformacionConstancia.VigenciaInicio|date:"d/m/Y" }}</td>
+				<td>Hasta: {{ InformacionConstancia.VigenciaFin|date:"d/m/Y" }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table impresionConstancia">
+		<thead>
+			<tr>
+				<th colspan="3">ASEGURADO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>SOLICITANTE:</b> {{ Asegurado.0.NombrePersona }}</td>
+				<td><b>TELÉFONO:</b> {{ Asegurado.0.TelefonoPersona }}</td>
+				<td><b>RFC:</b> {{ Asegurado.0.RfcPersona }}</td>
+			</tr>
+			<tr>
+				<td><b>DOMICILIO:</b> {{ Asegurado.0.DireccionPersona }}</td>
+				<td><b>MUNICIPIO:</b> {{ Asegurado.0.MunicipioPersona|upper }}</td>
+				<td><b>ESTADO:</b> {{ Asegurado.0.EstadoPersona|upper }}</td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th colspan="3">CONTRATANTE</th>
+			</tr>						
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>CONTRATANTE:</b> {{ Contratante.0.NombrePersona }}</td>
+				<td><b>TELÉFONO:</b> {{ Contratante.0.TelefonoPersona }}</td>
+				<td><b>RFC:</b> {{ Contratante.0.RfcPersona }}</td>
+			</tr>
+			<tr>
+				<td><b>DOMICILIO:</b> {{ Contratante.0.DireccionPersona }}</td>
+				<td><b>MUNICIPIO:</b> {{ Contratante.0.MunicipioPersona|upper }}</td>
+				<td><b>ESTADO:</b> {{ Contratante.0.EstadoPersona|upper }}</td>
+			</tr>
+		</tbody>		
+	</table>
+	<table class="table impresionConstancia">
+		<thead>
+			<tr>
+				<th>Beneficiario</th>
+				<th>Domicilio</th>
+				<th>RFC</th>
+				<th>Porcentaje</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for beneficiario in Beneficiarios %}
+				<tr>
+					<td>{{ beneficiario.NombrePersonaBeneficiario }}</td>
+					<td>{{ beneficiario.DomicilioPersonaBeneficiario }}</td>
+					<td>{{ beneficiario.RfcPersonaBeneficiario }}</td>
+					<td style="text-align:right;">{{ beneficiario.Porcentaje }}</td>
+				</tr>
+			{% endfor %}		
+		</tbody>
+	</table>
+	<center><h5>Descripción Bienes</h5></center>
+	<table class="table impresionConstancia">
+		<thead>
+			<tr>
+				<th>Bien Asegurado</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for descripcionBien in DescripcionBienes %}
+				<tr>
+					<td>{{ descripcionBien.NombreEquipo }}</td>
+					<td style="text-align:right;">{{ descripcionBien.Cantidad }}</td>
+					<td style="text-align:right;">{{ descripcionBien.ValorUnitario }}</td>
+					<td style="text-align:right;">{{ descripcionBien.SumaAsegurada }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<center><h5>Coberturas</h5></center>
+	<br />	
+	<table class="table impresionConstancia">
+		<thead>
+			<tr>
+				<th>Cobertura</th>
+				<th>Tarifa</th>
+				<th style="text-align:center;">Subtotal</th>			
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Total:</th>
+				<td>{{ TotalTarifa }}</td>
+				<th style="text-align:right;font-size: 1.5em;">
+				{% if InformacionSolicitud.DeclaracionSolicitud == "ANUAL" %}
+					Cuota Total: 
+				{% else %}
+					Prima en Deposito:
+				{% endif %}
+				{{ CuotaNeta }}
+				</th>			
+			</tr>
+		</tfoot>		
+		<tbody>
+			{% for cobertura in Coberturas %}
+				<tr>
+					<td>{{ cobertura.Descripcion }}</td>
+					<td>{{ cobertura.Tarifa }}</td>
+					<td style="text-align:right;">{{ cobertura.SubTotal }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="row">
+		<div class="pull-right">
+			<button id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</button>
+			<button id="btnRegresar" name="btnRegresar" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i> Regresar</button>
+		</div>
+	</div>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ReporteConstancia.js"></script>
+{% endblock scriptjs %}

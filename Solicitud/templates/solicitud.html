@@ -1,0 +1,482 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar solicitud {% endcomment %}
+
+{% block titulo %} Solicitud {% endblock titulo %}
+
+ {% block scriptcss %} 
+  	<link rel="stylesheet" href="/static/css/Solicitud.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Solicitud</strong>
+<form class="form-horizontal " id="formulario_solicitudes" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<input type='hidden' name='varIdPersonaSolicitante' id="varIdPersonaSolicitante" value='' />
+	<input type='hidden' name='varIdPersonaAsegurada' id="varIdPersonaAsegurada" value='' />
+	<input type='hidden' name='varIdPersonaContratante' id="varIdPersonaContratante" value='' />
+	<input type='hidden' name='varEsSocio' id="varEsSocio" value='' />
+	<input type='hidden' name='varIdSolicitud' id="varIdSolicitud" value='' />
+	<input type='hidden' name='varIdTipoPrograma' id="varIdTipoPrograma" value='' />
+	<fieldset>
+		<legend></legend>
+		<div class="row">
+			<span class="label label-success pull-right nuevaSolicitud">Solicitud Nueva</span>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Número de Solicitud</label> 			<!-- Text input Número de solicitud -->
+					<div class="controls">
+						{{ formulario_solicitud.FolioSolicitud }} 
+					</div> 															<!-- Fin Número de solicitud -->
+				</div>			
+			</div>
+			<div class="span5">
+				<div class="control-group">			
+					<label class="control-label">Fecha</label>						<!-- Text input Fecha de solicitud -->
+					<div class="controls">
+						{{ formulario_solicitud.FechaSolicitud }}
+					</div> 															<!-- Fin Fecha Solicitud -->
+				</div>			
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">Solicitud</label>				<!-- Combo para elegir tipo de declaración solicitud -->
+					<div class="controls">
+						{{ formulario_solicitud.DeclaracionSolicitud }}
+					</div>														<!-- Fin Tipo de Solicitud -->
+				</div>
+			</div>		
+		</div>
+		
+		<div class="alert alert-danger">
+			<h4>Datos del Solicitante</h4>
+		</div>
+		<!-- begin:Datos del Solicitante -->
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       <!-- Text input Nombre --> 
+					<label class="control-label">Solicitante</label>
+					<div class="controls">
+						<input class="input-large" type="text" id="txtSolicitanteSolicitud" placeholder="Solicitante" disabled>
+						<a href="#mdlBuscarPersonaSolicitanteContratanteBeneficiario" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaSolicitante"><i class="icon-search icon-white"></i> </a>
+					</div>
+				</div>												  <!-- Fin Text input Nombre --> 
+			</div>
+			
+			<div id="mdlBuscarPersonaSolicitanteContratanteBeneficiario" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca a las personas -->
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				   <h3 id="myModalLabel">Buscar Persona</h3>
+				</div>
+			    <div class="modal-body">																								
+					<input type="text" class="input-xlarge search-query span4" id="txtBuscarPersonaSolicitud">
+					<!-- informacion oculta para saber que boton se presiono -->
+					<input type='hidden' id='txtSolicitanteOContratanteOBeneficiario' value="" />
+					<button type="submit" class="btn" id="btnBuscarPersonaSolicitud"><i class="icon-search"></i> Buscar</button>
+				 					
+					<p></p>
+					<table class="table tblBusquedaPersonaSolicitud">
+						<thead>
+							<tr>		
+								<th>Id Persona</th>	
+								<th>Nombre</th>
+								<th>Rfc</th>	
+								<th style="display: none;">Direccion</th>
+								<th style="display: none;">Telefono</th>
+								<th style="display: none;">CP</th>
+								<th style="display: none;">Municipio</th>
+								<th style="display: none;">Estado</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>    																		
+				</div> 																    
+				<div class="modal-footer">
+					<button id ="btnCerrarMdlPersonaSolicitud" class="btn" data-dismiss="modal" >Cerrar</button>
+				</div>												
+			</div>		
+			
+			<div class="span5">
+				<div class="control-group">						      <!-- Text input Rfc --> 
+					<label class="control-label">RFC</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteRfc" placeholder="Rfc" class="input-medium" disabled>
+					</div>
+				</div>												  <!-- Fin Text input Rfc --> 	
+			</div>		
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Domicilio --> 
+					<label class="control-label">Domicilio</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteDomicilio" placeholder="Domicilio" class="input-xlarge" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Domicilio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input CP --> 
+					<label class="control-label">C.P.</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteCP" placeholder="CP" class="input-small" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input CP --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Municipio --> 
+					<label class="control-label">Municipio</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteMunicipio" placeholder="Municipio" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Municipio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Estado --> 
+					<label class="control-label">Estado</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteEstado" placeholder="Estado" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Estado --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						      				<!-- Text input Telefono --> 
+					<label class="control-label">Teléfono</label>
+					<div class="controls">
+						<input type="text" id="txtSolicitanteTelefono" placeholder="Teléfono" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Telefono --> 	
+			</div>	
+		</div>
+		<!-- end:Datos del Solicitante -->
+		<div class="alert alert-danger">
+			<h4>Datos del Asegurado</h4>
+		</div>
+		<!-- begin:Datos del Asegurado -->
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       <!-- Text input Nombre --> 
+					<label class="control-label">Asegurado</label>
+					<div class="controls">
+						<input class="input-large" type="text" id="txtAseguradoSolicitud" placeholder="Asegurado" disabled>
+						<a href="#mdlBuscarPersonaSolicitanteContratanteBeneficiario" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaAsegurada"><i class="icon-search icon-white"></i></a>
+					</div>
+				</div>												  <!-- Fin Text input Nombre --> 			
+			</div>
+			<div class="span5">
+				<div class="control-group">						      <!-- Text input Rfc --> 
+					<label class="control-label">RFC</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoRfc" placeholder="Rfc" class="input-medium" disabled>
+					</div>
+				</div>												  <!-- Fin Text input Rfc --> 				
+			</div>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Domicilio --> 
+					<label class="control-label">Domicilio</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoDomicilio" placeholder="Domicilio" class="input-xlarge" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Domicilio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input CP --> 
+					<label class="control-label">C.P.</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoCP" placeholder="CP" class="input-small" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input CP --> 
+			</div>			
+		</div>		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Municipio --> 
+					<label class="control-label">Municipio</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoMunicipio" placeholder="Municipio" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Municipio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Estado --> 
+					<label class="control-label">Estado</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoEstado" placeholder="Estado" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Estado --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						      				<!-- Text input Telefono --> 
+					<label class="control-label">Teléfono</label>
+					<div class="controls">
+						<input type="text" id="txtAseguradoTelefono" placeholder="Teléfono" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Telefono --> 	
+			</div>	
+		</div>
+		<!-- end:Datos del Asegurado -->
+		<div class="alert alert-danger">
+			<h4>Datos del Contratante</h4>
+		</div>
+		<!-- begin:Datos del contratante -->
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       <!-- Text input Nombre --> 
+					<label class="control-label">Contratante</label>
+					<div class="controls">
+						<input class="input-large" type="text" id="txtContratanteSolicitud" placeholder="Contratante" disabled>
+						<a href="#mdlBuscarPersonaSolicitanteContratanteBeneficiario" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaContratante"><i class="icon-search icon-white"></i></a>
+					</div>
+				</div>												  <!-- Fin Text input Nombre --> 			
+			</div>
+			<div class="span5">
+				<div class="control-group">						      <!-- Text input Rfc --> 
+					<label class="control-label">RFC</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteRfc" placeholder="Rfc" class="input-medium" disabled>
+					</div>
+				</div>												  <!-- Fin Text input Rfc --> 				
+			</div>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Domicilio --> 
+					<label class="control-label">Domicilio</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteDomicilio" placeholder="Domicilio" class="input-xlarge" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Domicilio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input CP --> 
+					<label class="control-label">C.P.</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteCP" placeholder="CP" class="input-small" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input CP --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Municipio --> 
+					<label class="control-label">Municipio</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteMunicipio" placeholder="Municipio" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Municipio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Estado --> 
+					<label class="control-label">Estado</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteEstado" placeholder="Estado" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Estado --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						      				<!-- Text input Telefono --> 
+					<label class="control-label">Teléfono</label>
+					<div class="controls">
+						<input type="text" id="txtContratanteTelefono" placeholder="Teléfono" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Telefono --> 	
+			</div>	
+		</div>
+		<!-- end: Datos del contratante -->
+		<a href="#mdlBuscarPersonaSolicitanteContratanteBeneficiario" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaBeneficiario"><i class="icon-user icon-white"></i> Agregar Beneficiario</a>
+		<p></p>
+		<table class="table tblPersonaBeneficiarioSolicitud table-striped">														<!-- Tabla que muestra los beneficiarios -->
+			<thead>
+				<th style="display: none;">IdPersonaBeneficiario</th>
+				<th style="display: none;">IdBeneficiario</th>
+				<th>Nombre Beneficiario</th>
+				<th>Domicilio</th>
+				<th>Rfc</th>
+				<th></th>
+			</thead>
+			<tbody></tbody>
+		</table>
+			
+		<div class="alert alert-danger">
+			<h4>Tipo de Seguro</h4>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Tipo Seguro --> 
+					<label class="control-label">Tipo</label>
+					<div class="controls">
+						<input type="text" id="txtTipoSeguroSolicitud" placeholder="Tipo Seguro" class="input-medium" disabled>
+						<a href="#mdlBuscarProgramaSolicitud" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarProgramaSolicitud"><i class="icon-search icon-white"></i></a>
+					</div>
+				</div>												  				<!-- Fin Text input Tipo seguro --> 
+			</div>
+
+			<div id="mdlBuscarProgramaSolicitud" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca los programas -->
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				   <h3 id="myModalLabel">Buscar Programa</h3>
+				</div>
+			    <div class="modal-body">																								
+					<input type="text" class="input-xlarge search-query span4" id="txtBuscarProgramaSolicitud">
+					<button type="submit" class="btn" id="btnBuscarProgramaSolicitudModal"><i class="icon-search"></i> Buscar</button>
+				 					
+					<p></p>
+					<table class="table tblBusquedaProgramaSolicitud">
+						<thead>
+							<tr>		
+								<th style="display: none;">Id Tipo Seguro</th>	
+								<th>Tipo Seguro</th>
+								<th>Sub Tipo Seguro</th>	
+								<th>Moneda</th>
+								<th>Contrato</th>
+								<th>Folio</th>
+								<th style="display: none;">Ejercicio</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>    																		
+				</div>									    
+				<div class="modal-footer">
+					<button id ="btnCerrarMdlProgramaSolicitud" class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				</div>												
+			</div>			
+			
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Estado --> 
+					<label class="control-label">Sub Tipo</label>
+					<div class="controls">
+						<input type="text" id="txtSubTipoSeguroSolicitud" placeholder="Sub Tipo Seguro" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Estado --> 
+			</div>	
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Moneda --> 
+					<label class="control-label">Moneda</label>
+					<div class="controls">
+						<input type="text" id="txtMonedaSolicitud" placeholder="Moneda" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Moneda --> 
+			</div>
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Ejercicio --> 
+					<label class="control-label">Ejercicio</label>
+					<div class="controls">
+						<input type="text" id="txtEjercicioSolicitud" placeholder="Ejercicio" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Ejercicio --> 
+			</div>			
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Contrato Reaseguro --> 
+					<label class="control-label">Contrato Reaseguro</label>
+					<div class="controls">
+						<input type="text" id="txtContratoReaseguro" placeholder="Contrato Reaseguro" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Contrato Reaseguro --> 
+			</div>
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Folio --> 
+					<label class="control-label">Folio</label>
+					<div class="controls">
+						<input type="text" id="txtFolioPrograma" name="txtFolioPrograma" placeholder="Folio" class="input-medium" readonly>
+					</div>
+				</div>												  				<!-- Fin Text input Folio --> 
+			</div>						
+		</div>
+		
+		<h5>Coberturas:</h5>
+		
+		<div class="row coberturasSolicitud">
+		</div>
+		
+		<p></p>
+		
+		<div class="row">
+		
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Unidades --> 
+					<label class="control-label">Unidades/Fletes en Transporte/Toneladas</label>
+					<div class="controls">
+						{{ formulario_solicitud.Unidades }}
+					</div>
+				</div>												  				<!-- Fin Text input Unidades --> 
+			</div>
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Valor por Unidad --> 
+					<label class="control-label">Valor por Unidad/Tonelada</label>
+					<div class="controls">
+						{{ formulario_solicitud.ValorUnidad }}
+					</div>
+				</div>												  				<!-- Fin Text input Valor por Unidad --> 
+			</div>		
+		</div>	
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Suma asegurada solicitada --> 
+					<label class="control-label">Suma Asegurada Solicitada</label>
+					<div class="controls">
+						<input type="text" id="txtSumaAseguradaSolicitada" placeholder="Suma Asegurada Solicitada" class="input-medium" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Suma asegurada solicitada --> 
+			</div>		
+		</div>
+		
+		<div class="alert alert-danger">
+			<h4>Observaciones</h4>
+		</div>
+		
+		<div class="row">
+			<div class="control-group">
+			  <label class="control-label" for="textarea"></label>
+			  <div class="controls">                     
+				{{ formulario_solicitud.Observaciones }}
+			  </div>
+			</div>		
+		</div>						
+	</fieldset>
+	
+	<hr />
+	
+	<div class="row">	
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnVistaPrevia" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Vista Previa</a>
+    			<button id="btnGuardarSolicitud" name="btnGuardarSolicitud" class="btn btn-success">Guardar</button>
+	    		<a role="button" class="sort btn btn-warning" id="btnListadoSolicitudes" href="/Solicitudes/"><i class="icon-list icon-white"></i> Listado Solicitudes</a>
+	    		<button id="btnCancelarSolicitud" name="btnCancelarSolicitud" class="btn btn-danger">Cancelar</button>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/Solicitud.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

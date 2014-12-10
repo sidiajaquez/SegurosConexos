@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0; 
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>Recibo Pago de Prima en Deposito</span><br/>
+	</div>
+	
+	<div class = "linea">
+		 <span><hr size="2"></span>
+	</div>
+	
+	<div class = "datosGenerales">
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>FOLIO RECIBO</th>
+				<th>FECHA DE RECIBO</th>
+				<th>CONSTANCIA</th>
+				<th>VIGENCIA</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:center">{{ informacionPago.FolioRecibo }}</td>
+				<td style="text-align:center">{{ informacionPago.FechaPago|date:"d/m/Y" }}</td>
+				<td style="text-align:center">{{ informacionConstancia.FolioConstancia }}</td>
+				<td style="text-align:center">{{ informacionConstancia.VigenciaInicio|date:"d/m/Y" }} al {{ informacionConstancia.VigenciaFin|date:"d/m/Y" }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		</p>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2" style="text-align:center">ASEGURADO</th>
+						<th style="text-align:center">R.F.C.</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td colspan="2">{{ asegurado.0.NombrePersona }}</td>
+						<td>{{ asegurado.0.RfcPersona }}</td>
+					</tr>
+				</tbody>
+				<thead>
+					<tr>
+						<th>DOMICILIO</th>
+						<th>TELÉFONO</th>
+						<th>C.P.</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ asegurado.0.DireccionPersona }}</td>
+						<td>{{ asegurado.0.TelefonoPersona }}</td>
+						<td>{{ asegurado.0.CPPersona }}</td>
+					</tr>
+				</tbody>
+				<thead>
+					<tr>
+						<th>COLONIA</th>
+						<th>MUNICIPIO</th>
+						<th>ESTADO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ asegurado.0.AsentamientoPersona|upper }}</td>
+						<td>{{ asegurado.0.MunicipioPersona|upper }}</td>				
+						<td>{{ asegurado.0.EstadoPersona|upper }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+	</div>
+	<div>
+		<p>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2"></th>
+						<th>MONEDA</th>
+						<th>{{ informacionMoneda.Nombre }}</th>
+						<th>TOTAL A PAGAR</th>
+						<th>$ {{ montoAPagar }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</p>
+	</div>
+</body>
+</html>

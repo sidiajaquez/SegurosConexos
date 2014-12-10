@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar el listado de declaración de transporte. {% endcomment %}
+
+{% block titulo %} Transporte {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/ListaDeclaracionTransporte.css">    
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Declaración de Transporte</strong>
+<form class="form-horizontal" id="formulario_listado_transporte" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<!-- Campos para ingresar la información general de la declaración de transporte. -->	
+	<fieldset>
+		<legend></legend>
+	 	<a id="btnTransporteNuevo" name="btnTransporteNuevo" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Declaración Nueva</a>  
+		<p></p>          		
+        <div id="list_transporte">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarEndoso" placeholder="Buscar Endoso" /> <b>Ordenar por:</b>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-user icon-white"></i> Folio Constancia</a>  
+            <a role="button" class="sort btn btn-warning" data-sort="Rfc"><i class="icon-list icon-white"></i> Rfc</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>        
+	</fieldset>	<!-- Se termina la generación de la declaración de transporte. -->
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %}
+ 	<script src="/static/js/jquery.validate.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+	<script src="/static/js/ListadoDeclaracionTransporte.js"></script>
+{% endblock scriptjs %} 

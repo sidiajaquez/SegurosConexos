@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para llevar el listado de programas{% endcomment %}
+
+{% block titulo %} Programas {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ListaProgramas.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Programas</strong>
+<form class="form-horizontal" id="formulario_listado_programas" accept-charset="utf-8">
+	<!-- Campos para ingresar la información general de los programas. -->	
+	<fieldset>
+		<legend></legend>
+		<a href="/Programa/" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Programa Nuevo</a>
+		<p></p>
+        <div id="list_programas">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarPrograma" placeholder="Buscar Programa" /> <b>Ordenar por:</b> 
+            <a role="button" class="sort btn btn-warning" data-sort="Folio"><i class="icon-user icon-white"></i> Folio Programa</a>
+            <a role="button" class="sort btn btn-warning" data-sort="NumeroContrato"><i class="icon-list icon-white"></i> Número de Contrato</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+        
+	</fieldset>	<!-- Se termina la generación de los campos para la información basica de la persona. -->
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ListadoProgramas.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %} 

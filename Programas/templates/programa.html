@@ -1,0 +1,202 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar programas de aseguramiento {% endcomment %}
+
+{% block titulo %} Programa {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/Programa.css">
+	<link rel="stylesheet" href="/static/css/iCheck/skins/square/aero.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Programas</strong>
+<form class="form-horizontal " id="formulario_programas_aseguramiento" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para los programas de aseguramiento. -->
+{% csrf_token %}
+	<input type='hidden' name='varIdPrograma' id="varIdPrograma" value='{{InformacionPrograma}}' />
+	<input type='hidden' name='varUtilizado' id="varUtilizado" value='{{InformacionPrograma.Utilizado}}' />
+	<input type='hidden' name='varIdHabilitador' id="varIdHabilitador" value='' />  
+	<fieldset>
+	<div class="tabbable"> 															 			<!-- Generación de tabs -->
+		<ul class="nav nav-tabs">
+	    	<li class="active"><a href="#rA" data-toggle="tab">Datos Generales</a></li>
+	       	<li><a href="#rB" data-toggle="tab">Coberturas</a></li>
+	       	<li><a href="#rC" data-toggle="tab">Área de Influencia</a></li>
+	     </ul>
+
+		 <div class="tab-content">													
+		 	<div class="tab-pane active" id="rA">
+		 		<div class="row">
+					<div class="span6">
+						<label class="control-label">Contrato</label>
+						<div class="controls">
+							<select class="input-large" id="IdContratoFondo" name="IdContratoFondo">
+								{% if ContratoPrograma %}
+									<option value="">---------</option>
+									{% for contrato in contratos %}
+										{% if ContratoPrograma.IdContratoFondo == contrato.IdContratoFondo %}
+											<option value='{{ contrato.IdContratoFondo }}' selected="selected">{{contrato.NumeroContrato}}</option>
+										{% else %}								
+											<option value='{{ contrato.IdContratoFondo }}'>{{contrato.NumeroContrato}}</option>
+										{% endif %}
+									{% endfor %}									
+								{% else %}
+									<option value="" selected="selected">---------</option>
+									{% for contrato in contratos %}								
+										<option value='{{ contrato.IdContratoFondo }}'>{{contrato.NumeroContrato}}</option>
+									{% endfor %}
+								{% endif %}
+							</select>
+						</div>
+					</div>
+
+
+
+					<div class="span5">
+						<div class="control-group">									
+							<label class="control-label">Habilitador</label>				<!-- Text input observaciones -->
+							<div class="controls">
+								{{ formulario_programas.PersonaHabilitador }}
+								<a href="#mdlBuscarHabilitadorPersonaMoral" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaSolicitante"><i class="icon-search icon-white"></i> </a>
+							</div> 															<!-- Fin observaciones -->
+						</div>					
+					</div>					
+				</div>	
+				
+				<div id="mdlBuscarHabilitadorPersonaMoral" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca a las personas -->
+					<div class="modal-header">
+					   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					   <h3 id="myModalLabel">Buscar Persona</h3>
+					</div>
+					
+				    <div class="modal-body">																								
+						<input type="text" class="input-xlarge search-query span4" id="txtBuscarHabilitador">
+						<!-- informacion oculta para saber que boton se presiono -->
+						<!-- <input type='hidden' id='txt txtSolicitanteOContratanteOBeneficiario' value="" />  -->
+						<button type="submit" class="btn" id="btnBuscarHabilitador"><i class="icon-search"></i> Buscar</button>
+					 					
+						<p></p>
+						<table class="table tblBusquedaHabilitador">
+							<thead>
+								<tr>		
+									<th>Id Persona</th>	
+									<th>Nombre</th>
+									<th>Rfc</th>	
+									<th style="display: none;">Direccion</th>
+									<th style="display: none;">Telefono</th>
+									<th style="display: none;">CP</th>
+									<th style="display: none;">Municipio</th>
+									<th style="display: none;">Estado</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>    																		
+					</div> 																    
+					<div class="modal-footer">
+						<button id ="btnCerrarMdlHabilitador" class="btn" data-dismiss="modal" >Cerrar</button>
+					</div>												
+				</div>		
+						 											
+	 			<div class="row">
+					<div class="span6">
+						<div class="control-group">									
+							<label class="control-label">Tipo de Seguro</label>				<!-- Text input tipo de seguro -->
+							<div class="controls">
+								{{ formulario_programas.IdTipoSeguro }}
+							</div> 															<!-- Fin tipo de seguro -->
+						</div>
+					</div>
+			
+					<div class="span5">
+						<div class="control-group">			
+							<label class="control-label">Sub Tipo de Seguro</label> 			<!-- Text input sub tipo de seguro -->
+							<div class="controls">
+								{% if ContratoPrograma %}
+									<select class="input-large" id="IdSubTipoSeguro" name="IdSubTipoSeguro">
+									{% for SubTipoSeguro in SubTiposSeguro %}
+										{% if ContratoPrograma.IdSubTipoSeguro == SubTipoSeguro.IdSubTipoSeguro %}
+											<option value='{{ SubTipoSeguro.IdSubTipoSeguro }}' selected="selected">{{SubTipoSeguro.DescripcionSubTipoSeguro}}</option>
+										{% else %}								
+											<option value='{{ SubTipoSeguro.IdSubTipoSeguro }}'>{{SubTipoSeguro.DescripcionSubTipoSeguro}}</option>
+										{% endif %}
+									{% endfor %}
+									</select>			
+								{% else %}
+									{{ formulario_programas.IdSubTipoSeguro }}
+								{% endif %}
+							</div> 															<!-- Fin sub tipo de seguro -->
+						</div>
+					</div>
+				</div>
+							
+				<div class="row">
+					<div class="span6">
+						<div class="control-group">									
+							<label class="control-label">Moneda</label>				<!-- Text input tipo de moneda -->
+							<div class="controls">
+								{% if TipoMonedas %}
+									<select class="input-large" id="IdTipoMoneda" name="IdTipoMoneda">
+									{% for moneda in TipoMonedas %}								
+										<option value='{{ moneda.IdMoneda }}'>{{moneda.DescripcionMoneda}}</option>
+									{% endfor %}
+									</select>
+								{% else %}
+									{{ formulario_programas.IdTipoMoneda }}
+								{% endif %}
+							</div> 															<!-- Fin tipo de moneda -->
+						</div>
+					</div>
+					
+					<div class="span5">
+						<div class="control-group">									
+							<label class="control-label">Ejercicio</label>				<!-- Text input ejercicio del programa -->
+							<div class="controls">
+								<input type="number" id="Ejercicio" name="Ejercicio" min="0" max="999999">
+							</div> 															<!-- Fin de fecha de ejercicio del programa -->
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span11">
+						<div class="control-group">									
+							<label class="control-label">Observaciones</label>				<!-- Text input observaciones -->
+							<div class="controls">
+								{{ formulario_programas.Observaciones }}
+							</div> 															<!-- Fin observaciones -->
+						</div>
+					</div>					
+				</div>			 			
+			</div>	
+			<div class="tab-pane" id="rB">        <!-- Tab que contiene los checkbox de la cobertura. -->		     											
+
+			</div>	
+			<div class="tab-pane" id="rC">        <!-- Tab que contiene los checkbox de las areas de influencia del fondo de aseguramiento. -->		     											
+	 					
+			</div>		
+		</div>	
+	</div>						
+	</fieldset>
+	
+	<div class="row">	
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnVistaPrevia" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Vista Previa</a>
+	  			{% if not InformacionPrograma.Utilizado %}
+	    			<a id="btnGuardarPrograma" role="button" name="btnGuardarPrograma" class="btn btn-success">Guardar</a>
+	    		{% endif %}
+	    		<a role="button" class="sort btn btn-warning" id="btnListadoProgramas"><i class="icon-list icon-white"></i> Listado Programas</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/lib/jquery.icheck.min.js"></script> 
+	<script src="/static/js/Programa.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

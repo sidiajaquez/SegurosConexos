@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar el listado de cotizadores. {% endcomment %}
+
+{% block titulo %} Cotizadores {% endblock titulo %}
+
+ {% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ListaCotizadores.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Cotizador</strong>
+<form class="form-horizontal" id="formulario_listado_cotizador" accept-charset="utf-8">
+	<!-- Campos para ingresar la información general del cotizador. -->	
+	<fieldset>
+		<legend></legend>
+		<a href="/Cotizador/" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Cotizador Nuevo</a>
+		<p></p>
+        <div id="list_cotizadores">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarCotizdor" placeholder="Buscar Cotizador" /> <b>Ordenar por:</b> 
+            <a role="button" class="sort btn btn-warning" data-sort="FolioCotizador"><i class="icon-user icon-white"></i> Folio Cotizador</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioPrograma"><i class="icon-list icon-white"></i> Folio Programa</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+        
+	</fieldset>	<!-- Se termina la generación de los campos para la información basica de la persona. -->
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ListadoCotizaciones.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script> 	
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %} 

@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de endosos para cobro {% endcomment %}
+
+{% block titulo %} Lista de endosos para cobro (Declaración y Transporte) {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ListaCobroEndosos.css">  
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Cobro de Endosos (Declaración y Transporte)</strong>
+	<form class="form-horizontal " id="formulario_listado_cobro_endosos" method="post" action="" accept-charset="utf-8">
+		<p></p>
+		<legend></legend>
+		<div id="lovely-things-list">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarEndoso" placeholder="Buscar Endoso" />
+            <!-- <a role="button" class="sort btn btn-warning" data-sort="PersonaConstancia"><i class="icon-user icon-white"></i> Ordenar por Nombre</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-list icon-white"></i> Ordenar por Folio</a>
+            <a role="button" class="sort btn btn-warning" data-sort="VigenciaConstancia"><i class="icon-time icon-white"></i> Ordenar por Fecha</a> -->
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListaCobroEndosos.js"></script>  
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>	
+{% endblock scriptjs %}

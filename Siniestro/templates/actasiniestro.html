@@ -1,0 +1,421 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario que nos permite completar la información de la acta de siniestro.  {% endcomment %}
+
+{% block titulo %} Acta de Siniestro {% endblock titulo %}
+
+ {% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ActaSiniestro.css">
+{% endblock scriptcss %}
+ 
+{% block contenido %}
+<strong>Acta de Siniestro</strong>
+<form class="form-horizontal" id="formulario_acta_siniestro" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para el acta de siniestro. -->
+{% csrf_token %}
+	<input type="hidden" name="varIdActaSiniestro" id="varIdActaSiniestro" value="{{ idActaSiniestro }}" />
+	<input type="hidden" name="varIdInspeccion" id="varIdInspeccion" value="{{ idInspeccion }}" />
+	<input type="hidden" name="varIdBienAfectado" id="varIdBienAfectado" value="" />
+	<input type="hidden" name="varIdBienActaSiniestro" id="varIdBienActaSiniestro" value="" />
+	<input type="hidden" name="varSumaAseguradaBien" id="varSumaAseguradaBien" value="" />
+		
+	<fieldset>
+	
+	<div class="alert alert-block">
+		<h4>Datos de la Constancia</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Moneda</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtMoneda" id="txtMoneda" value="{{ tipoMoneda }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Asegurado</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtNombre" id="txtNombre" value="{{ nombrePersona }}" readonly>
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Técnico</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtTecnico" id="txtTecnico" value="{{ nombreTecnico }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Causa de Siniestro</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+		  				{% if avisoSiniestro.TipoAviso == 'SINIESTRO' %}
+			    			<input type="text" name="txtCausaSiniestro" id="txtCausaSiniestro" value="{{ avisoSiniestro.CausaSiniestro }}" readonly>
+			    		{% else %}
+			    			<input type="text" name="txtCausaAgravante" id="txtCausaAgravante" value="{{ avisoSiniestro.CausaAgravante }}" readonly>
+			    		{% endif %}
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Fecha de Inspección</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtFechaInspeccion" id="txtFechaInspeccion" value="{{ fechaInspeccion }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtConstancia" id="txtConstancia" value="{{ numeroConstancia }}" readonly>
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="alert alert-block">
+		<h4>Acta de Siniestro</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Folio del Acta</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtFolioActa" id="txtFolioActa" value="{{ folioActaSiniestro }}" readonly>
+			    	</div>
+		  		</div>
+			</div>
+		</div>
+		
+		<div class="span5">
+			<label class="control-label">Tipo del Aviso</label>
+		    <div class="controls">
+				<select class="input-large" id="txtTipoAviso" name="txtTipoAviso">
+				{% if tipoAviso == 'AGRAVANTE' %}
+					<option value="" selected="selected">---------</option>
+					<option value="AGRAVANTE" selected>AGRAVANTE</option>
+					<option value="SINIESTRO">SINIESTRO</option>
+				{% else %}
+					{% if tipoAviso == 'SINIESTRO' %}
+						<option value="">---------</option>
+						<option value="AGRAVANTE">AGRAVANTE</option>
+						<option value="SINIESTRO" selected>SINIESTRO</option>
+					{% else %}
+						<option value="" selected="selected">---------</option>
+						<option value="AGRAVANTE">AGRAVANTE</option>
+						<option value="SINIESTRO">SINIESTRO</option>
+					{% endif %}
+				{% endif %}
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">				
+			<div class="control-group">
+		   		<label class="control-label">Fecha de Siniestro</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+		  				<input type="text" name="dtpFechaSiniestro" id="dtpFechaSiniestro" value="{{ fechaSiniestro }}">
+			    	</div>
+		  		</div>
+			</div>	
+		</div>
+		<div class="span5">
+			<div class="control-group">	
+				<label class="control-label">Hora de Siniestro</label>
+				<div class="controls">
+					<div class="input-append bootstrap-timepicker">
+			            <input id="tpHoraSiniestro" type="text" class="input-small" value='{{ horaSiniestro }}'>
+			            <span class="add-on"><i class="icon-time"></i></span>
+			        </div>
+			    </div>
+	        </div>
+	    </div>		
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label">Monto del Daño</label>
+				<div class="controls">
+					<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtMontoDano" id="txtMontoDano" value="{{ montoDano }}" readonly>
+			    	</div>
+			    </div>
+	        </div>
+	    </div>
+	</div>	
+	
+	<div id='tabla'>
+		<table class="table tbl_bienes table-striped">
+			<thead>
+				<th style="display:none;">IdBienAfectado</th>
+				<th style="display:none;">IdDescripcion</th>
+				<th>Nombre</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+				<th>No. Bienes Afectados</th>
+				<th>Estado de los Daños</th>
+				<th>Descripcion</th>
+				<th>Proporcion Indemnizable</th>
+				<th>Deducible</th>
+				<th>Participacion a Perdida</th>
+				<th>Monto Indemnizable</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th style="display:none;">Fue Perdida</th>
+			</thead>			
+			<tbody>
+				{% if bienes %}
+					{% for bien in bienes %}
+						<tr>
+							<td style="display:none;">{{ bien.IdBienAfectado }}</td>
+							<td style="display:none;">{{ bien.IdDescripcion }}</td>						
+							<td>{{ bien.Nombre }}</td>
+							<td>{{ bien.Cantidad }}</td>
+							<td>{{ bien.ValorUnitario }}</td>
+							<td>{{ bien.SumaAsegurada }}</td>
+							<td>{{ bien.NoBienesAfectados }}</td>
+							<td>{{ bien.EstadoDanos }}</td>
+							<td>{{ bien.Descripcion }}</td>
+							<td>{{ bien.proporcion }}</td>
+							<td>{{ avisoSiniestro.Deducible }}</td>
+							<td>{{ avisoSiniestro.ParticipacionAPerdida }}</td>
+							<td>{{ bien.montoBien }}</td>
+							<td>
+								<select class="input-default" name="cmdOpcionBien" class="cmdOpcionBien" onclick="cambiarCombo($(this))">
+									{% if bien.TipoDescripcion == '--------' %}
+										<option selected>--------</option>
+									{% else %}
+										<option>--------</option>
+									{% endif %}
+									{% if bien.TipoDescripcion == 'PROCEDENCIA' %}
+										<option selected>PROCEDENCIA</option>
+									{% else %}
+										<option>PROCEDENCIA</option>
+									{% endif %}
+									{% if bien.TipoDescripcion == 'NEGATIVA' %}
+										<option selected>NEGATIVA</option>
+									{% else %}
+										<option>NEGATIVA</option>
+									{% endif %}
+								</select>
+							</td>
+							<td><a data-toggle="modal" title='Procedencia' class='btnProcedenciaBien' onclick='abrirModalProcedencia($(this))'><i class='icon-th-list'></i></a></td>
+							<td style="display:none;">{{ bien.IdBienActaSiniestro }}</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="modal_procedencia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca los avisos de sineistros terminados. -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Procendecia</h3>
+		</div>
+	    <div class="modal-body">																								
+			<div class="row">
+				<div class="span6">
+					<div class="control-group">
+				   		<label class="control-label">Riesgo Afectado</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<input type="text" name="cmdRiesgoAfectado" id="cmdRiesgoAfectado" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+				  		</div>
+					</div>
+				</div>
+				
+				<div class="span5">
+					<div class="control-group">
+						<label class="control-label">Unidades Afectadas</label>
+						<div class="controls">
+							<div clascriptjsss="input-prepend">
+					    		<input type="text" name="txtUnidadesAfectadas" id="txtUnidadesAfectadas" value="{{ inspeccion.0.4 }}">
+					    	</div>
+					    </div>
+			        </div>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<div class="span6">								
+					<div class="control-group">
+						<label class="control-label">¿Fue Perdida Total?</label><br>
+						<div class="controls">
+							<label class="radio">					
+								<input type="radio" name="optionsRadios" id="optionsRadios" value="1" checked readonly onclick="cambiarOptions($(this))">
+						  		Si
+							</label>
+							<label class="radio">					
+								<input type="radio" name="optionsRadios" id="optionsRadios" value="0" readonly onclick="cambiarOptions($(this))">
+							  	No
+							</label>
+					    </div>
+			        </div>
+				</div>
+			</div>	
+			
+			<div class="row">
+				<div class="span6">						
+					<div class="control-group">
+						<label class="control-label">Suma Asegurada</label>
+						<div class="controls">
+							<div clascriptjsss="input-prepend">
+					    		<input type="text" name="txtSumaAseguradaModal" id="txtSumaAseguradaModal" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+					    </div>
+			        </div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span6">						
+					<div class="control-group">
+						<label class="control-label">Proporcion Indemnizable</label>
+						<div class="controls">
+							<div clascriptjsss="input-prepend">
+					    		<input type="text" name="txtProporcion" id="txtProporcion" value="{{ inspeccion.0.4 }}" readonly onkeyup="recalcularMontos()">
+					    	</div>
+					    </div>
+			        </div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span6">								
+					<div class="control-group">
+				   		<label class="control-label">Salvamento</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<input type="text" name="txtSolvento" id="txtSolvento" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+				  		</div>
+					</div>		
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span6">								
+					<div class="control-group">
+				   		<label class="control-label">Deducible</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<input type="text" name="txtDeducible" id="txtDeducible" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+				  		</div>
+					</div>		
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span6">								
+					<div class="control-group">
+				   		<label class="control-label">Participacion a Perdida</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<input type="text" name="txtParticipacionAPerdida" id="txtParticipacionAPerdida" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+				  		</div>
+					</div>		
+				</div>
+			</div>	
+			
+			<div class="row">
+				<div class="span6">								
+					<div class="control-group">
+				   		<label class="control-label">Monto Indemnizable</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<input type="text" name="txtMontoIndemnizable" id="txtMontoIndemnizable" value="{{ inspeccion.0.4 }}" readonly>
+					    	</div>
+				  		</div>
+					</div>		
+				</div>
+			</div>										
+		</div> 																    
+		<div class="modal-footer">		
+			<a href="#" class="btn btn-primary" id="btnGuardarModalBienProcedencia">Guardar</a>
+			<button id="btnCerrarModalBienProcedencia" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>
+	
+	<div id="modal_negativa" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal negativa el cual nos permite ingresar la descripcion del bien. -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Negativa</h3>
+		</div>
+	    <div class="modal-body">																								
+			<div class="row">
+				<div class="span8">
+					<div class="control-group">
+				   		<label class="control-label">Descripción</label>
+				  		<div class="controls">
+				  			<div clascriptjsss="input-prepend">
+				  				<textarea type="textarea" name="txtDescripcionNegativa" id="txtDescripcionNegativa"></textarea>
+					    	</div>
+				  		</div>
+					</div>
+				</div>
+			</div>										
+		</div> 																    
+		<div class="modal-footer">		
+			<a href="#" class="btn btn-primary" id="btnGuardarModalBienNegativa">Guardar</a>
+			<button id="btnCerrarModalBienNegativa" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>
+	
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnGuardar" name="btnGuardar" class="btn btn-success" >Guardar</a>
+		    	<a role="button" class="sort btn btn-warning" id="btnListadoAvisos"><i class="icon-list icon-white"></i> Listado de Avisos</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	</fieldset>
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/ActaSiniestro.js"></script> 
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %}

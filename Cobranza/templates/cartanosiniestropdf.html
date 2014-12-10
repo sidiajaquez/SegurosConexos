@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style type="text/css">
+	@page {
+	  margin: 1cm 2.5cm 2.5cm 2.5cm;
+	}
+	body{
+		font-size: 12px;
+	}
+	.derecha{
+		text-align: right;
+	}
+	.izquierda{
+		text-align: left;
+	}
+	.justificado{
+		text-align: justify;
+	}
+	</style>
+</head>
+<body>
+	<center><h1>{{DatosFondo.0.NombrePersona}}</h1></center>
+	<hr />
+	<br />
+	<img src="fondo.jpg" height="50" align = "right" />
+	
+	<div class="izquierda">
+		{{DatosFondo.0.MunicipioPersona}}, {{DatosFondo.0.EstadoPersona}} , a {{FechaEndoso|date:"j"}} de {{FechaEndoso|date:"F"}} de {{FechaEndoso|date:"Y"}}
+	</div>
+	<br />
+	
+	<div class="derecha">
+		Ref. Folio Constancia: {{InformacionConstancia.FolioConstancia}}
+	</div>
+	<br />
+	
+	<div class="izquierda">
+		<b>{{DatosFondo.0.NombrePersona}}</b>
+	</div>
+	<br />
+	
+	<div class="derecha">
+		<b>Asunto: Carta de No Siniestralidad - Rehabilitación</b>
+	</div>
+	<br />
+	
+	<div class="justificado">
+	Por medio de la presente solicito se acepte el pago vencido de mi constancia ya que de la fecha de cancelación a la fecha en que se autorice la
+	rehabilitación no existe siniestro alguno en los bienes solicitados para su aseguramiento.
+	<br /><br />
+	
+	Estoy conforme en que el {{DatosFondo.0.NombrePersona}} no cubrirá ningún daño que hubiese ocurrido en el lapso de tiempo mencionado.
+	</div>
+	<br />
+	
+	Atentamente
+	<br /><br />
+	<p>_____________________________</p>
+	<p>Nombre Completo y Firma</p>
+	<p>Solicitante o Representante</p>
+	
+</body>
+</html>

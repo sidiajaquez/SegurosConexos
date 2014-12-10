@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+
+{% comment %} Dictamen del Siniestro {% endcomment %}
+
+{% block titulo %} Dictamen Siniestro {% endblock titulo %}
+
+{% block scriptcss %} 
+	{%load staticfiles %}
+	<link href="{% static 'css/SettingsUser.css' %}" type="text/css" rel="stylesheet"/>
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Configuración general de la cuenta </strong>
+	<form class="form-horizontal " id="frmChangeDataUser" method="post" action="" accept-charset="utf-8">
+		{% csrf_token %}
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Nombre: </label> 		<!-- Label Nombre Usuario -->
+					<div class="controls">
+						<input class="input-xlarge" type="text" id="txtNombre" value="{{usuario.first_name|add:' '|add:usuario.last_name}}" disabled>
+					</div> 															<!-- Fin Nombre Usuario -->
+				</div>			
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Nombre de usuario: </label> 		<!-- Label usuario -->
+					<div class="controls">
+						<input class="input-xlarge" type="text" id="txtNombreUsuario" value="{{usuario.username}}" disabled>
+					</div> 															<!-- Fin usuario -->
+				</div>			
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Correo electrónico: </label> 		<!-- Label Correo Usuario -->
+					<div class="controls">
+						<input class="input-xlarge" type="text" id="txtCorreoUsuario" value="{{usuario.email}}" disabled>
+					</div> 															<!-- Fin Correo Usuario -->
+				</div>			
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Base de Datos: </label> 		<!-- Label Base de datos -->
+					<div class="controls">
+						<input class="input-xlarge" type="text" id="txtBaseDatos" value="{{database}}" disabled>
+					</div> 															<!-- Fin Base de Datos -->
+				</div>			
+			</div>
+		</div>
+
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Cambiar Contraseña: </label> 		<!-- Label Password1 -->
+					<div class="controls">
+						<input class="input-xlarge" type="password" id="txtPassword1">
+					</div> 															<!-- Fin Password1 -->
+				</div>			
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">			
+					<label class="control-label">Confirmar Contraseña: </label> 		<!-- Label Password2 -->
+					<div class="controls">
+						<input class="input-xlarge" type="password" id="txtPassword2">
+					</div> 															<!-- Fin Password2 -->
+				</div>			
+			</div>
+		</div>
+		
+		<div class="row">	
+			<!-- Generación de botones del formulario -->
+			<div class="control-group pull-right">
+		  		<div class="controls">
+	    			<button id="btnActualizar" name="btnActualizar" class="btn btn-success">Actualizar</button>
+		  		</div>
+			</div> <!-- Fin generación de botones del formulario -->
+		</div>
+	</form>
+		
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="{% static 'js/SettingsUser.js' %}"></script>
+{% endblock scriptjs %} 

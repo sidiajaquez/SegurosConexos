@@ -1,0 +1,129 @@
+{% extends 'index.html' %}
+
+{% comment %} Pago de los endosos de declaración y de transporte {% endcomment %}
+
+{% block titulo %} Pago endoso declaración y transporte {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/CobroEndosoTransporteDeclaracion.css">
+{% endblock scriptcss %}
+ 
+{% block contenido %}
+<form class="form-horizontal " id="formulario_pago_endoso" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<input type='hidden' name='varIdPagoEndoso' id="varIdPagoEndoso" value='' />
+	<input type='hidden' name='varTotalAPagar' id="varTotalAPagar" value='{{ totalAPagar }}' />
+	<input type='hidden' name='varTipoDeclaracion' id="varTipoDeclaracion" value='{{ tipoDeclaracion }}' />
+	<input type='hidden' name='varIdDeclaracion' id="varIdDeclaracion" value='{{ folioEndoso }}' />
+	<div class="row" align="center">	
+		<div class="span2">  
+			<img src="/static/img/fondo.jpg" height="50" width="90" align = "left">
+		</div>
+		<div class="control-group span8">
+			<p>PAGO DE ENDOSO (DECLARACIÓN Y/O TRANSPORTE)</p>
+			<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+			<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+			<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+		</div>
+	</div>
+	<table class="table-condensed tblFolio">
+		<thead>
+			<tr>
+				<th>FECHA DE PAGO</th>
+				<th>FOLIO CONSTANCIA</th>
+				<th>FOLIO ENDOSO</th>
+				<th>TIPO ENDOSO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:center">{{ fechaPago|date:"d/m/Y" }}</td>
+				<td style="text-align:center">{{ folioConstancia }}</td>
+				<td style="text-align:center">{{ folioEndoso }}</td>
+				<td style="text-align:center">{{ tipoEndoso }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th colspan="2" style="text-align:center">ASEGURADO</th>
+				<th style="text-align:center">R.F.C.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="2">{{ asegurado.0.NombrePersona }}</td>
+				<td>{{ asegurado.0.RfcPersona }}</td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th>DOMICILIO</th>
+				<th>TELÉFONO</th>
+				<th>C.P.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ asegurado.0.DireccionPersona|upper }}</td>
+				<td>{{ asegurado.0.TelefonoPersona }}</td>
+				<td>{{ asegurado.0.CPPersona }}</td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th>COLONIA</th>
+				<th>MUNICIPIO</th>
+				<th>ESTADO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ asegurado.0.AsentamientoPersona|upper }}</td>
+				<td>{{ asegurado.0.MunicipioPersona|upper }}</td>				
+				<td>{{ asegurado.0.EstadoPersona|upper }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-condensed tblFormaPago">
+		<thead>
+			<tr>
+				<th>FORMA DE PAGO</th>
+				<th>TOTAL</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<select class="input-large" id="FormaPago" name="FormaPago">
+						<option value="" selected="selected">---------</option>
+						<option value="CHEQUE">CHEQUE</option>
+						<option value="DEPOSITO">DEPOSITO</option>
+						<option value="EFECTIVO">EFECTIVO</option>
+						<option value="TRANSFERENCIA">TRANSFERENCIA</option>
+					</select>
+				</td>
+				<td>$ {{ totalAPagar }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnPagoEndoso" name="btnPagoEndoso" class="btn btn-primary">$ Pagar</a>
+				<a id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</a>
+				<a role="button" class="sort btn btn-warning" id="btnCobroListado" href="/ListadoCobroEndosos/"><i class="icon-list icon-white"></i> Listado Cobro de Endosos</a>
+ 			</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>	
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/CobroEndosoTransporteDeclaracion.js"></script>
+{% endblock scriptjs %}

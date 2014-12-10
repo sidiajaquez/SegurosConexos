@@ -1,0 +1,377 @@
+{% extends 'index.html' %}
+
+{% comment %} Endosos de Cancelación {% endcomment %}
+
+{% block titulo %} Endoso de Cancelación {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/EndosoCancelacion.css">		
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Endoso de Cancelación</strong>
+	<form class="form-horizontal " id="FormularioEndosoCancelacion" method="post" action="" accept-charset="utf-8">
+		{% csrf_token %}
+		<input type='hidden' name='varIdEndosoCancelacion' id="varIdEndosoCancelacion" value='' />
+		<input type='hidden' name='varIdConstancia' id="varIdConstancia" value='{{ datosConstancia.0.0 }}' />
+		<input type='hidden' name='varIdSolicitudEndoso' id="varIdSolicitudEndoso" value='{{  datosConstancia.0.1 }}' />
+		<input type='hidden' name='varMontoCancelacion' id="varMontoCancelacion" value='{{  montoAPagar }}' />
+		<input type='hidden' name='varTipoEndoso' id="varTipoEndoso" value='{{  TipoEndoso }}' />
+		<div class="alert alert-danger">
+			<h4>Datos de la Constancia</h4>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Constancia --> 
+					<label class="control-label">No. Constancia</label>
+					<div class="controls">
+						<input type="text"class="input-xlarge" value="{{ datosConstancia.0.0 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Constancia --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Solicitud de Endoso --> 
+					<label class="control-label">No. Solicitud de Endoso</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ datosConstancia.0.1 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Solicitud de Endoso --> 
+			</div>			
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Constancia --> 
+					<label class="control-label">Folio Solicitud de Endoso</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" value="{{ datosConstancia.0.2 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Constancia --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Solicitud de Endoso --> 
+					<label class="control-label">Ejercicio</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ datosConstancia.0.10 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Solicitud de Endoso --> 
+			</div>			
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Constancia --> 
+					<label class="control-label">Moneda</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" value="{{ datosConstancia.0.3 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Constancia --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Solicitud de Endoso --> 
+					<label class="control-label">Fecha Solicitud de Endoso</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ datosConstancia.0.4 }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Solicitud de Endoso --> 
+			</div>			
+		</div>
+		
+		
+		<table class="table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">Vigencia de la Constancia</th>
+				</tr>
+				<tr>
+					<td style="text-align: center;">Desde</td>
+					<td style="text-align: center;">Hasta</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{datosConstancia.0.5}}</td>
+					<td style="text-align: center;">{{datosConstancia.0.6}}</td>
+				</tr>
+			</tbody>			
+		</table>
+		<br />
+		
+		<div class="alert alert-danger">
+			<h4>Datos Generales del Socio</h4>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Asegurado --> 
+					<label class="control-label">Asegurado</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" value="{{ Asegurado.0.NombrePersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Asegurado --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input RFC --> 
+					<label class="control-label">RFC</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ Asegurado.0.RfcPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input RFC --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Domicilio --> 
+					<label class="control-label">Domicilio</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" value="{{ Asegurado.0.DireccionPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Domicilio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Telefono --> 
+					<label class="control-label">Teléfono</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ Asegurado.0.TelefonoPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Telefono --> 
+			</div>			
+		</div>		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Colonia --> 
+					<label class="control-label">Colonia</label>
+					<div class="controls">
+						<input type="text" class="input-large" value="{{ Asegurado.0.AsentamientoPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Colonia --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input CP --> 
+					<label class="control-label">C.P.</label>
+					<div class="controls">
+						<input type="text" class="input-small" value="{{ Asegurado.0.CPPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input CP --> 
+			</div>			
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Municipio --> 
+					<label class="control-label">Municipio</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ Asegurado.0.MunicipioPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Municipio --> 
+			</div>	
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Estado --> 
+					<label class="control-label">Estado</label>
+					<div class="controls">
+						<input type="text" class="input-medium" value="{{ Asegurado.0.EstadoPersona }}" disabled>
+					</div>
+				</div>												  				<!-- Fin Text input Estado --> 
+			</div>			
+		</div>
+		
+		<div class="alert alert-danger">
+			<h4>Observaciones</h4>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<textarea class="span9" disabled>{{observaciones}}</textarea>
+			</div>
+		</div>
+		
+		{% if TipoEndoso == "AUMENTO" %}
+		<!-- Button to trigger modal -->
+		<button href="#mdlDescripcionBien" role="button" class="btn btn-primary" data-toggle="modal" id="btnAgregarBienModal"><i class="icon-plus icon-white"></i> Agregar Bien</button>
+		{% endif %}
+
+		<!-- Modal Descripcion Equipo -->
+		<div id="mdlDescripcionBien" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">Descripción de Bienes</h3>
+			</div>
+			<div class="modal-body">
+				<input type='hidden' id="idBien" value='' />
+				<div class="control-group">
+					<label class="control-label">Nombre Equipo</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.NombreEquipo }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Marca</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Marca }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Modelo</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Modelo }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Serie</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Serie }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Fecha</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.FechaBien }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Documentación Evaluación</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.DocumentacionEvaluacion }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Cantidad</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Cantidad }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Valor Unitario</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.ValorUnitario }}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				<a class="btn btn-primary" id="btnAgregarBien"><i class="icon-plus icon-white"></i> Agregar Bien</a>
+				<a class="btn btn-primary" id="btnAceptarBienEditable"><i class="icon-ok icon-white"></i> Aceptar Edición</a>
+			</div>
+		</div><!-- Termino del codigo para la generación del modal Descripcion de Equipo -->
+		<p></p>
+		
+		<table class="table tblDescripcionDetalladaBien table-striped">
+			<thead>
+				<th style="display:none;">idEquipo</th>
+				<th>Nombre</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>No. Serie</th>
+				<th>Documentación</th>
+				<th>Fecha</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+				<th></th>
+			</thead>
+			<tfoot>
+				<tr>
+					<th colspan="8" style="text-align:right;">Suma Asegurada:</th>
+					<th style="text-align:right;"><input type="text" id="SumaAseguradaTotal" disabled class="input-medium" value="{{ SumaAseguradaBienes }}" style="text-align:right;"></th><th></th>
+				</tr>
+			</tfoot>			
+			<tbody>
+				{% for descripcionBien in descripcionBienes %}
+					<tr>
+						<td style="display:none;"></td>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td>{{ descripcionBien.Cantidad }}</td>
+						<td>{{ descripcionBien.ValorUnitario }}</td>
+						<td>{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		{% if TipoEndoso == 'DT' %}
+			<table class="table tblDeclaracionTransporte table-striped">
+				<thead>
+					<th>Cantidad de Fletes</th>
+					<th>Suma Asegurada Unitaria</th>
+					<th>Suma Asegurada Total</th>
+					<th>Cuota</th>
+					<th>Importe de la Cuota Devengada</th>
+				</thead>			
+				<tbody>
+					<tr>
+						<td>{{ CantidadFletes }}</td>
+						<td>{{ SumaAseguradaUnitaria }}</td>
+						<td>{{ SumaAseguradaTotal }}</td>
+						<td>{{ Cuota }}</td>
+						<td>{{ montoAPagar }}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endif %}
+		
+		{% if TipoEndoso == 'DD' %}
+			<table class="table tblDeclaracion table-striped">
+				<thead>
+					<th>Promedio Diario</th>
+					<th>Precio</th>
+					<th>Valor Existencia Periodo</th>
+					<th>Tarifa Mensual</th>
+					<th>Cuota del Periodo</th>
+					<th>Tarifa Del Periodo</th>
+				</thead>			
+				<tbody>
+					<tr>
+						<td>{{ PromedioDiario }}</td>
+						<td>{{ Precio }}</td>
+						<td>{{ Valor }}</td>
+						<td>{{ TarifaMensual }}</td>
+						<td>{{ Cuota }}</td>
+						<td>{{ montoAPagar }}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endif %}	
+		
+		{% if TipoEndoso == 'CA' %}
+			<table class="table tblDeclaracionAnual table-striped">
+				<thead>
+					<th>Dias Totales</th>
+					<th>Dias Devengados</th>
+					<th>Porcentaje a Regresar</th>
+					<th>Cuota Total</th>
+					<th>Cuota Devengada</th>
+				</thead>
+				<tbody>
+					<tr>	
+						<td>{{ DiasTotales }}</td>
+						<td>{{ DiasDevengados }}</td>
+						<td>{{ Porcentaje }}</td>
+						<td>{{ CuotaAnual }}</td>
+						<td>{{ montoAPagar }}</td>
+					</tr>
+				</tbody>
+			</table>		
+		{% endif %}
+
+		<hr />
+
+		<div class="row">	
+			<!-- Generación de botones del formulario -->
+			<div class="control-group pull-right">
+		  		<label class="control-label"></label>
+		  		<div class="controls">		  			
+		    		<a id="btnGuardarEndoso" name="btnGuardarEndoso" class="btn btn-success">Guardar</a>
+		    		<a id="btnImprimirEndoso" name="btnImprimirEndoso" class="btn btn-success" disabled>Imprimir</a>
+		    		<a id="btnVolverListadoEndoso" name="btnVolverListadoEndoso" class="btn btn-danger">Volver al Listado</a>
+		  		</div>
+			</div> <!-- Fin generación de botones del formulario -->
+		</div>		
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/EndosoCancelacion.js"></script>
+{% endblock scriptjs %}

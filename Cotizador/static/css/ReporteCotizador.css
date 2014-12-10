@@ -1,0 +1,67 @@
+th{	   	
+	height:.7em;	
+}
+
+tr{
+	height:.7em;
+}
+
+#btnRegresar, .btn{
+   visibility: hidden;
+}
+
+.logo {
+	margin-right:50px;
+}
+
+.tbl_cotizador td {
+   	font-size: .7em;   
+}
+
+.tbl_cotizador_programa td {
+   font-size: .7em;
+}
+
+.tbl_cotizador th {   
+    font-size: .8em;
+    text-align:center;
+}
+
+.tbl_cotizador_programa th {
+   text-align:center;
+   font-size: .8em;
+}
+
+.tbl_coberturas td {
+   font-size: .7em;
+}
+
+.tbl_coberturas th {
+   text-align:center;
+   font-size: .8em;
+}
+
+.tbl_footer_pagina td {	
+   font-size: .7em;
+   text-align:center;
+}
+
+.tbl_footer_pagina th {
+   font-size: .8em;
+   text-align:center;
+}
+
+#titulo{
+   font-size: 1.3em;
+   text-align:center;
+}
+
+.pie{
+   visibility: hidden;
+}
+
+.subtitulo{
+   	font-size: .8em;
+	text-align:rigth;
+}
+

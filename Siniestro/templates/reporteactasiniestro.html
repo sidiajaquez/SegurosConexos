@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+			size: landscape;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+			empty-cells: show;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		table tr
+		{
+			width: .5em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0;
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">	
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>ACTA DE SINIESTRO</span><br/> 	
+	</div>			
+	   
+	<div class = "linea">
+		 <span><hr size="2"></span>
+	</div>
+	
+	<div class = "datosGenerales">	
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>NO. AVISO</th>									
+					<th>NO. CONSTANCIA</th>
+					<th>PRODUCTO</th>									
+					<th>FECHA SINIESTRO</th>
+					<th>EJERCICIO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ actasiniestro.0.2 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.5 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.8 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.4 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.7 }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>FECHA DE ATENCIÓN</th>
+					<th>CAUSA DE SINIESTRO</th>					
+					<th>FECHA DEL AVISO</th>
+					<th>VIGENCIA</th>					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>					
+					<td style="text-align: center;"></td>
+					<td style="text-align: center;">{{ actasiniestro.0.3 }}</td>					
+					<td style="text-align: center;">{{ actasiniestro.0.9 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.6 }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">NOMBRE DEL ASEGURADO</th>
+					<th>TELEFONO</th>						
+				</tr>
+			</thead>
+			<tbody>
+				<tr>					
+					<td style="text-align: center;" colspan="3">{{ actasiniestro.0.10 }}</td>
+					<td style="text-align: center;">{{ actasiniestro.0.11 }}</td>	
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<br>
+	<table class="table tblBienes table-striped">
+		<thead>
+			<th>Nombre</th>
+			<th>Cantidad</th>
+			<th>Suma asegurada unitaria</th>
+			<th>Suma asegurada total</th>
+			<th>Número Bien Afectado</th>
+			<th>Valor del daño</th>
+			<th>Perdida total</th>
+			<th>Perdida parcial</th>
+		</thead>			
+		<tbody>
+			{% for bien in bienesAfectados %}
+				<tr>
+					<td style="text-align: center;">{{ bien.Nombre }}</td>
+					<td style="text-align: center;">{{ bien.Cantidad }}</td>
+					<td style="text-align: center;">{{ bien.SumaAseguradaUnitaria }}</td>
+					<td style="text-align: center;">{{ bien.SumaAsegurada }}</td>
+					<td style="text-align: center;">{{ bien.NumeroBienesAfectados }}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar listado de solicitudes con su relación anexa para la elaboración del acta de verificación {% endcomment %}
+
+{% block titulo %} Actas de Verificación {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ListadoActasVerificacion.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Actas de Verificación</strong>
+<form class="form-horizontal " id="formulario_listado_actas_verificacion">
+	<legend></legend>
+	<a href="/ListadoActasVerificacionRechazadas/" role="button" class="btn btn-danger"><i class="icon-fire icon-white"></i> Solicitudes Rechazadas</a>
+	<p></p>		
+      <div id="lovely-things-list">
+          <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarSolicitud" placeholder="Buscar Solicitud" /> <b>Ordenar por: </b>
+          <a role="button" class="sort btn btn-warning" data-sort="PersonaSolicitud"><i class="icon-user icon-white"></i> Nombre</a>
+          <a role="button" class="sort btn btn-warning" data-sort="FolioSolicitud"><i class="icon-list icon-white"></i> Folio</a>
+          <a role="button" class="sort btn btn-warning" data-sort="FechaSolicitud"><i class="icon-time icon-white"></i> Fecha</a>
+		<p></p>
+          <ul class="paging topPaging clearfix"></ul>
+          <ul class="list">
+          </ul>
+          <ul class="paging bottomPaging clearfix"></ul>
+      </div>
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ListadoActasVerificacion.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %} 

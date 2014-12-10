@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar el listado de avisos de siniestro. {% endcomment %}
+
+{% block titulo %} Avisos {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/ListadoAvisoSiniestro.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Avisos de Siniestro</strong>
+<form class="form-horizontal" id="formulario_listado_aviso" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<!-- Campos para ingresar la información general del aviso. -->	
+	<fieldset>
+		<legend></legend>
+	 	<a id="btnAvisoNuevo" name="btnAvisoNuevo" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Aviso Nuevo</a>  
+		<p></p>          		
+        <div id="list_aviso">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarEndoso" placeholder="Buscar Aviso" /> Ordenar por: 
+            <a role="button" class="sort btn btn-warning" data-sort="Aviso"><i class="icon-file icon-white"></i> Aviso</a>  
+            <a role="button" class="sort btn btn-warning" data-sort="PersonaAsegurada"><i class="icon-user icon-white"></i> Asegurado</a>
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list">
+            </ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+        
+	</fieldset>	<!-- Se termina la generación del aviso. -->
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %}
+ 	<script src="/static/js/jquery.validate.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+	<script src="/static/js/ListadoAvisoSiniestro.js"></script>
+{% endblock scriptjs %}

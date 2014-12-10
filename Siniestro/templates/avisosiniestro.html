@@ -1,0 +1,424 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar el aviso de siniestro {% endcomment %}
+
+{% block titulo %} Aviso de Siniestro {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/AvisoSiniestro.css">  
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Aviso de Siniestro</strong>
+<form class="form-horizontal" id="formulario_aviso_siniestro" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para el aviso de siniestro. -->
+{% csrf_token %}
+	<input type="hidden" name="varIdAvisoSiniestro" id="varIdAvisoSiniestro" value="{{ avisoSiniestro.IdAvisoSiniestro }}" />
+	<input type="hidden" name="varIdConstancia" id="varIdConstancia" value="{{ avisoSiniestro.Constancia_id }}" />
+	<input type="hidden" name="varIdPersonaAvisa" id="varIdPersonaAvisa" value="{{ avisoSiniestro.PersonaAvisa_id }}" />
+	<input type="hidden" name="varIdTecnico" id="varIdTecnico" value="{{ avisoSiniestro.PersonaTecnico_id }}" />
+	<input type="hidden" name="varTieneAumento" id="varTieneAumento" value="{{ tieneAumento }}" />
+	<input type="hidden" name="varStatusAviso" id="varStatusAviso" value="{{ status }}" />
+	<input type="hidden" name="varIdPrograma" id="varIdPrograma" value="{{ idPrograma }}" />
+	<input type="hidden" name="varDeducible" id="varDeducible" value="{{ avisoSiniestro.Deducible }}" />
+	<input type="hidden" name="varParticipacionAPerdida" id="varParticipacionAPerdida" value="{{ avisoSiniestro.ParticipacionAPerdida }}" />
+	
+	<fieldset>			
+	<div class="alert alert-block">
+		<h4>Datos de la Constancia</h4>
+	</div>	
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtConstancia" id="txtConstancia" value="{{ NumeroConstancia }}" readonly>
+			    		<a href="#modal_buscar_constancia" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarConstanciaModal"><i class="icon-search icon-white"></i></a>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Ejercicio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtEjercicio" id="txtEjercicio" value="{{ Ejercicio }}" readonly>
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Nombre de Asegurado</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtNombreAsegurado" id="txtNombreAsegurado" value="{{ Asegurado }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		   		<label class="control-label">Vigencia de Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtVigenciaConstancia" id="txtVigenciaConstancia" value="{{ Vigencia }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Folio de Aviso</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtNumeroAviso" id="txtNumeroAviso" value="{{ avisoSiniestro.FolioAviso }}" readonly>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<label class="control-label">Tipo de Aviso </label>
+			<div class="controls">
+				<select class="input-large" id="cmbTipoAviso" name="cmbTipoAviso"  onclick="cambiarCombo($(this))">
+					<option value="" selected="selected">---------</option>
+					{% if avisoSiniestro.TipoAviso == 'AGRAVANTE' %}
+						<option value="AGRAVANTE" selected>AGRAVANTE</option>
+					{% else %}
+						<option value="AGRAVANTE">AGRAVANTE</option>
+					{% endif %}
+					
+					{% if avisoSiniestro.TipoAviso == 'SINIESTRO' %}
+						<option value="SINIESTRO" selected>SINIESTRO</option>
+					{% else %}
+						<option value="SINIESTRO">SINIESTRO</option>
+					{% endif %}										
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">								
+			<div class="control-group">
+		   		<label class="control-label">Fecha de Aviso</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+		  				<input type="text" class="input-small" id="dtpFechaAviso" name="dtpFechaAviso" value='{{ avisoSiniestro.FechaAviso|date:"d/m/Y" }}' />
+			    	</div>
+		  		</div>
+			</div>		
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">	
+				<label class="control-label">Hora de Aviso</label>
+				<div class="controls">
+					<div class="input-append bootstrap-timepicker">
+			            <input id="tpHoraAviso" type="text" class="input-small" value='{{ avisoSiniestro.HoraAviso }}'>
+			            <span class="add-on"><i class="icon-time"></i></span>
+			        </div>
+			    </div>
+	        </div>
+	    </div>
+	</div>		
+	
+	<div class="row">	
+		<div class="span6">												
+			<div class="contiarol-group">	  	
+		  		<label class="control-label">Fecha de Siniestro</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" class="input-small" id="dtpFechaSiniestro" name="dtpFechaSiniestro" value='{{ avisoSiniestro.FechaSiniestro|date:"d/m/Y" }}' />			    		
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+		
+		<div class="span5">	
+			<div class="control-group">
+				<label class="control-label">Hora de Siniestro</label>
+				<div class="controls">
+					<div class="input-append bootstrap-timepicker">
+			            <input id="tpHoraSiniestro" type="text" class="input-small" value='{{ avisoSiniestro.HoraSiniestro }}'>
+			            <span class="add-on"><i class="icon-time"></i></span>
+			        </div>
+			    </div>
+	        </div>
+	    </div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+			<label class="control-label">Via del Aviso </label>
+			<div class="controls">
+				<select class="input-large" id="cmbViaAviso" name="cmbViaAviso" onchange="seleccionarOtros()" >
+					<option value="" selected="selected">---------</option>
+					{% if ViaAviso == 'TELEFONICO' %}
+						<option value="TELEFONICO" selected>TELEFONICO</option>
+					{% else %}	
+						<option value="TELEFONICO">TELEFONICO</option>
+					{% endif %}
+					
+					{% if ViaAviso == 'FAX' %}
+						<option value="FAX" selected>FAX</option>
+					{% else %}
+						<option value="FAX">FAX</option>
+					{% endif %}
+					
+					{% if ViaAviso == 'TELEGRAFICO' %}
+						<option value="TELEGRAFICO" selected>TELEGRAFICO</option>
+					{% else %}
+						<option value="TELEGRAFICO">TELEGRAFICO</option>
+					{% endif %}
+					
+					{% if ViaAviso == 'PERSONAL' %}
+						<option value="PERSONAL" selected>PERSONAL</option>
+					{% else %}
+						<option value="PERSONAL">PERSONAL</option>
+					{% endif %}
+					
+					{% if ViaAviso == 'OTROS' %}
+						<option value="OTROS" selected>OTROS</option>
+					{% else %}
+						<option value="OTROS">OTROS</option>
+					{% endif %}
+				</select>
+			</div>
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		   		<label class="control-label">Otros</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtOtros" id="txtOtros" value="{{ OtraVia }}" readonly>
+			    	</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Quien Avisa</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtQuienAvisa" id="txtQuienAvisa" value="{{ avisoSiniestro.NombreAvisa }}">
+			    		<a href="#modal_buscar_persona" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaModal"><i class="icon-search icon-white"></i></a>
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Quien Recibe</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtQuienRecibe" id="txtQuienRecibe" value="{{ NombreTecnico }}" readonly>
+			    		<a href="#modal_buscar_tecnico" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarTecnicoModal"><i class="icon-search icon-white"></i></a>
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label">Causa Siniestro</label>
+				<div class="controls">
+									
+					<select class="input-large" id="cmbCausaSiniestro" name="cmbCausaSiniestro" onclick="cambiarComboCausaSiniestro($(this))">
+						<option value="" selected="selected">---------</option>
+						{% for causa in causaSiniestro %} 
+							{% if causa.Descripcion == avisoSiniestro.CausaSiniestro %}						
+								<option value="{{causa.IdCotizadorCobertura}}" selected>{{causa.Descripcion}}</option>
+							{% else %}
+								<option value="{{causa.IdCotizadorCobertura}}">{{causa.Descripcion}}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<div class="control-group">
+				<label class="control-label">Causa Agravante</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<textarea class="input-large" type="text" name="txtCausaAgravante" id="txtCausaAgravante">{{ avisoSiniestro.CausaAgravante }}</textarea>  
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label">Descripcion del Bien Afectado</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<textarea class="span9 input-xlarge" type="text" name="txtBien" id="txtBien">{{ avisoSiniestro.DescripcionBienAfectado }}</textarea>  
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<table class="table tbl_bienes table-striped">
+		<thead>
+			<th style="display:none;">IdBienAfectado</th>
+			<th style="display:none;">IdDescripcion</th>
+			<th></th>
+			<th>Nombre</th>
+			<th>Cantidad</th>
+			<th>Valor Unitario</th>
+			<th>Suma Asegurada</th>
+			<th>No. Bienes Afectados</th>
+			<th>Estado de los Daños</th>
+			<th>Descripcion</th>
+			<th></th>
+		</thead>			
+		<tbody>
+			{% for bien in bienesAfectados %}
+				<tr>
+					<td style="display:none;">{{ bien.IdBienAfectado }}</td>
+					<td style="display:none;">{{ bien.IdDescripcion }}</td>
+					
+					{% if bien.IdBienAfectado == '' %}
+						<td><input type="checkbox" name="checkSeleccionar" onClick="checkedInputs();"/></td>
+					{% else %}	
+						<td><input type="checkbox" name="checkSeleccionar" onClick="checkedInputs();" checked/></td>
+					{% endif %}
+					
+					<td>{{ bien.Nombre }}</td>
+					<td>{{ bien.Cantidad }}</td>
+					<td>{{ bien.ValorUnitario }}</td>
+					<td>{{ bien.SumaAsegurada }}</td>
+					<td><input type="text" class="input-mini" value="{{ bien.NoBienesAfectados }}" style="text-align:right;"></td>
+					<td><input type="text" class="input-mini" value="{{ bien.EstadoDanos }}" ></td>
+					<td><input type="text" class="input-large" value="{{ bien.Descripcion }}" ></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnTerminar" role="button" class="btn btn-success" disabled><i class="icon-file icon-white"></i> Terminar</a>
+	  			<a id="btnVistaPrevia" role="button" class="btn btn-success" disabled><i class="icon-file icon-white"></i> Vista Previa</a>
+	  			<a id="btnGuardar" name="btnGuardar" class="btn btn-success" >Guardar</a>
+		    	<a role="button" class="sort btn btn-warning" id="btnListadoAvisos"><i class="icon-list icon-white"></i> Listado de Avisos</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	
+	<div id="modal_buscar_constancia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las constancias -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Constancias</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarConstancia">
+			<button type="submit" class="btn" id="btnBuscarConstancia"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_constancia">
+				<thead>
+					<tr>
+						<th>Constancia</th>						
+						<th>Ejercicio</th>
+						<th>Asegurado</th>	
+						<th>Vigencia</th>							
+					    <th style="display: none;">IdConstancia</th>
+					    <th style="display: none;">IdPrograma</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div> 																    
+		<div class="modal-footer">
+			<button id ="btnCerrarModalBuscarConstancia" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>	
+	
+	<div id="modal_buscar_persona" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las personas en la base de datos. -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Personas</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarPersona">
+			<button type="submit" class="btn" id="btnBuscarPersona"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_persona">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Rfc</th>							
+					    <th style="display: none;">IdPersona</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div> 																    
+		<div class="modal-footer">
+			<button id ="btnCerrarModalPersona" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>
+	
+	<div id="modal_buscar_tecnico" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca los tecnicos del fondo -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Técnicos</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarTecnico">
+			<button type="submit" class="btn" id="btnBuscarTecnico"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_tecnico">
+				<thead>
+					<tr>
+						<th>Nombre</th>						
+						<th>Rfc</th>							
+					    <th style="display: none;">IdPersona</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div> 																    
+		<div class="modal-footer">
+			<button id ="btnCerrarModalTecnico" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>
+	</fieldset>
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/AvisoSiniestro.js"></script> 
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

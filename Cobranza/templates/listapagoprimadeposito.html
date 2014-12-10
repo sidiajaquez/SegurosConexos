@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de pago de pŕima en deposito {% endcomment %}
+
+{% block titulo %} Lista de pago de prima en deposito {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ListaPagoPrimaDeposito.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Pago de Prima en Deposito</strong>
+	<form class="form-horizontal " id="formulario_listado_pago_prima" method="post" action="" accept-charset="utf-8">
+		<!-- <a href="/ListadoCobroEndosos/" role="button" class="btn btn-success"><i class="icon-file icon-white"></i>Pago de Endoso Declaracion y Transporte</a>  -->
+		<p></p>
+		<legend></legend>
+        <div id="lovely-things-list">
+            <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarConstancia" placeholder="Buscar Constancia" />
+            <!-- <a role="button" class="sort btn btn-warning" data-sort="PersonaConstancia"><i class="icon-user icon-white"></i> Ordenar por Nombre</a>
+            <a role="button" class="sort btn btn-warning" data-sort="FolioConstancia"><i class="icon-list icon-white"></i> Ordenar por Folio</a>
+            <a role="button" class="sort btn btn-warning" data-sort="VigenciaConstancia"><i class="icon-time icon-white"></i> Ordenar por Fecha</a>  -->
+			<p></p>
+            <ul class="paging topPaging clearfix"></ul>
+            <ul class="list"></ul>
+            <ul class="paging bottomPaging clearfix"></ul>
+        </div>
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListaPagoPrimaDeposito.js"></script>  
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>	
+{% endblock scriptjs %}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+			size: landscape;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0; 
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">	
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>DECLARACION DE TRANSPORTE</span><br/> 	
+	</div>			
+	   
+	<div class = "linea">
+		 <span><hr size="2"></span>  
+	</div>
+	
+	<div class = "datosGenerales">	
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>	
+	
+	<table>
+		<thead>
+			<tr>		
+				<th>ENDOSO</th>									
+				<th>CONSTANCIA</th>			
+				<th>VIGENCIA</th>
+				<th>TIPO ENDOSO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">{{ datosReporteDeclaracion.0.0 }}</td>
+				<td style="text-align: center;">{{ datosReporteDeclaracion.0.1 }}</td>
+				<td style="text-align: center;" colspan="2">{{ datosReporteDeclaracion.0.2 }}</td>
+				<td style="text-align: center;">{{ datosReporteDeclaracion.0.3 }}</td>
+			</tr>		
+		</tbody>
+	</table>
+	
+	<table>
+		<thead>
+			<tr>													
+				<th>RFC</th>
+				<th>NOMBRE DEL SOCIO ASEGURADO</th>
+				<th>DOMICILIO DEL SOCIO ASEGURADO</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr>
+				<td style="text-align: center;" colspan="2">{{ datosReporteDeclaracion.0.4 }}</td>
+				<td style="text-align: center;" colspan="2">{{ datosReporteDeclaracion.0.5 }}</td>
+				<td style="text-align: center;">SERVICIO PUBLICO FEDERAL</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table>
+		<thead>
+			<tr>													
+				<th colspan="2">PERIODO DE DECLARACIÓN</th>			
+				<th>MONEDA</th>
+				<th>TELEFONO</th>							
+				<th>SERIE</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr>
+				<td style="text-align: center;" colspan="2">{{ datosReporteDeclaracion.0.6 }}</td>
+				<td style="text-align: center;">{{ moneda }}</td>
+				<td style="text-align: center;">{{ datosReporteDeclaracion.0.8 }}</td>
+				<td style="text-align: center;">1/1</td>
+			</tr>	
+		</tbody>
+	</table>
+	
+	<div class="alert alert-block">
+		<h4>DETALLE DE LA DECLARACION DE LOS EMBARQUES</h4>
+	</div>
+			
+	<div>
+		<p>
+			<table>
+				<thead>
+					<tr>													
+						<th>ROMANEAJE</th>
+						<th>FECHA</th>
+						<th colspan="2">DESCRIPCION DEL BIEN ASEGURADO</th>
+						<th>CANTIDAD</th>
+						<th>SUMA ASEGURADA UNITARIA PROMEDIO</th>
+						<th>SUMA ASEGURADA TOTAL</th>
+						<th>ORIGEN</th>
+						<th>DESTINO</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if declaracionTransportePorUnidad %}
+						{% for declaracion in declaracionTransportePorUnidad %}
+							<tr>
+								<td style="text-align: center;">{{ declaracion.Romaneaje }}</td>			
+								<td style="text-align: center;">{{ declaracion.Fecha|date:"d/m/Y" }}</td>
+								<td style="text-align: center;" colspan="2">{{ datosReporteDeclaracion.0.11 }}</td>
+								<td style="text-align: center;">{{ declaracion.Cantidad }}</td>
+								<td style="text-align: center;">{{ declaracion.SumaAseguradaUnitaria }}</td>
+								<td style="text-align: center;">{{ declaracion.SumaAseguradaTotal }}</td>
+								<td style="text-align: center;">{{ declaracion.Origen }}</td>
+								<td style="text-align: center;">{{ declaracion.Destino }}</td>
+							</tr>
+						{% endfor %}
+					{% endif %}				
+				</tbody>
+			</table>
+		</p>
+	</div>
+	
+	<div>
+		<p>
+			<table>
+				<thead>
+					<tr>													
+						<th>OBSERVACIONES</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ datosReporteDeclaracion.0.10 }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+	</div>
+	
+	<div>	
+		<p>
+			<span>Por el presente ENDOSO se hace constar que: De acuerdo con las condiciones de la constancia arriba citada, se procede a cobrar el importe de la cuota devengada que
+			aparece en el cuadro de verificación, correspondiente al valor de las existencias declaradas del periodo: Del {{ datosReporte.0.6 }}. Para lo cual se expedira el recibo
+			correspondiente.</span>
+		</p>
+	</div>	
+	
+	<table>
+		<thead>
+			<tr>													
+				<th colspan="3" rowspan="2">VERIFICACION</th>			
+				<th>CANTIDAD DE FLETES</th>
+				<th>SUMA ASEGURADA UNITARIA</th>							
+				<th>SUMA ASEGURADA TOTAL</th>
+				<th>CUOTA</th>
+				<th>IMPORTE DE LA CUOTA DEVENGADA</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr>
+				<td style="text-align: center;">{{ cantidadFletes }}</td>
+				<td style="text-align: center;">{{ sumaAseguradaUnitaria }}</td>
+				<td style="text-align: center;">{{ sumaAseguradaTotal }}</td>
+				<td style="text-align: center;">{{ datosReporteDeclaracion.0.12 }}</td>
+				<td style="text-align: center;">{{ importeCuota }}</td>
+			</tr>	
+		</tbody>
+	</table>
+	
+	<div>	
+		<p>
+			<span>Se anexa por embarque copia simple de la siguente documentación: Cartaporte, romaneaje de las pacas transportas.</span>
+		</p>
+	</div>	
+	
+	<div class="firmaAsegurada">
+		<center>
+			<br/><br/><br/><span>______________________________</span><br/>
+			<span>{{ datosReporte.0.4 }}</span><br/>
+		</center>
+	</div>	
+</body>
+</html>

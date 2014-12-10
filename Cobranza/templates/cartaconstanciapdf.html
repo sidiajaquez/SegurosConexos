@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style type="text/css">
+	@page {
+	  margin: 1cm 2.8cm 2.5cm 3cm;
+	}
+	body{
+		font-size: 12px;	
+	}
+	.datosConstancia{
+		font-weight:bold;
+		margin:4em 0 5em 0;
+		text-align:right;
+	}
+	.descripcionCarta{
+		text-align: justify;
+	}
+	.fechaCarta{
+		text-align: right;
+	}
+	</style>
+</head>
+<body>
+	<center><h1>{{ DatosFondo.0.NombrePersona }}</h1></center>
+	<hr />
+	<div class="datosConstancia">
+		<img src="/static/img/fondo.jpg" height="50" align = "left" />
+		CONSTANCIA DE ASEGURAMIENTO NÚMERO {{InformacionConstancia.FolioConstancia}}<br />
+		SOLICITUD NÚMERO {{InformacionSolicitud.FolioSolicitud}}<br />
+		Ramo de daños a bienes conexos a la actividad<br />
+		Agropecuaria, rural y patrimonial.
+	</div>
+	<div class="descripcionCarta">
+		<p>
+		Por la presente se hace constar que para la constancia de aseguramiento citada al rubro, expedida a favor de <b>{{Asegurado.0.NombrePersona}}</b> los bienes 
+		amparados como contenidos, adjunto relación de la descripción, se encuentran amparados en su conjunto y de manera individual, hasta el importe que en la misma relación se mencionan.		
+		</p><br />
+		<p>En este acto hacemos de su conocimiento que dicha constancia se encuentra bajo el amparo del contrato de <b>{{ContratoReaseguro.Obligacion}}</b> número 
+		<b>{{Contrato.NumeroContrato}}</b> que tiene celebrado este Fondo de Aseguramiento con la compañía de Reaseguro <b>{{Reaseguradora}}</b> en la modalidad de <b>{{ContratoReaseguro.RazonContenido}}</b>.</p>
+	</div>
+	<br />
+	<div class="fechaCarta">
+		{{DatosFondo.0.MunicipioPersona|upper}}, {{DatosFondo.0.EstadoPersona|upper}}; a {{FechaActual|date:"j"}} de {{FechaActual|date:"F"}} de {{FechaActual|date:"Y"}}
+	</div>
+	<br /><br /><br />
+	<div class="firmaCarta">
+		<p>_______________________________</p>
+		{{DatosGerente.0.NombrePersona}}<p></p>
+		<b>Gerente</b>
+	</div>
+</body>
+</html>

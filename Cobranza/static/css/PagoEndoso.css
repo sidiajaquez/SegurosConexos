@@ -1,0 +1,20 @@
+body{
+	background-color: #3C7780;
+}
+strong{
+	background-color: rgba(255,255,255,0.2);
+	color: #111111;
+	display: block;
+	font-size: 2em;
+	padding: 20px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.3)
+}
+#formulario_pago_endoso_aumento{
+	background-color: white;
+	box-shadow:2px 2px 6px rgba(0,0,0,0.4);
+	padding: 10px;
+}
+table thead{
+	background-color:#000000;
+	color:#fff;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<title>Solicitud de Endoso a la Constancia de Aseguramiento</title>
+	<style type="text/css">
+		@page {
+			margin: 1cm 2.8cm 2.5cm 3cm;
+			size: letter landscape;
+		}
+		table {
+			border: 1px solid black;
+			display : block;
+			line-height:10px;
+			padding:2px 2px;
+		}		
+		.datosFondo {
+			margin:1em 0;
+			text-align: center;
+		}		
+	</style>
+</head>
+
+<body>
+	<div class="datosFondo">
+		<img src="fondo.jpg" height="50" align = "left" /> <h1>{{ NombreFondo }}</h1>	
+	</div>
+	<hr>
+	
+	<p>DATOS DE LA CONSTANCIA:</p>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>No. Constancia</th>
+					<th>No. Solicitud</th>
+					<th>Ejercicio</th>
+					<th>Fecha Endoso</th>
+					<th>Vigencia Inicio</th>
+					<th>Vigencia Fin</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{Constancia.IdConstancia}}</td>
+					<td style="text-align: center;">{{Constancia.Solicitud_id}}</td>
+					<td style="text-align: center;">{{Constancia.VigenciaInicio|date:"Y"}}</td>
+					<td style="text-align: center;">{{ControlEndoso.FechaEndoso|date:"d/m/Y"}}</td>
+					<td style="text-align: center;">{{Constancia.VigenciaInicio|date:"d/m/Y"}}</td>
+					<td style="text-align: center;">{{Constancia.VigenciaFin|date:"d/m/Y"}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<p>DESCRIPCIÓN DEL ENDOSO DE {{ControlEndoso.TipoEndoso}}:</p>
+
+
+	<div>
+		<table class="table tblDescripcionDetalladaBien table-striped">
+			<thead>
+				<th style="display:none;">idEquipo</th>
+				<th>Nombre</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>No. Serie</th>
+				<th>Documentación</th>
+				<th>Fecha</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+			</thead>
+			<tbody>
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+						<td style="display:none;">{{ descripcionBien.IdBien }}</td>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td style="display:none;">{{ descripcionBien.CantidadOriginal }}</td>
+						<td style="display:none;">{{ descripcionBien.ValorUnitarioOriginal }}</td>
+						<td style="text-align:right;">{{ descripcionBien.Cantidad }}</td>
+						<td style="text-align:right;">{{ descripcionBien.ValorUnitario }}</td>
+						<td style="text-align:right;">{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>			
+		</table>
+	</div>		
+</body>
+</html>

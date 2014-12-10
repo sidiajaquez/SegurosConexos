@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+			size: landscape;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0; 
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>ENDOSO A LA CONSTANCIA</span><br/>
+	</div>
+	
+	<div class = "linea">
+		 <span><hr size="2"></span>
+	</div>
+	
+	<div class = "datosGenerales">
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>FECHA</th>
+				<th>ENDOSO</th>							
+				<th>CONSTANCIA</th>			
+				<th>VIGENCIA</th>
+				<th>MONEDA</th>
+				<th>EJERCICIO</th>
+				<th>TIPO ENDOSO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">{{ fechaActual|date:"d/m/Y" }}</td>
+				<td style="text-align: center;">{{ idEndoso }}</td>
+				<td style="text-align: center;">{{ informacionConstancia.FolioConstancia }}</td>
+				<td style="text-align: center;">{{ informacionEndoso.PeriodoInicio|date:"d/m/Y" }} al {{ informacionEndoso.PeriodoFin|date:"d/m/Y" }}</td>
+				<td style="text-align: center;">{{ descripcionMoneda }}</td>
+				<td style="text-align: center;">{{ informacionPrograma.Ejercicio }}</td>
+				<td style="text-align: center;">AUMENTO</td>
+			</tr>		
+		</tbody>
+	</table>
+	
+	<table>
+		<thead>
+			<tr>													
+				<th>RFC</th>
+				<th colspan="3">NOMBRE DEL ASEGURADO</th>
+				<th colspan="2">DOMICILIO DEL ASEGURADO</th>
+				<th>SEGURO</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr>
+				<td style="text-align: center;">{{ socio.RfcPersona }}</td>
+				<td style="text-align: center;" colspan="3">{{ socio.NombrePersona }}</td>
+				<td style="text-align: center;" colspan="2">{{ socio.DireccionPersona }}</td>
+				<td style="text-align: center;">{{ tipoSeguro }}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div>
+		<p>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="8">CONSTANCIA</th>
+					</tr>
+					<tr>				
+						<th rowspan="3">BIENES ASEGURADOS</th>
+						<th rowspan="3">SUMA ASEGURADA</th>
+						<th colspan="6">PORCENTAJE E IMPORTE DE CUOTAS DE LA CONSTANCIA</th>
+					</tr>
+					<tr>									
+						<th colspan="2">FONDO</th>
+						<th colspan="2">REASEGURO</th>
+						<th colspan="2">TOTAL</th>
+					</tr>
+					<tr>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+					</tr>
+				</thead>
+				<tbody>	
+					<tr>
+						<td style="text-align: center;">{{ constanciaBienesAsegurados }}</td>
+						<td style="text-align: center;">{{ constanciaSumaAsegurada }}</td>
+						<td style="text-align: center;">{{ constanciaFondoPorcentaje }}</td>
+						<td style="text-align: center;">{{ constanciaFondoImporte }}</td>
+						<td style="text-align: center;">{{ constanciaReaseguroPorcentaje }}</td>
+						<td style="text-align: center;">{{ constanciaReaseguroImporte }}</td>
+						<td style="text-align: center;">{{ constanciaTotalPorcentaje }}</td>
+						<td style="text-align: center;">{{ constanciaTotalImporte }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+	</div>
+	
+	<div>
+		<p>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="8">ENDOSO</th>
+					</tr>
+					<tr>				
+						<th rowspan="3">BIENES ASEGURADOS</th>
+						<th rowspan="3">SUMA ASEGURADA</th>
+						<th colspan="6">PORCENTAJE E IMPORTE DE CUOTAS DEL ENDOSO</th>
+					</tr>
+					<tr>									
+						<th colspan="2">FONDO</th>
+						<th colspan="2">REASEGURO</th>
+						<th colspan="2">TOTAL</th>
+					</tr>
+					<tr>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align: center;">{{ endosoBienesAsegurados }}</td>
+						<td style="text-align: center;">{{ endosoSumaAsegurada }}</td>
+						<td style="text-align: center;">{{ constanciaFondoPorcentaje }}</td>
+						<td style="text-align: center;">{{ endosoFondoImporte }}</td>
+						<td style="text-align: center;">{{ constanciaReaseguroPorcentaje }}</td>
+						<td style="text-align: center;">{{ endosoReaseguroImporte }}</td>
+						<td style="text-align: center;">{{ constanciaTotalPorcentaje }}</td>
+						<td style="text-align: center;">{{ endosoTotalImporte }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+	</div>
+	
+	<div>
+		<p>
+			<table class="table tbl_constancia_actualizada">
+				<thead>
+					<tr>
+						<th colspan="8">CONSTANCIA ACTUALIZADA</th>
+					</tr>
+					<tr>				
+						<th rowspan="3">BIENES ASEGURADOS</th>
+						<th rowspan="3">SUMA ASEGURADA</th>
+						<th colspan="6">PORCENTAJE E IMPORTE DE CUOTAS ACTUALIZADO</th>
+					</tr>
+					<tr>									
+						<th colspan="2">FONDO</th>
+						<th colspan="2">REASEGURO</th>
+						<th colspan="2">TOTAL</th>
+					</tr>
+					<tr>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+						<th>AL MILLAR</th>
+						<th>IMPORTE</th>
+					</tr>
+				</thead>
+				<tbody>				
+					{% if informacionEndosos %}
+						{% for endoso in informacionEndosos %}
+							<tr>
+								<td style="text-align: center;">{{ endoso.BienesAsegurados }}</td>
+								<td style="text-align: center;">{{ endoso.SumaAsegurada }}</td>
+								<td style="text-align: center;">{{ endoso.PorcentajeFondo }}</td>
+								<td style="text-align: center;">{{ endoso.ImporteFondo }}</td>
+								<td style="text-align: center;">{{ endoso.PorcentajeReaseguro }}</td>
+								<td style="text-align: center;">{{ endoso.ImporteReaseguro }}</td>
+								<td style="text-align: center;">{{ endoso.PorcentajeTotal }}</td>
+								<td style="text-align: center;">{{ endoso.ImporteTotal }}</td>
+							</tr>
+						{% endfor %}				
+					{% endif %}	
+				</tbody>
+			</table>
+		</p>
+	</div>
+	
+	<div>	
+		<p>
+			<span>Por el presente ENDOSO se hace constar que: De acuerdo con las condiciones de la constancia arriba citada, se procede a cobrar el importe de la cuota devengada que
+			aparece en el cuadro de verificación, correspondiente al valor de las existencias declaradas del periodo: Del {{ informacionEndoso.PeriodoInicio|date:"d/m/Y" }} al {{ informacionEndoso.PeriodoFin|date:"d/m/Y" }}.
+			Para lo cual se expedira el recibo correspondiente.</span>
+		</p>
+	</div>
+			
+	<div class="firmaAsegurada">
+		<br/><br/><br/><span align = "left">___________________________________________________</span><br/>
+	</div>	
+</body>
+</html>

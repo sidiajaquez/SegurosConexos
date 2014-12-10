@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% comment %} Listado de Solicitudes con acta de verificación aprobada y su relación anexa para la generación de constancia  {% endcomment %}
+
+{% block titulo %} Listado para la generación de constancias {% endblock %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ListadoConstancias.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Solicitudes - Constancias</strong>
+<form class="form-horizontal " id="formulario_listado_constancias">
+	<legend></legend>
+	<p></p>
+	<div id="lovely-things-list">
+           <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarSolicitud" placeholder="Buscar Solicitud - Constancia" /> <b>Ordenar por: </b>
+           <a role="button" class="sort btn btn-warning" data-sort="PersonaSolicitud"><i class="icon-user icon-white"></i> Nombre</a>
+           <a role="button" class="sort btn btn-warning" data-sort="FolioSolicitud"><i class="icon-list icon-white"></i> Folio</a>
+           <a role="button" class="sort btn btn-warning" data-sort="FechaSolicitud"><i class="icon-time icon-white"></i> Fecha</a>
+		<p></p>
+           <ul class="paging topPaging clearfix"></ul>
+           <ul class="list">
+           </ul>
+           <ul class="paging bottomPaging clearfix"></ul>
+       </div>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ListadoConstancias.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %}

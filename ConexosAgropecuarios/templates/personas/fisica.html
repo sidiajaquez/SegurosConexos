@@ -1,0 +1,191 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario de alta a personas {% endcomment %}
+
+{% load direcciones_tags %}
+{% load telefonos_tags %}
+{% load buscadorPersonas_tags %}
+
+{% block titulo %} Personas {% endblock titulo %}
+
+ {% block scriptcss %} 
+  <link rel="stylesheet" href="/static/css/PersonaFisica.css">
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Persona Física</strong>
+<form class="form-horizontal " id="formulario_persona_fisica" method="post" action="" accept-charset="utf-8">
+{% csrf_token %}
+	<input type='hidden' name='varIdPersona' id="varIdPersona" value='' />
+	<!-- Campos para ingresar la información general de la persona fisica. -->
+	<fieldset>
+		<legend></legend>					
+		<div class="row">
+			<div class="span6">
+				<!-- Text input Rfc-->
+				<div class="control-group">
+			  		<label class="control-label">RFC</label>
+			  		<div class="controls">
+			    		{{ persona_Form.Rfc }}
+			    		<a href="#buscarPersona" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaModal"><i class="icon-search icon-white"></i></a>
+			  		</div>
+				</div> <!-- Fin text input Rfc -->
+			</div>
+			<div class="span5">
+				<!-- Text input Curp-->
+				<div class="control-group">
+			   		<label class="control-label">CURP</label>
+			  		<div class="controls">
+			    		{{ persona_Form.Curp }}
+			  		</div>
+				</div> <!-- Fin text input Curp -->
+			</div>
+		</div>
+				
+		<div class="row">
+			<div class="span6">
+				<!-- Text input primer nombre -->
+				<div class="control-group">
+			  		<label class="control-label">Primer Nombre</label>
+			  		<div class="controls">
+			   			{{ persona_Form.PrimerNombre }}
+			  		</div> <!-- Fin text input primer nombre -->
+				</div>		
+			</div>
+			
+			<div class="span5">
+				<!-- Text input segundo nombre-->
+				<div class="control-group">
+			  		<label class="control-label">Segundo Nombre</label>
+			  		<div class="controls">
+			   			{{ persona_Form.SegundoNombre }}			    
+			 		 </div>
+				</div> <!-- Fin text input segundo nombre -->
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="span6">
+				<!-- Text input apellido paterno-->
+				<div class="control-group">
+					<label class="control-label">Apellido Paterno</label>
+			  		<div class="controls">
+			   			{{ persona_Form.ApellidoPaterno }}
+			  		</div>
+				</div> <!-- Fin text input apellido paterno -->
+			</div>
+		
+			<div class="span5">
+				<!-- Text input apellido materno-->
+				<div class="control-group">
+					<label class="control-label">Apellido Materno</label>
+					<div class="controls">
+			   			{{ persona_Form.ApellidoMaterno }}			    
+					</div>
+				</div> <!-- Fin text input apellido materno -->		
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="span6">
+				<!-- Text input scriptjsfecha de nacimiento -->
+				<div class="control-group">
+					<label class="control-label">Fecha de Nacimiento</label>
+				  	<div class="controls">
+				    	{{ persona_Form.FechaNacimiento }}
+				  	</div>
+				</div> <!-- Fin text input fecha de nacimiento -->		
+			</div>
+			
+			<div class="span5">
+				<!-- Select Basic sexo-->
+				<div class="control-group">
+					<label class="control-label">Sexo</label>
+				 	<div class="controls">
+				    	{{ persona_Form.Sexo }}	
+				  	</div>
+				</div> <!-- Fin select sexo -->	
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<!-- Prepended text email-->
+				<div class="control-group">
+					<label class="control-label">Email</label>
+				  	<div class="controls">
+				    	<div clascriptjsss="input-prepend">
+				      		<span class="add-on">@</span>
+				      		{{ persona_Form.Email }}
+				    	</div>			    
+				 	</div>
+				</div> <!-- Fin prepended text email -->
+			</div>
+			
+			<div class="span5">
+				<!-- Select Basic estado civil -->
+				<div class="control-group">
+					<label class="control-label">Estado Civil</label>
+				  	<div class="controls">
+						{{ persona_Form.EstadoCivil }}  
+				  	</div>
+				</div> <!-- Select Basic estado civil -->		
+			</div>		
+		</div>	
+		<div class="row">
+			<div class="span6">
+				<!-- Select Basic es socio -->
+				<div class="control-group">
+					<label class="control-label">Socio</label>
+				  	<div class="controls">
+				  		{{ persona_Form.EsSocio }}  
+				  	</div>
+				</div> <!-- Select basic es socio -->		
+			</div>	
+		</div>	
+	</fieldset>	<!-- Se termina la generación de los campos para la información basica de la persona. -->
+	
+	<hr />
+	<!-- Generación de tabs para mostrar los listados de teléfonos, direcciones, etc. -->
+	<div class="tabbable tabs-right">
+		<ul class="nav nav-tabs">
+	    	<li class="active"><a href="#rA" data-toggle="tab">Direcciones</a></li>
+	       	<li><a href="#rB" data-toggle="tab">Teléfonos</a></li>
+	     </ul>
+	     <div class="tab-content">
+	     	<!-- Generación del tab de direcciones -->
+	     	<div class="tab-pane active" id="rA">       		      		
+	        	{% show_direcciones %}
+	      	</div>
+	      	<!-- Generación del tab de telefonos -->
+	       	<div class="tab-pane" id="rB">         		      		
+	        	{% show_telefonos %}
+	       	</div>      		
+		 </div>	
+	</div>	 <!-- Se termina la generación de los tabs -->
+		
+	<!-- Llama al formulario modal para la busqueda de personas -->	
+	{% show_buscadorPersonas %}
+		
+	<div class="row">	
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	   			<!-- Button to trigger modal -->   					 
+	    		<a id="Guardar" name="Guardar" class="btn btn-success" >Guardar</a>
+	    		<a id="Cancelar" name="Cancelar" class="btn btn-danger" >Cancelar</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>	
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/PersonaFisica.js"></script>
+ 	<script src="/static/js/Telefonos.js"></script>
+ 	<script src="/static/js/Direcciones.js"></script>
+    <script src="/static/js/BuscadorPersonas.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

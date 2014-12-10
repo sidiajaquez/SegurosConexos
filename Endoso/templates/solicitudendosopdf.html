@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Solicitud de Endoso</title>
+	<style type="text/css">
+	@page {
+		margin: 1cm 2.8cm 2.5cm 3cm;
+		size: letter landscape;
+	}
+	body {
+		text-align: justify;
+	}
+	table {
+		border: 1px solid black;
+		display : block;
+		line-height:10px;
+		padding:2px 2px;
+	}
+	table thead th{
+		text-align: center;	
+	}
+	.datosFondo {
+		margin:1em 0;
+		text-align: center;
+	}
+	.contenedorFirma {
+		margin:3em 0;
+		text-align: center;
+	}
+	.contenedorInformacion {
+		margin:1em 0;
+		text-align:right;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="datosFondo">
+		<img src="fondo.jpg" height="50" align = "left" /> <h1>{{ NombreFondo }}</h1>	
+	</div>
+	<hr>
+	<div class="contenedorInformacion">
+		SOLICITUD DE ENDOSO A LA CONSTANCIA DE ASEGURAMIENTO <br>
+		SEGURO PARA CUBRIR DAÑOS DE BIENES RELACIONADOS CON LA ACTIVIDAD AGROPECUARIA <br>
+		TIPO DE ENDOSO: {{SolicitudEndoso.TipoEndoso}}
+	</div>
+	
+	<div><p>DATOS DE LA CONSTANCIA:</p></div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>No. Constancia</th>
+					<th>No. Solicitud</th>
+					<th>Ejercicio</th>
+					<th>Moneda</th>
+					<th>Fecha</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{SolicitudEndoso.Constancia_id}}</td>
+					<td style="text-align: center;">{{Constancia.Solicitud_id}}</td>
+					<td style="text-align: center;">{{Constancia.VigenciaInicio|date:"Y"}}</td>
+					<td style="text-align: center;">{{Moneda}}</td>
+					<td style="text-align: center;">{{SolicitudEndoso.FechaSolicitudEndoso|date:"d/m/Y"}}</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="2">Vigencia de la Constancia</th>
+					<th colspan="3" rowspan="2">No. de acta de verificación y relación anexa a la solicitud</th>
+				</tr>
+				<tr>
+					<td style="text-align: center;">Desde</td>
+					<td style="text-align: center;">Hasta</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{Constancia.VigenciaInicio|date:"d/m/Y"}}</td>
+					<td style="text-align: center;">{{Constancia.VigenciaFin|date:"d/m/Y"}}</td>
+					<td colspan="3" style="text-align: center;">{{ActaVerificacion}}</td>
+				</tr>
+			</tbody>			
+		</table>
+	</div>
+	
+	<div><p>DATOS GENERALES DEL SOCIO:</p></div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">ASEGURADO</th>
+					<th>R.F.C.</th>
+				</tr>
+			<thead>
+			<tbody>
+				<tr>
+					<td colspan="2">{{ Asegurado.0.NombrePersona }}</td>
+					<td>{{ Asegurado.0.RfcPersona }}</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th>DOMICILIO</th>
+					<th>TELÉFONO</th>
+					<th>C.P.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ Asegurado.0.DireccionPersona }}</td>
+					<td>{{ Asegurado.0.TelefonoPersona }}</td>
+					<td>{{ Asegurado.0.CPPersona }}</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th>COLONIA</th>
+					<th>MUNICIPIO</th>
+					<th>ESTADO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ Asegurado.0.AsentamientoPersona }}</td>
+					<td>{{ Asegurado.0.MunicipioPersona }}</td>
+					<td>{{ Asegurado.0.EstadoPersona }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div><p>DESCRIPCION DEL SEGURO EN LA CONSTANCIA:</p></div>
+	
+	<div>
+		<table class="table tblDescripcionDetalladaBien table-striped">
+			<thead>
+				<th style="display:none;">idEquipo</th>
+				<th>Nombre</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>No. Serie</th>
+				<th>Documentación</th>
+				<th>Fecha</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+			</thead>
+			<tbody>
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+						<td style="display:none;">{{ descripcionBien.IdBien }}</td>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td style="display:none;">{{ descripcionBien.CantidadOriginal }}</td>
+						<td style="display:none;">{{ descripcionBien.ValorUnitarioOriginal }}</td>
+						<td style="text-align:right;">{{ descripcionBien.Cantidad }}</td>
+						<td style="text-align:right;">{{ descripcionBien.ValorUnitario }}</td>
+						<td style="text-align:right;">{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>					
+		</table>
+	</div>	
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Observaciones:</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{SolicitudEndoso.Observaciones}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="contenedorFirma">
+		________________________________<br>
+		Firma del Solicitante
+	</div>
+	
+	<div>
+		"ESTE DOCUMENTO ÚNICAMENTE CONSTITUYE UNA SOLICITUD Y, POR LO TANTO, SU RECEPCIÓN Y TRÁMITE NO IMPLICA EL OTORGAMIENTO DEL ASEGURAMIENTO. 
+		LOS TÉRMINOS Y CONDICIONES EN LOS QUE EL FONDO OTORGUE EL ASEGURAMIENTO, EN SU CASO, DEPENDERÁ DEL RESULTADO DE LA INSPECCIÓN DE LOS BIENES. LA ACEPTACIÓN
+		DEL RIESGO POR EL FONDO DEBERÁ CONSTAR EXPRESAMENTE EN EL ENDOSO."
+	</div>
+</body>
+</html>

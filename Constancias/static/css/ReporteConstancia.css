@@ -1,0 +1,17 @@
+table{
+	border:1px solid!important;
+	font-size: 0.7em;
+}
+.impresionConstancia thead{
+	background-color: #CCCCCC;
+	color: black;	
+}
+.impresionConstancia th{
+	text-align: center;
+}
+@media print{
+	footer, hr, .btn, .navbar{
+		margin: -20px;
+		visibility: hidden;
+	}
+}

@@ -1,0 +1,343 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para ingresar la declaración de endoso {% endcomment %}
+
+{% block titulo %} Declaración de Endoso {% endblock titulo %}
+
+ {% block scriptcss %} 
+ 	<link rel="stylesheet" href="/static/css/DeclaracionEndoso.css"> 
+ {% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Declaración del endoso</strong>
+<form class="form-horizontal " id="formulario_endoso" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para los endosos. -->
+{% csrf_token %}
+	<input type="hidden" name="varIdEndoso" id="varIdEndoso" value="{{ informacionEndoso.IdDeclaracionEndoso }}" />
+	<input type="hidden" name="varIdConstancia" id="varIdConstancia" value="{{ informacionConstancia.IdConstancia }}" />
+	<input type="hidden" name="varIdPersona" id="varIdPersona" value="{{ Solicitante.IdPersona }}" />
+	<input type="hidden" name="varTotalTarifa" id="varTotalTarifa" value="{{ informacionCotizador.TotalTarifa }}" />
+	<input type="hidden" name="varPrima" id="varPrima" value="{{ informacionCotizador.Prima }}" />
+	<input type="hidden" name="varTotalExistencia" id="varTotalExistencia" value="{{ totalExistencia }}" />
+	<input type="hidden" name="varUltimoDiaIngresado" id="varUltimoDiaIngresado" value="{{ ultimoDiaIngresado }}" />
+	<input type="hidden" name="varIdDeclaracionEndosoAnterior" id="varIdDeclaracionEndosoAnterior" value="{{ idDeclaracionEndosoAnterior }}" />
+		
+	<input type="hidden" name="varSumaPromedioDiario" id="varSumaPromedioDiario" value="{{ promedioDiario }}" />		   <!-- Variables para obtener los promedios de las tablas. -->
+	<input type="hidden" name="varSumaPrecio" id="varSumaPrecio" value="{{ promedioPrecio }}" />
+	<input type="hidden" name="varSumaValorExistencia" id="varSumaValorExistencia" value="{{ promedioValor }}" />
+	<input type="hidden" name="varSumaCuotaMensual" id="varSumaCuotaMensual" value="{{ promedioCuotaMensual }}" />
+	<input type="hidden" name="varSumaCuotaPeriodo1" id="varSumaCuotaPeriodo1" value="{{ promedioCuota1 }}" />
+	<input type="hidden" name="varSumaCuotaPeriodo2" id="varSumaCuotaPeriodo2" value="{{ promedioCuota2 }}" />
+	<input type="hidden" name="varTotalDias" id="varTotalDias" value="{{ totalDias }}" />
+	 
+	<fieldset>
+			
+	<div class="alert alert-block">
+		<h4>Datos de la Constancia</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">								
+			<div class="control-group">	
+		   		<label class="control-label">Folio de Constancia</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtFolioConstancia" id="txtFolioConstancia" value="{{ informacionConstancia.FolioConstancia }}">
+			    		{% if idDeclaracionEndosoAnterior == "" or not idDeclaracionEndosoAnterior %}
+			    			<a href="#modal_buscar_constancia" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarConstanciaModal"><i class="icon-search icon-white"></i></a>
+			    		{% endif %}
+			    	</div>
+		  		</div>
+			</div>		
+		</div>					
+			
+		<div class="span5">												
+			<div class="control-group">	  	
+		  		<label class="control-label">Número de Solicitud</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtNumeroSolicitud" id="txtNumeroSolicitud" value="{{ informacionSolicitud.FolioSolicitud }}">			    		
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Moneda</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtMoneda" id="txtMoneda" value="{{ Moneda }}">
+			    	</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">
+			<div class="control-group">
+		  		<label class="control-label">Ejercicio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtEjercicio" id="txtEjercicio" value="{{ informacionPrograma.Ejercicio }}">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Vigencia</label>
+		  		<div class="controls">
+					<input type="text" class="input-small" id="txtVigenciaInicio" name="txtVigenciaInicio" value='{{ informacionConstancia.VigenciaInicio|date:"d/m/Y" }}' readonly />				
+					<input type="text" class="input-small" id="txtVigenciaFin" name="txtVigenciaFin" value='{{ informacionConstancia.VigenciaFin|date:"d/m/Y" }}' readonly />
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="alert alert-block">
+		<h4>Datos del Socio Asegurado</h4>
+	</div>
+	
+	<div class="row">	
+		<div class="span6">					
+			<div class="control-group">
+		   		<label class="control-label">Rfc</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtRfc" id="txtRfc" value="{{ Solicitante.RfcPersona }}">
+		  		</div>
+			</div> 	
+		</div>
+		<div class="span5">											
+			<div class="control-group">
+		  		<label class="control-label">Nombre</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtNombre" id="txtNombre" value="{{ Solicitante.NombrePersona }}">
+		    	</div>
+			</div> 	
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		  		<label class="control-label">Domicilio</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtDomicilio" id="txtDomicilio" value="{{ Solicitante.DireccionPersona }}">
+		  		</div>
+			</div> 	
+		</div>
+		<div class="span5">
+			<div class="control-group">
+		   		<label class="control-label">Teléfono</label>
+		  		<div class="controls">
+		    		<input type="text" name="txtTelefono" id="txtTelefono" value="{{ Solicitante.TelefonoPersona }}">
+		  		</div>
+			</div> 	
+		</div>
+	</div>	
+	
+	<div class="alert alert-block">
+		<h4>Datos de la Declaración de Endoso</h4>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		   		<label class="control-label">Periodo declaración</label>
+		  		<div class="controls">
+					<input type="text" class="input-small" id="dtpPeriodoInicio" name="dtpPeriodoInicio" value='{{ periodoInicio|date:"d/m/Y" }}'/>				
+					<input type="text" class="input-small" id="dtpPeriodoFin" name="dtpPeriodoFin" value='{{ periodoFin|date:"d/m/Y" }}'/>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+		  		<label class="control-label">Existencia Inicial</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtExistenciaInicial" id="txtExistenciaInicial" value="{{ existenciaInicial }}">
+		    		</div>
+		  		</div>
+			</div>
+		</div>
+		
+		<div class="span5">								
+			<div class="control-group">
+		  		<label class="control-label">Entrada</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtEntrada" id="txtEntrada" value="">
+		    		</div>
+		  		</div>
+			</div>
+		</div>			
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+			 <div class="control-group">
+		  		<label class="control-label">Salida</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtSalida" id="txtSalida" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>
+		
+		<div class="span5">											
+			<div class="control-group">
+		  		<label class="control-label">Precio</label>
+		  		<div class="controls">
+		  			<div clascriptjsss="input-prepend">
+			    		<input type="text" name="txtPrecio" id="txtPrecio" value="">
+		    		</div>
+		  		</div>
+			</div> 
+		</div>			
+	</div>	
+		
+	<a id="btnAgregar" name="btnAgregar" class="btn btn-success" > Agregar</a>
+	<a id="btnQuitar" name="btnQuitar" class="btn btn-danger" > Quitar</a>
+	<table class="table tabla_endoso table-striped">  <!-- Se genera la tabla para agregar los calculos de los endosos. -->
+		<thead>
+			<tr>	
+				<th style="display: none;">IdEndosoPorDia</th>		
+				<th>Dia</th>
+				<th>Entrada</th>
+				<th>Salida</th>
+				<th>Existencia</th>
+				<th>Precio</th>
+				<th>Valor</th>
+				<th>Tarifa Mensual</th>
+				<th>Tarifa Diaria</th>
+				<th>Cuota</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>	
+			{% if informacionEndosoPorDia %}
+				{% for endosoPorDia in informacionEndosoPorDia %}
+					<tr>
+						<td style="display: none;">{{ endosoPorDia.IdEndosoPorDia }}</td>
+						<td>{{ endosoPorDia.Dia }}</td>
+						<td>{{ endosoPorDia.Entrada }}</td>
+						<td>{{ endosoPorDia.Salida }}</td>
+						<td>{{ endosoPorDia.Existencia }}</td>
+						<td>{{ endosoPorDia.Precio }}</td>
+						<td>{{ endosoPorDia.Valor }}</td>
+						<td>{{ endosoPorDia.TarifaMensual }}</td>
+						<td>{{ endosoPorDia.TarifaDiaria }}</td>
+						<td>{{ endosoPorDia.Cuota }}</td>
+						<td><a href='#' title='Actualizar' onclick='actualizarTablaDeclaracionDia($(this));'><i class='icon-refresh'></i></a></td>
+					</tr>
+				{% endfor %}				
+			{% endif %}					
+		</tbody>
+	</table>
+	
+	<table class="table tabla_endoso_totales">  <!-- Se genera la tabla para agregar los calculos de los endosos. -->
+		<thead>
+			<tr>
+				<th></th>
+				<th>Promedio Diario</th>
+				<th>Precio</th>
+				<th>Valor Existencias Periodo</th>
+				<th>Tarifa Mensual</th>
+				<th>Cuota del Periodo</th>
+				<th>Tarifa Del Periodo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<td></td>
+			<td>{{ promedioDiario }}</td>
+			<td>{{ promedioPrecio }}</td>
+			<td>{{ promedioValor }}</td>
+			<td>{{ promedioCuotaMensual }}</td>
+			<td>{{ promedioCuota1 }}</td>
+			<td>{{ promedioCuota2 }}</td>
+		</tbody>
+	</table>	<!-- Fin de la generación de la tabla para agregar coberturas. -->
+	
+	<div class="alert alert-block">
+		<h4>Observaciones</h4>
+	</div>
+	
+	<div class="row">
+		<div class="control-group">
+	  		<div class="controls">
+	  			<div clascriptjsss="input-prepend">
+		    		<textarea class="span9 input-xlarge" type="text" name="txtObservaciones" id="txtObservaciones">{{ informacionEndoso.Observaciones }}</textarea>  
+	    		</div>
+	  		</div>
+		</div>
+	</div>
+			
+	<div class="row">	
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			{% if informacionEndoso.CierreMes == 0 or informacionEndoso == null %}
+	  				<a id="btnLimpiarTabla" role="button" class="btn btn-success"><i class="icon-list-alt icon-white"></i> Limpiar Todo</a>
+	  			{% endif %}
+	  			<a id="btnVistaPreviaDeclaracion" role="button" class="btn btn-success" disabled><i class="icon-file icon-white"></i> Vista Previa</a>
+	  			<a id="btnGuardarDeclaracion" name="btnGuardarDeclaracion" class="btn btn-success" >Guardar</a>
+	  			<a role="button" class="sort btn btn-warning" id="btnListadoDeclaracion"><i class="icon-list icon-white"></i> Listado de Declaraciones</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	
+	<div id="modal_buscar_constancia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las constancias -->
+		<div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		   <h3 id="myModalLabel">Buscar Constancias</h3>
+		</div>
+	    <div class="modal-body">																								
+			<input type="text" class="input-xlarge search-query span4" id="txtBuscarConstancia">
+			<button type="submit" class="btn" id="btnBuscarConstancia"><i class="icon-search"></i>Buscar</button>
+		 					
+			<p></p>
+			<table class="table tbl_buscar_constancia">
+				<thead>
+					<tr>
+						<th>Constancia</th>
+						<th>Solicitud</th>
+						<th>Moneda</th>
+						<th>Ejercicio</th>							
+					    <th style="display: none;">IdConstancia</th>
+					    <th style="display: none;">TotalTarifa</th>
+					    <th style="display: none;">Prima</th>						
+						<th style="display: none;">IdSolicitud</th>
+						<th style="display: none;">Nombre</th>
+						<th style="display: none;">Rfc</th>
+						<th style="display: none;">Domicilio</th>
+						<th style="display: none;">Telefono</th>
+						<th>Inicio</th>
+						<th>Fin</th>	
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																		
+		</div> 																    
+		<div class="modal-footer">
+			<button id ="btnCerrarModalBuscarConstancia" class="btn" data-dismiss="modal">Cerrar</button>
+		</div>					
+	</div>
+	</fieldset>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/DeclaracionEndoso.js"></script> 
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

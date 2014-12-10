@@ -1,0 +1,253 @@
+{% extends 'index_sin_dajax.html' %}
+
+{% comment %} Dictamen del Siniestro {% endcomment %}
+
+{% block titulo %} Dictamen Siniestro {% endblock titulo %}
+
+{% block scriptcss %} 
+	 <link rel="stylesheet" href="{{STATIC_URL}}css/dropzone.css" type="text/css" rel="stylesheet"/>
+	 <link rel="stylesheet" href="{{STATIC_URL}}css/chosen/chosen.css">
+	 <link rel="stylesheet" href="{{STATIC_URL}}css/DictamenSiniestro.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong id="title">Dictamen del Siniestro</strong>
+	<div id="ContentDictamenSiniestro">
+		<p></p>
+		<div class="form-horizontal">
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Constancia: </label> 		<!-- Label Folio Constancia -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFolioConstancia" placeholder="Constancia" value="{{Constancia.FolioConstancia}}" disabled>
+						</div> 															<!-- Fin Folio Constancia -->
+					</div>			
+				</div>
+				<div class="span3">
+					<div class="control-group">			
+						<label class="control-label">Folio Dictamen: </label> 		<!-- Label Folio dictamen siniestro -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFolioDictamen" placeholder="Dictamen" disabled>
+						</div> 															<!-- Fin Folio dictamen siniestro -->
+					</div>			
+				</div>
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Folio Inspeccion: </label> 		<!-- Label Folio dictamen inspeccion -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFolioInspeccion" placeholder="Inspeccion" disabled value="{{Inspeccion.FolioInspeccion}}">
+						</div> 															<!-- Fin Folio dictamen inspeccion -->
+					</div>			
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Folio Aviso: </label> 		<!-- Label Folio Aviso -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFolioAviso" placeholder="Aviso" disabled value="{{AvisoSiniestro.FolioAviso}}">
+						</div> 															<!-- Fin Folio Aviso -->
+					</div>			
+				</div>
+				<div class="span3">
+					<div class="control-group">			
+						<label class="control-label">Folio Acta: </label> 		<!-- Label Folio Acta -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFolioActa" placeholder="Acta" disabled value="{{ActaSiniestro.FolioActaSiniestro}}">
+						</div> 															<!-- Fin Folio Acta -->
+					</div>			
+				</div>
+				<div class="span3">
+					<div class="control-group">			
+						<label class="control-label">Moneda: </label> 		<!-- Label Moneda -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtMoneda" placeholder="Moneda" value="{{Moneda}}" disabled>
+						</div> 															<!-- Fin Moneda -->
+					</div>			
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Ejercicio: </label> 		<!-- Label Ejercicio -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtEjercicio" placeholder="Ejercicio" value="{{Ejercicio}}" disabled>
+						</div> 															<!-- Fin Ejercicio -->
+					</div>			
+				</div>
+				<div class="span6">
+					<div class="control-group">			
+						<label class="control-label">Asegurado: </label> 		<!-- Label Asegurado -->
+						<div class="controls">
+							<input class="input-xlarge" type="text" id="txtAsegurado" placeholder="Asegurado" value="{{Asegurado}}" disabled>
+						</div> 															<!-- Fin Asegurado -->
+					</div>			
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Seguro: </label> 		<!-- Label Seguro -->
+						<div class="controls">
+							<input class="input-large" type="text" id="txtSeguro" placeholder="Seguro" value="{{Seguro}}" disabled>
+						</div> 															<!-- Fin Seguro -->
+					</div>			
+				</div>
+				<div class="span6">
+					<div class="control-group">			
+						<label class="control-label">SubTipo: </label> 		<!-- Label SubTipo -->
+						<div class="controls">
+							<input class="input-xlarge" type="text" id="txtSubTipo" placeholder="SubTipo" value="{{SubTipoSeguro}}" disabled>
+						</div> 															<!-- Fin SubTipo -->
+					</div>			
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Ubicación Latitud: </label> 		<!-- Label Latitud -->
+						<div class="controls">
+							<input class="input-large" type="text" id="txtLatitud" placeholder="Latitud" value="{{RelacionAnexaActaVerificacion.UbicacionBienLat}}" disabled>
+						</div> 															<!-- Fin Latitud -->
+					</div>			
+				</div>
+				<div class="span6">
+					<div class="control-group">			
+						<label class="control-label">Ubicación Longitud: </label> 		<!-- Label Longitud -->
+						<div class="controls">
+							<input class="input-large" type="text" id="txtLongitud" placeholder="Longitud" value="{{RelacionAnexaActaVerificacion.UbicacionBienLng}}" disabled>
+						</div> 															<!-- Fin Longitud -->
+					</div>			
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Fecha de Inspección: </label> 		<!-- Label Fecha de Inspección -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFechaInspeccion" placeholder="FInspeccion" disabled>
+						</div> 															<!-- Fin Fecha de Inspección -->
+					</div>			
+				</div>
+				<div class="span3">
+					<div class="control-group">			
+						<label class="control-label">Fecha de Dictamen: </label> 		<!-- Label Fecha de Dictamen -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFechaDictamen" placeholder="FDictamen" value='{{DiaActual|date:"d/m/Y"}}' disabled>
+						</div> 															<!-- Fin Fecha de Dictamen -->
+					</div>			
+				</div> 
+				<div class="span4">
+					<div class="control-group">			
+						<label class="control-label">Fecha de Ocurrencia: </label> 		<!-- Label Fecha de Ocurrencia -->
+						<div class="controls">
+							<input class="input-small" type="text" id="txtFechaOcurrencia" placeholder="FOcurrencia" value='{{ActaSiniestro.FechaSiniestro|date:"d/m/Y"}}' disabled>
+						</div> 															<!-- Fin Fecha de Ocurrencia -->
+					</div>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="span6">
+					<div class="control-group">			
+						<label class="control-label">Asignada: </label> 		<!-- Label Asignada -->
+						<div class="controls">
+							<input class="input-xlarge" type="text" id="txtAsignada" placeholder="Asignada" value="{{Asignada}}" disabled>
+						</div> 															<!-- Fin Asignada -->
+					</div>			
+				</div>
+			</div>
+			
+		</div>
+
+		<p></p>
+		<div class="alert alert-danger">
+			<h4>Imágenes</h4>
+		</div>
+	
+		<form class="dropzone" id="frmDictamenSiniestro" method="post" action="{% url 'Siniestro:DictamenSiniestro' 1 %}">
+			{% csrf_token %}
+		</form>
+		
+		<p></p>
+		<div class="alert alert-danger">
+			<h4>Bienes</h4>
+		</div>
+		
+		<div id="Bienes">
+			<table class="table BienesSiniestrados">
+				<thead>
+					<tr>
+						<th>Procedente o Improcedente</th>
+						<th>Causa Negativa</th>
+						<th>Nombre Bien</th>
+						<th>Riesgo Afectado</th>
+						<th>Unidades Afectadas</th>
+						<th>Valor Unitario</th>
+						<th>Suma Asegurada</th>
+						<th>Deducible</th>
+						<th>Salvamento</th>
+						<th>Participación a Perdida</th>
+						<th>Proporción Indemnizable</th>
+						<th>Monto Indeminzable</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan="11" style="text-align: right;'">Total Indemnización:</td>
+						<td></td>
+					</tr>
+				</tfoot>
+				<tbody>
+					{% for BienActaSiniestro in BienesActaSiniestro %}
+						<tr>
+							<td>
+								<label><input type="radio" value="Procedente" name="ProcedenteImprocedente" id="rdProcedente" /> Procedente </label>
+								<label><input type="radio" value="Improcedente" name="ProcedenteImprocedente" id="rdImprocedente" /> Improcedente</label>
+							</td>
+							<td>
+					  			<select class="input-medium chosen-select-deselect" id="cmbCausaNegativa" name="cmbCausaNegativa" data-placeholder="Selecciona Causa" disabled>
+					  				<option value="0"></option>
+									{% for Improcedencia in Improcedencias %}
+										<option value="{{Improcedencia.IdImprocedencia}}">{{Improcedencia.Descripcion}}</option>
+									{% endfor %}					  				
+					  			</select>
+							</td>
+							<td>{{BienActaSiniestro.RiesgoAfectado}}</td>
+							<td>{{AvisoSiniestro.CausaSiniestro}}</td>
+							<td>{{BienActaSiniestro.UnidadesAfectadas}}</td>
+							<td></td>
+							<td></td>
+							<td>{{BienActaSiniestro.Solvento}}</td>
+							<td>{{BienActaSiniestro.Total}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="row">	
+			<!-- Generación de botones del formulario -->
+			<div class="control-group pull-right">
+		  		<div class="controls">
+	    			<button id="btnGuardarDictamenSiniestro" name="btnGuardarDictamenSiniestro" class="btn btn-success">Guardar</button>
+		  		</div>
+			</div> <!-- Fin generación de botones del formulario -->
+		</div>
+		
+	</div>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="{{STATIC_URL}}js/dropzone.js"></script>
+	<script src="{{STATIC_URL}}js/chosen/chosen.jquery.js" type="text/javascript"></script>
+	<script src="{{STATIC_URL}}js/DictamenSiniestro.js"></script>
+{% endblock scriptjs %} 
+
+
+

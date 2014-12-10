@@ -1,0 +1,144 @@
+{% extends 'index.html' %}
+
+{% comment %} Impresion del recibo de pago de la constancia {% endcomment %}
+
+{% block titulo %} Recibo de pago constancia {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/ReporteReciboPagoConstancia.css">
+{% endblock scriptcss %}
+ 
+{% block contenido %}
+	<strong>Recibo Pago de Constancia</strong>
+	<input type='hidden' name='varIdConstancia' id="varIdConstancia" value='{{ constancia }}' />
+	<input type='hidden' name='varIdSolicitud' id="varIdSolicitud" value='{{ constancia.Solicitud_id }}' />
+	<input type='hidden' name='varRehabilitarConstancia' id="varRehabilitarConstancia" value='{{ RehabilitarConstancia }}' />
+	<input type='hidden' name='varIdEstatusConstancia' id='varIdEstatusConstancia' value='{{constancia.Estatus}}' />
+	<div id="ReciboPagoConstancia">
+		<div class="row" align="center">	
+			<div class="span2">  
+				<img src="/static/img/fondo.jpg" height="50" width="90" align = "left">
+			</div>
+			<div class="control-group span8">
+				<p>RECIBO PAGO DE CONSTANCIA</p>
+				<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+				<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+				<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+			</div>
+		</div>
+		<table class="table-condensed tblFolio">
+			<thead>
+				<tr>
+					<th>FOLIO RECIBO</th>
+					<th>FECHA DE PAGO</th>
+					<th>FOLIO SOLICITUD</th>
+					<th>FOLIO CONSTANCIA</th>
+					<th>MONEDA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align:center">{{ FolioRecibo }}</td>
+					<td style="text-align:center">{{ FechaActual|date:"d/m/Y" }}</td>
+					<td style="text-align:center">{{ Constancia.0.FolioSolicitud }}</td>
+					<td style="text-align:center">{{ constancia.FolioConstancia }}</td>
+					<td style="text-align:center">{{ Moneda }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2" style="text-align:center">ASEGURADO</th>
+					<th style="text-align:center">R.F.C.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2">{{ Constancia.0.Asegurado.0.NombrePersona }}</td>
+					<td>{{ Constancia.0.Asegurado.0.RfcPersona }}</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th>DOMICILIO</th>
+					<th>TELÉFONO</th>
+					<th>C.P.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ Constancia.0.Asegurado.0.DireccionPersona }}</td>
+					<td>{{ Constancia.0.Asegurado.0.TelefonoPersona }}</td>
+					<td>{{ Constancia.0.Asegurado.0.CPPersona }}</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th>COLONIA</th>
+					<th>MUNICIPIO</th>
+					<th>ESTADO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ Constancia.0.Asegurado.0.AsentamientoPersona }}</td>
+					<td>{{ Constancia.0.Asegurado.0.MunicipioPersona }}</td>				
+					<td>{{ Constancia.0.Asegurado.0.EstadoPersona }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="table table-condensed tblFormaPago">
+			<thead>
+				<tr>
+					<th>CONCEPTO/DESCRIPCIÓN</th>
+					<th>FORMA DE PAGO</th>
+					<th>TOTAL</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ Constancia.0.ConceptoDescripcion }}</td>
+					<td>
+					{% if not constancia.Estatus or constancia.Estatus == 3 %}
+						<select class="input-large" id="FormaPago" name="FormaPago">
+							<option value="" selected="selected">---------</option>
+							<option value="CHEQUE">CHEQUE</option>
+							<option value="DEPOSITO">DEPOSITO</option>
+							<option value="EFECTIVO">EFECTIVO</option>
+							<option value="TRANSFERENCIA">TRANSFERENCIA</option>
+						</select>
+					{% else %}
+						{{ constancia.FormaPago }}
+					{% endif %}
+					</td>
+					{% load humanize %}
+					<td>$ {{ constancia.CuotaNeta|floatformat:2|intcomma }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<div class="row">
+			<div class="pull-right">
+			{% if Rehabilitada or RehabilitarConstancia %}
+				<button id="btnCartaNoSiniestro" name="btnCartaNoSiniestro" class="btn btn-primary">Carta de no Siniestro</button>
+			{% endif %}
+			{% if not FolioRecibo %}
+				<button id="btnPagarConstancia" name="btnPagarConstancia" class="btn btn-primary">$ Pagar</button>
+				<button id="btnCartaConstancia" name="btnCartaConstancia" class="btn btn-primary" onclick='generarCartaConstancia();' disabled><i class="icon-print icon-white"></i> Carta</button>
+				<button id="btnImprimir" name="btnImprimir" class="btn btn-primary" disabled><i class="icon-print icon-white"></i> Imprimir</button>
+				<button id="btnCancelar" name="btnCancelar" class="btn btn-danger">Cancelar</button>
+			{% else %}
+				<button id="btnCartaConstancia" name="btnCartaConstancia" class="btn btn-primary" onclick='generarCartaConstancia();'><i class="icon-print icon-white"></i> Carta</button>
+				<button id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</button>
+				<button id="btnCancelar" name="btnCancelar" class="btn btn-danger">Volver al listado</button>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/ReporteReciboPagoConstancia.js"></script>
+{% endblock scriptjs %}

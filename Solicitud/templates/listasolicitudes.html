@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para mostrar listado de solicitudes {% endcomment %}
+
+{% block titulo %} Solicitudes de aseguramiento {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ListaSolicitudes.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Solicitudes</strong>
+<form class="form-horizontal " id="formulario_listado_solicitudes">
+	<legend></legend>
+	<a href="/Solicitud/" role="button" class="btn btn-success"><i class="icon-file icon-white"></i> Solicitud Nueva</a>
+	<p></p>		
+       <div id="lovely-things-list">
+           <input type="text" class="search-fuzzy input-xlarge search-query span6" id="txtBuscarSolicitud" placeholder="Buscar Solicitud" /> <b>Ordenar por:</b>
+           <a role="button" class="sort btn btn-warning" data-sort="PersonaSolicitud"><i class="icon-user icon-white"></i> Nombre</a>
+           <a role="button" class="sort btn btn-warning" data-sort="FolioSolicitud"><i class="icon-list icon-white"></i> Folio</a>
+           <a role="button" class="sort btn btn-warning" data-sort="FechaSolicitud"><i class="icon-time icon-white"></i> Fecha</a>
+		<p></p>
+           <ul class="paging topPaging clearfix"></ul>
+           <ul class="list">
+           </ul>
+           <ul class="paging bottomPaging clearfix"></ul>
+       </div>
+</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ListadoSolicitudes.js"></script>
+	<script src="/static/js/lib/list.min.js"></script>
+	<script src="/static/js/lib/list.fuzzySearch.min.js"></script>
+{% endblock scriptjs %} 

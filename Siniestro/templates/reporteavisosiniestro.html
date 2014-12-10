@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		@page 
+		{
+			margin: 1cm 1.7cm 1.5cm 2cm;
+		}
+		body 
+		{
+			font-size: 9px;	
+		}
+		table 
+		{
+			border: solid 1px black;
+			padding: 2px 0 0.5px 1px;
+			line-height: 10px;
+		}	
+		table td 
+		{
+	   		font-size: .5em;
+		}
+		table th
+		{
+	   		text-align:center;
+	   		font-size: .6em;
+		}
+		.datosFondo 
+		{		
+			font-weight:bold;
+			font-size: 14px;
+			text-indent:50px;
+			text-align:center;			
+		}
+		.datosGenerales
+		{
+			font-weight:bold;
+			font-size:8px;
+			margin:2em 0 3em 0; 
+			text-align:right;
+		}
+		.logo 
+		{
+			margin-right:50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="datosFondo">	
+		<img src="fondo.jpg" height="50" align = "left" />						
+	    <span>AVISO DE SINIESTRO</span><br/> 	
+	</div>			
+	   
+	<div class = "linea">
+		 <span><hr size="2"></span>
+	</div>
+	
+	<div class = "datosGenerales">	
+		<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+		<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+		<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>FOLIO DE AVISO</th>									
+					<th>TIPO DE AVISO</th>
+					<th>CONSTANCIA</th>									
+					<th>EJERCICIO</th>
+					<th>VIGENCIA DE CONSTANCIA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ avisoSiniestro.FolioAviso }}</td>
+					<td style="text-align: center;">{{ avisoSiniestro.TipoAviso }}</td>
+					<td style="text-align: center;">{{ NumeroConstancia }}</td>
+					<td style="text-align: center;">{{ Ejercicio }}</td>
+					<td style="text-align: center;">{{ Vigencia }}</td>
+				</tr>		
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>VIA DEL AVISO</th>
+					<th>CAUSA DEL SINIESTRO</th>					
+					<th>FECHA DE AVISO</th>
+					<th>FECHA DE SINIESTRO</th>					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>					
+					<td style="text-align: center;">{{ avisoSiniestro.ViaAviso }}</td>
+					<td style="text-align: center;">{{ avisoSiniestro.CausaSiniestro }}</td>					
+					<td style="text-align: center;">{{ avisoSiniestro.FechaAviso }}</td>
+					<td style="text-align: center;">{{ avisoSiniestro.FechaSiniestro }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="4">NOMBRE DEL ASEGURADO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;" colspan="4">{{ Asegurado }}</td>				
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>										
+					<th>QUIEN AVISA</th>
+					<th>QUIEN RECIBE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">{{ avisoSiniestro.NombreAvisa }}</td>
+					<td style="text-align: center;">{{ NombreTecnico }}</td>	
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<table>
+			<thead>
+				<tr>													
+					<th>DESCRIPCION DEL BIEN AFECTADO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ avisoSiniestro.DescripcionBienAfectado }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<br>
+	<table class="table tblBienes table-striped">
+		<thead>
+			<th style="display:none;">IdBienAfectado</th>
+			<th style="display:none;">IdDescripcion</th>
+			<th>Nombre</th>
+			<th>Cantidad</th>
+			<th>Valor Unitario</th>
+			<th>Suma Asegurada</th>
+			<th>No. Bienes Afectados</th>
+			<th>Estado de los Daños</th>
+			<th>Descripcion</th>
+		</thead>			
+		<tbody>
+			{% for bien in bienesAfectados %}
+				<tr>
+					<td style="display:none;">{{ bien.IdBienAfectado }}</td>
+					<td style="display:none;">{{ bien.IdDescripcion }}</td>					
+					<td>{{ bien.Nombre }}</td>
+					<td>{{ bien.Cantidad }}</td>
+					<td>{{ bien.ValorUnitario }}</td>
+					<td>{{ bien.SumaAsegurada }}</td>
+					<td>{{ bien.NoBienesAfectados }}</td>
+					<td>{{ bien.EstadoDanos }}</td>
+					<td>{{ bien.Descripcion }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</html>

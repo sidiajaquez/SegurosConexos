@@ -1,0 +1,704 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para alta de datos generales del fondo {% endcomment %}
+
+{% block titulo %} Datos Generales del Fondo de Aseguramiento {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/DatosFondo.css">
+	<link rel="stylesheet" href="/static/css/chosen/chosen.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+<strong>Datos del Fondo</strong>
+
+<form method="post" class="form-horizontal" action="" id="formulario_datos_fondo" accept-charset="utf-8"> {% csrf_token %}
+	<input type='hidden' name='varIdFondo' id="varIdFondo" value='' />
+	<fieldset>
+	<div class="tabbable"> 															 				  <!-- Generación de tabs -->
+		<ul class="nav nav-tabs">
+	    	<li class="active"><a href="#rA" data-toggle="tab">Datos Básicos</a></li>
+	       	<li><a href="#rB" data-toggle="tab">Registros</a></li>
+	       	<li><a href="#rC" data-toggle="tab">Cuentas</a></li>
+	       	<li><a href="#rD" data-toggle="tab">Contratos</a></li>
+	       	<li><a href="#rE" data-toggle="tab">Consejo de Administración</a></li>
+	       	<li><a href="#rF" data-toggle="tab">Personal de Apoyo Fondo</a></li>
+	     </ul>
+		 <div class="tab-content">
+		 	<div class="tab-pane active" id="rA">     												<!-- Se genera tab datos fondo !!!!!!!!-->
+		 		<div class="row">
+		 			<div class="span6">
+						<div class="control-group">													<!--Text input Numero de fondo-->
+					  		<label class="control-label">Numero de Fondo</label>
+					  		<div class="controls">
+					  			<input class="input-small" id="NumeroFondo" name="NumeroFondo" type="text" placeholder="# Fondo" maxlength="4">
+					  		</div>
+						</div> 																		<!-- Fin text input Numero de fondo -->		 			
+		 			</div>
+		 		</div>
+	
+				<div class="row">												                    <!-- Se genera row -->
+				    <div class="span6">
+																									<!--Text input Nombre fondo-->
+						<div class="control-group">
+					  		<label class="control-label">Nombre Fondo</label>
+					  		<div class="controls">
+					  			<input class="input-xlarge" id="NombreFondo" name="NombreFondo" type="text" placeholder="Nombre Fondo" disabled>
+					  		</div>
+						</div> 																		<!-- Fin text input Nombre fondo -->
+					</div>
+					
+					<div class="span5">																						
+				  		<div class="control-group">													<!-- Text input Domicilio-->
+					   		<label class="control-label">Domicilio</label>
+					  		<div class="controls">
+					  			<input class="input-xlarge" id="Domicilio" name="Domicilio" type="text" placeholder="Domicilio" disabled>
+					  		</div>
+						</div> 																		<!-- Fin text input Domicilio -->
+					</div>					
+				</div>														    					<!-- Fin row -->			
+						
+				<div class="row">																	<!-- Se genera row -->
+					<div class="span6">																<!-- Prepended text email-->
+						<div class="control-group">
+							<label class="control-label">Email</label>
+						  	<div class="controls">
+						    	<div class="input-prepend">
+						      		<span class="add-on">@</span>
+						      		<input class="span3" id="Email" name="Email" placeholder="Email" type="text" disabled>
+						    	</div>			    
+						 	</div>
+						</div> 												   <!-- Fin prepended text email -->
+					</div>
+				    <div class="span5">
+																			   <!-- Text input Telefono-->
+						<div class="control-group">
+					  		<label class="control-label">Teléfono</label>
+					  		<div class="controls">
+					  			<input class="input-medium" id="Telefono" name="Telefono" placeholder="Teléfono" type="text" disabled>
+					  		</div>
+						</div> 												   <!-- Fin text input Telefono -->
+					</div>							
+				</div>														   <!-- Fin row -->
+				
+				<!-- Datos ocultos -->
+				<input type='hidden' id='IdPersonaDatosFondo' name='IdPersonaDatosFondo' />
+				   			
+				<a href="#agregarInformacionFondo" role="button" class="btn btn-primary" data-toggle="modal" id="btnAgregarInformacionFondo"><i class="icon-search icon-white"></i> Agregar Información</a>
+				<!-- Modal for people find -->
+				<div id="agregarInformacionFondo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Buscar Fondo</h3>
+						<br />
+							<input type="text" class="input-xlarge search-query span4" id="txtBuscarFondo" placeholder="Buscar Fondo">
+							<button type="submit" class="btn" id="btnBuscarInformacionFondo">Buscar</button>
+						
+					</div>
+					<div class="modal-body">
+						<table class="table busquedaFondos table-striped">
+							<thead>
+								<th>#</th>
+								<th>Razón Social</th>
+								<th>Rfc</th>
+							</thead>
+							<tbody>	
+							</tbody>
+						</table>		
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+					</div>
+				</div><!-- Termino del codigo para la generación del modal busqueda de personas. -->				
+			    
+			    <hr />
+	      		<h4>Zona de Influencia</h4>
+		      	<div class="row">				        					    <!-- Se genera row -->						
+					<div class="span5">
+																				<!-- Text input Estado-->
+						<div class="control-group">
+					   		<label class="control-label">Estado</label>
+					  		<div class="controls">
+					  			<select class="input-large chosen-select-deselect" id="cmbEstados" name="cmbEstados" data-placeholder="Selecciona un Estado">
+					  				<option value="0"></option>
+									{% for Estado in Estados %}
+										<option value="{{Estado.IdEstado}}">{{Estado.Descripcion}}</option>
+									{% endfor %}					  				
+					  			</select>
+					  		</div>
+						</div> 													<!-- Fin text input Estado -->
+					</div>
+					
+					<div class="span5">
+						<div class="control-group">
+					   		<label class="control-label">Municipio</label>
+					  		<div class="controls">
+					    		<select multiple class="chosen-select input-xlarge" id="cmbMunicipios" data-placeholder="Selecciona el Municipios">
+					    		</select>
+					    		<label class="select-all-label">
+					    			<input type="checkbox" class="multiple-select-all" id="chkSeleccionarTodosMunicipios" disabled> Seleccionar todos
+					    		</label>
+
+					  		</div>
+						</div> 													<!-- Fin text input Municipio -->						
+					</div>								
+				</div>	
+
+				<button class="btn btn-primary" type="button" id="btnAgregarMunicipioDatosFondo"><i class="icon-plus icon-white"></i> Agregar Municipio</button>
+				<p></p>
+				
+				<!-- Generación de tabla para ingresar los municipios que pertenecen al estado. -->
+				<table class="table municipios_datosFondo_tabla table-striped">
+					<thead>						
+						<tr>	
+							<th style="display: none;">Id</th>
+							<th style="display: none;">IdAreaInfluencia</th>
+							<th>Estado</th>		
+							<th>Municipio</th>
+							<th></th>
+						</tr>
+					</thead>
+			   		<tbody>
+					</tbody>
+				</table> 											   <!-- Fin de la generación de la tabla -->									
+			</div>												    		   <!-- Fin tab datos fondo !!!!!!!-->												  
+																											
+			      	
+	      	<div class="tab-pane" id="rB"> 									   <!-- Se genera tab registros fondo!!!!!!!!!! -->
+	       	<h4>    Registro Público</h4>        		      		
+	        	<div class="row">			       							   <!-- Se genera row -->
+				    <div class="span6">																															  
+						<div class="control-group">							   <!-- Text input Numero de la escritura constitutiva-->
+					  		<label class="control-label">No. de Escritura Constitutiva</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.NumeroEscritura }}
+					  		</div>
+						</div> 												   <!-- Fin text input Numero escritura -->
+					</div>
+							
+					<div class="span5">																			   <!-- Text input Fecha escritura-->
+						<div class="control-group">
+					   		<label class="control-label">Fecha de Escritura Constitutiva</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.FechaEscritura }}
+					  		</div>
+						</div> 												   <!-- Fin text input Fecha escritura -->
+					</div>
+				</div>														   <!-- Fin row -->
+						
+				<div class="row">											   <!-- Se genera row -->
+					<div class="span6">
+			       														       <!-- Text input Numero notario-->
+						<div class="control-group">
+					   		<label class="control-label">Número de Notario</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.NumeroNotario }}
+					  		</div>
+						</div> 												   <!-- Fin text input Numero notario -->
+					</div>		
+					
+				    <div class="span5">
+				    														   <!-- Text input Ciudad notario-->
+						<div class="control-group">
+					  		<label class="control-label">Ciudad Ubicación Notario</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.CiudadUbicacionNotario }}
+					  		</div>
+						</div> 												   <!-- Fin text input Ciudad notario -->
+					</div>							
+				</div>														   <!-- Fin row -->
+				<div class="row">											   <!-- Se genera row -->
+					<div class="span6">							               <!-- Prepended text Nombre notario-->
+						<div class="control-group">
+							<label class="control-label">Nombre Notario</label>
+						  	<div class="controls">
+						    	{{ formulario_RegistroFondo.NombreNotario }}    
+						 	</div>
+						</div> 												  <!-- Fin prepended text Nombre notario -->
+					</div>					
+				</div>				
+														                              <!-- Fin row -->
+				<hr />
+				<h4>    Registro de Hacienda</h4> 	
+				
+				<div class="row">			        						  <!-- Se genera row -->
+				    <div class="span6">
+																			  <!-- Text input Numero de registro -->
+						<div class="control-group">
+					  		<label class="control-label">No. de Registro ante SHCP</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.NumeroRegistroShcp }}
+					  		</div>
+						</div> 												   
+					</div>													  <!-- Fin text input Numero de registro -->
+							
+					<div class="span5">
+																			  <!-- Text input oficio registro-->
+						<div class="control-group">
+					   		<label class="control-label">Oficio de Registro</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.OficioRegistro }}
+					  		</div>
+						</div> 												   <!-- Fin text input Oficio de registro -->
+					</div>
+			  	</div>														   <!-- Fin row -->
+						
+				<div class="row">											   <!-- Se genera row -->
+					<div class="span6">  									   <!-- Text input Fecha registro-->
+						<div class="control-group">
+					   		<label class="control-label">Fecha de Registro</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.FechaRegistro }}
+					  		</div>
+						</div> 												   <!-- Fin text input Fecha registro -->
+					</div>		
+					
+				    <div class="span5">  									   <!-- Text input Rfc-->
+						<div class="control-group">
+					  		<label class="control-label">Rfc</label>
+					  		<div class="controls">
+					  			<input class="input-medium" id="Rfc" name="Rfc" placeholder="RFC" type="text" disabled>
+					  		</div>
+						</div> 												   <!-- Fin text input Rfc -->
+					</div>							
+				</div>														   <!-- Fin row -->			
+
+				<hr />						
+				<h4>    Datos del RPPC</h4> 	
+				
+				<div class="row">			        						   <!-- Se genera row -->
+				    <div class="span6">
+																			   <!-- Text input Fecha -->
+						<div class="control-group">
+					  		<label class="control-label">Fecha</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.FechaRppc }}
+					  		</div>
+						</div> 												   
+					</div>													   <!-- Fin text input Fecha -->
+					
+					<div class="span5">
+																			   <!-- Text input Lugar registro-->
+						<div class="control-group">
+					   		<label class="control-label">Lugar de Registro</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.LugarRegistro }}
+					  		</div>
+						</div> 												   <!-- Fin text input Lugar registro -->
+					</div>
+				</div>														   <!-- Fin row -->
+						
+				<div class="row">											   <!-- Se genera row -->
+					<div class="span6">  									   <!-- Text input Numero libro-->
+						<div class="control-group">
+					   		<label class="control-label">Número de libro</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.NumeroLibro }}
+					  		</div>
+						</div> 												   <!-- Fin text input Numero libro -->
+					</div>		
+					
+				    <div class="span5">  									   <!-- Text input Foja-->
+						<div class="control-group">
+					  		<label class="control-label">Foja</label>
+					  		<div class="controls">
+					    		{{ formulario_RegistroFondo.Foja }}
+					  		</div>
+						</div> 												   <!-- Fin text input Foja -->
+					</div>							
+				</div>																											 
+			       	
+        	</div>														       <!-- Fin tab registros fondo -->
+	        <div class="tab-pane" id="rC">      
+	        	
+	        	<a href="#agregarCuentasFondoModal" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlAgregarCuentasFondoModal"><i class="icon-briefcase icon-white"></i> Agregar Cuentas Bancarias</a>
+	           		      		
+	        	<div id="agregarCuentasFondoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+					   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					   <h3 id="myModalLabel">Agregar Cuentas Bancarias</h3>
+					</div>
+					<div class="modal-body">
+																					 
+						<div class="row">											   <!-- Se genera row -->
+							<div class="span3">  									   <!-- Text input Tipo de cuenta-->
+								<div class="control-group">
+				   					<label class="control-label">Tipo de Cuenta</label>
+				  					<div class="controls">
+				    					{{ formulario_CuentaBanco.TipoCuenta }}
+				  					</div>
+								</div> 												   <!-- Fin text input Tipo de cuenta -->
+							</div>		
+				
+						    <div class="span3">  									   <!-- Text input Banco-->
+								<div class="control-group">
+							  		<label class="control-label">Banco</label>
+							  		<div class="controls">
+							    		{{ formulario_CuentaBanco.IdBanco }}
+							  		</div>
+								</div> 												   <!-- Fin text input Banco -->
+							</div>							
+					 	</div>	
+					 	<div class="row">											   <!-- Se genera row -->
+							<div class="span3">  									   <!-- Text input Numero  de cuenta-->
+								<div class="control-group">
+				   					<label class="control-label">Número de Cuenta</label>
+				  					<div class="controls">
+				    				{{ formulario_CuentaBanco.NumeroCuenta }}
+				  					</div>
+								</div> 												   <!-- Fin text input Numero de cuenta -->
+							</div>		
+				
+						    <div class="span3">  									   <!-- Text input clave-->
+								<div class="control-group">
+							  		<label class="control-label">Clabe</label>
+							  		<div class="controls">
+							    		{{ formulario_CuentaBanco.Clave }}
+							  		</div>
+								</div> 												   <!-- Fin text input clave -->
+							</div>							
+				 		</div>
+					</div> 																    
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+						<a class="btn btn-primary" id="btnAgregarCuentaFondoModal"><i class="icon-plus icon-white"></i> Agregar Cuenta</a>
+					</div>
+				</div>																	<!-- Fin del modal para agregar cuentas -->
+					
+				<p></p>
+				<table class="table cuentasBancariasFondoTabla">						<!-- Tabla para ingresar las cuentas bancarias del fondo -->
+					<thead>
+						<tr>		
+							<th style="display: none;">IdCuenta</th>	
+							<th>Tipo de Cuenta</th>
+							<th>Banco</th>
+							<th>Número de Cuenta</th>
+							<th>Clabe</th>
+							<th></th>			
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>															   <!-- Fin de la tabla de cuentas bancarias -->
+   			</div>
+	       	<div class="tab-pane" id="rD">    										   <!-- Inicio de la tab para contrato del fondo !!!!!!!!!!!!! -->     		      		
+			        	
+			  	<a href="#mdlContratosFondo" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlContratosFondoModal"><i class="icon-briefcase icon-white"></i> Agregar Contratos</a>
+			           		      		
+	        	<div id="mdlContratosFondo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">   <!-- Generación de modal para contratos -->
+					<div class="modal-header">
+					   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					   <h3 id="myModalLabel">Agregar Contratos</h3>
+					 </div>
+					   <div class="modal-body">
+							<div class="row">											   <!-- Se genera row -->
+								<div class="span3">  									   <!-- Text input Año inicio -->
+									<div class="control-group">
+					   					<label class="control-label">Vigencia</label>
+					  					<div class="controls">
+					    					{{ formulario_ContratoFondo.VigenciaContrato }}
+					  					</div>
+									</div> 												   <!-- Fin text input Año inicio -->
+								</div>		
+					
+							    <div class="span3">  									   <!-- Text input Año final-->
+									<div class="control-group">
+								  		<label class="control-label">Ejercicio</label>
+								  		<div class="controls">
+								    		{{ formulario_ContratoFondo.Ejercicio }}
+								  		</div>
+									</div> 												   <!-- Fin text input Año final -->
+								</div>							
+						 	</div>	
+						 	<div class="row">											   <!-- Se genera row -->
+								<div class="span3">  									   <!-- Text input Fecha de contrato -->
+									<div class="control-group">
+					   					<label class="control-label">Fecha de Contrato</label>
+					  					<div class="controls">
+					    				{{ formulario_ContratoFondo.FechaContrato }}
+					  					</div>
+									</div> 												   <!-- Fin text input Fecha de contrato -->
+								</div>		
+					
+							    <div class="span3">  									   <!-- Text input Número de contrato-->
+									<div class="control-group">
+								  		<label class="control-label">Número de Contrato</label>
+								  		<div class="controls">
+								    		{{ formulario_ContratoFondo.NumeroContrato }}
+								  		</div>
+									</div> 												   <!-- Fin text input Número de contrato -->
+								</div>							
+						 	</div>
+						 	
+						 	<div class="row">											   <!-- Se genera row -->
+								<div class="span3">  									   <!-- Text input Reaseguradora-->
+									<div class="control-group">
+					   					<label class="control-label">Reaseguradora</label>
+					  					<div class="controls">
+					    				{{ formulario_ContratoFondo.IdReaseguradora }}
+					  					</div>
+									</div> 												   <!-- Fin text input Reaseguradora -->
+								</div>
+								
+								<div class="span3">  									   <!-- Text input ContratoReaseguro-->
+									<div class="control-group">
+					   					<label class="control-label">Contrato Reaseguro</label>
+					  					<div class="controls">
+					    				{{ formulario_ContratoFondo.IdContratoReaseguro }}
+					  					</div>
+									</div> 												   <!-- Fin text input ContratoReaseguro -->
+								</div>
+						 	</div>
+						 	
+						 	<div class="row">
+								<div class="span3">  									   <!-- Text input Moneda-->
+									<div class="control-group">
+					   					<label class="control-label">Moneda</label>
+					  					<div class="controls">
+					    				{{ formulario_ContratoFondo.IdMoneda }}
+					  					</div>
+									</div> 												   <!-- Fin text input Moneda -->
+								</div>						 	
+						 	</div>
+						</div> 															   <!-- Fin de la generación de campos de contrato -->
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+							<a class="btn btn-primary" id="btnAgregarContratosModal"><i class="icon-plus icon-white"></i> Agregar Contrato</a>
+						</div>
+				</div>						
+							
+				<p></p>
+				<table class="table tblcontratosFondo">									   <!-- Generación de la tabla de contratos del fondo -->
+					<thead>
+						<tr>		
+							<th style="display: none;">IdContratoFondo</th>	
+							<th>Vigencia Contrato</th>
+							<th>Ejercicio</th>
+							<th>Fecha de Contrato</th>
+							<th>Número de Contrato</th>
+							<th>Reaseguradora</th>	
+							<th style="display: none;">IdReaseguradora</th>
+							<th style="display: none;">IdContratoReaseguro</th>
+							<th style="display: none;">IdMoneda</th>
+							<th>Contrato Reaseguro</th>
+							<th>Moneda</th>
+							<th></th>			
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table> 																  <!-- Fin de la generación de la tabla de contratos del fondo -->		        	
+       	</div>																			  <!-- Fin de la tab de contratos del fondo !!!!!!!!!!!!! -->
+	    
+	    <div class="tab-pane" id="rE">     										          <!-- Generación de tab para gestionar el personal de consejo administrativo del fondo !!!!!!!! -->		    		      		
+        	<a href="#mdlConsejoAdministracionFondo" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlConsejoAdministracionFondoModal"><i class="icon-briefcase icon-white"></i> Agregar Miembros Consejo</a>
+           		      		
+        	<div id="mdlConsejoAdministracionFondo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				   <h3 id="myModalLabel">Agregar Miembro de Consejo</h3>
+				</div>
+			    <div class="modal-body">
+					<div class="row">											   <!-- Se genera row -->								
+																 
+						<div class="control-group">						       <!-- Text input Nombre --> 
+							<label class="control-label">Nombre</label>
+							<div class="controls">
+								<input type="text" id="txtNombrePersonaFisicaFondo" placeholder="Nombre">
+								<a href="#mdlBuscarPersonaConsejoFondo" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlBuscarPersonaConsejoModal"><i class="icon-search icon-white"></i> </a>
+							</div>
+						</div>	
+													   
+						<div class="control-group">							   <!-- Text input Cargo-->
+		   					<label class="control-label">Cargo</label>
+		  					<div class="controls">
+		    					{{ formulario_ConsejoAdministracion.Cargo }}
+		  					</div>
+						</div> 												   <!-- Fin text input Cargo -->
+																				  									
+					</div>	
+					<div class="row">											<!-- Se genera row -->
+															   
+						<div class="control-group">						<!-- Text input Fecha de eleccion -->
+		   					<label class="control-label">Fecha de Elección</label>
+		  					<div class="controls">
+		    					{{ formulario_ConsejoAdministracion.FechaEleccion }}
+		  					</div>
+						</div> 												   <!-- Fin text input Fecha de eleccion -->		
+												  
+						<div class="control-group">					   <!-- Text input Duración -->
+					  		<label class="control-label">Duración</label>
+					  		<div class="controls">
+					    		{{ formulario_ConsejoAdministracion.Duracion }}
+					  		</div>
+						</div> 												   <!-- Fin text input Duración -->						
+				 	</div>								 	
+								
+					<!-- Datos ocultos -->
+					<input type='hidden' name='varIdPersona' id="varIdPersona" value='' />									
+					<!-- Fin datos ocultos -->         	
+					
+					<div id="mdlBuscarPersonaConsejoFondo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las personas del consejo administrativo -->
+						<div class="modal-header">
+						   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						   <h3 id="myModalLabel">Buscar Persona</h3>
+						</div>
+					    <div class="modal-body">
+							<input type="text" class="input-xlarge search-query span4" id="txtBuscarPersonaFisicaConsejoFondoModal">
+							<button type="submit" class="btn" id="btnBuscarPersonaFisicaFondoMoral"><i class="icon-search"></i> Buscar</button>
+						 					
+							<p></p>
+							<table class="table tblPersonaMiembroConsejoFondo">
+								<thead>
+									<tr>		
+										<th>Id Persona</th>	
+										<th>Nombre</th>
+										<th>Rfc</th>		
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>    																		
+						</div> 																    
+						<div class="modal-footer">
+							<button id ="btnCerrarMdlBuscarPersonaConsejoFondo" class="btn" >Cerrar</button>
+						</div>												
+					</div>	
+				</div>													
+								   
+				<div class="modal-footer">						
+					<button id = "btnCerrarMdlConsejoAdministracionFondo" class="btn" data-dismiss="modal">Cerrar</button>
+					<a class="btn btn-primary" id="btnAgregarMiembroConsejoModal"><i class="icon-plus icon-white"></i> Agregar Miembro</a>
+				</div>
+				
+			</div>					
+						
+			<p></p>
+			<table class="table tblConsejoAdministracionFondo">  					<!-- Tabla que obtendra los miembros del consejo administrativo del fondo -->
+				<thead>
+					<tr>		
+						<th style="display: none;">IdconsejoAdministracion</th>	
+						<th>Cargo</th>
+						<th>Nombre</th>
+						<th></th>
+						<th>Fecha de Elección</th>
+						<th>Duración</th>	
+						<th style="display: none;">IdPersona</th>
+						<th></th>			
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table> 				
+		</div>
+			       	
+       	<!-- Pestaña para el Personal de Apoyo -->
+       	<div class="tab-pane" id="rF">
+	       	<!-- Button to trigger modal -->
+			<a href="#mdlPersonalApoyo" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlAgregarPersonalApoyo"><i class="icon-briefcase icon-white"></i> Agregar Personal de Apoyo</a>
+
+			<!-- Modal -->
+			<div id="mdlPersonalApoyo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				   <h3 id="myModalLabel">Agregar Personal de Apoyo</h3>
+				</div>
+			    <div class="modal-body">
+					<div class="row">											   <!-- Se genera row -->
+								
+						<div class="control-group">						       <!-- Text input Nombre --> 
+							<label class="control-label">Nombre</label>
+							<div class="controls">
+								<input type="text" id="txtNombrePersonaApoyoFondo" placeholder="Nombre">
+								<a href="#mdlBuscarPersonaApoyoFondo" role="button" class="btn btn-primary" data-toggle="modal" id="btnMdlBuscarPersonaApoyoModal"><i class="icon-search icon-white"></i> </a>
+							</div>
+						</div>			
+													   
+						<div class="control-group">							   <!-- Text input Cargo-->
+		   					<label class="control-label">Cargo</label>
+		  					<div class="controls">
+		    					{{ formulario_PersonalApoyo.CargoPersonaApoyo }}
+		  					</div>
+						</div> 												   <!-- Fin text input Cargo -->								 	
+								
+						<!-- Datos ocultos -->
+						<input type='hidden' name='varIdPersonaApoyo' id="varIdPersonaApoyo" value='' />									
+						<!-- Fin datos ocultos -->         	
+					
+						<div id="mdlBuscarPersonaApoyoFondo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca las personas del consejo administrativo -->
+							<div class="modal-header">
+							   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							   <h3 id="myModalLabel">Buscar Persona</h3>
+							</div>
+						    <div class="modal-body">
+								<input type="text" class="input-xlarge search-query span4" id="txtBuscarPersonaFisicaApoyoModal">
+								<button type="submit" class="btn" id="btnBuscarPersonaApoyoFondoMoral"><i class="icon-search"></i> Buscar</button>
+							 					
+								<p></p>
+								<table class="table tblPersonaMiembroApoyoFondo">
+									<thead>
+										<tr>		
+											<th>Id Persona</th>	
+											<th>Nombre</th>
+											<th>Rfc</th>		
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>    																		
+							</div> 																    
+							<div class="modal-footer">
+								<button id ="btnCerrarMdlBuscarPersonaApoyoFondo" class="btn" >Cerrar</button>
+							</div>												
+						</div>	
+					</div>	
+					
+				</div>	<!-- Fin modal -->		
+									  
+				<div class="modal-footer">						
+					<button id = "btnCerrarMdlPersonalApoyoFondo" class="btn" data-dismiss="modal">Cerrar</button>
+					<a class="btn btn-primary" id="btnAgregarPersonaloApoyoModal"><i class="icon-plus icon-white"></i> Agregar Miembro</a>
+				</div>	
+
+       		</div> <!-- Fin de la pestaña personal de apoyo -->  
+       	
+       				
+			<p></p>
+			<table class="table tblPersonaApoyoModal">
+				<thead>
+					<tr>		
+						<th style="display: none;">Id</th>	
+						<th>Nombre</th>
+						<th>Cargo</th>
+						<th></th>			
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>    																
+	 </div>	<!-- Se termina la generación de los tabs -->
+</fieldset>
+<hr />
+<div class="row">	
+	<!-- Generación de botones del formulario -->
+	<div class="control-group pull-right">
+  		<label class="control-label"></label>
+  		<div class="controls">
+    		<button id="btnGuardarDatosFondo" name="btnGuardarDatosFondo" class="btn btn-success" >Guardar</button>
+    		<button id="btnCancelarDatosFondo" name="btnCancelarDatosFondo" class="btn btn-danger" >Cancelar</button>
+  		</div>
+	</div> <!-- Fin generación de botones del formulario -->
+</div>
+</form>	
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/fondo/DatosFondo.js"></script>
+ 	<script src="/static/js/fondo/ConsejoAdministracion.js"></script>
+ 	<script src="/static/js/fondo/CuentaFondo.js"></script>
+ 	<script src="/static/js/fondo/ContratosFondo.js"></script>
+ 	<script src="/static/js/fondo/PersonalApoyo.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+ 	<script src="/static/js/chosen/chosen.jquery.js" type="text/javascript"></script>
+{% endblock scriptjs %} 

@@ -1,0 +1,2 @@
+-r base.txt #incluye los requerimientos del archivo base.txt
+-r local.txt #incluye los requerimientos del archivo local.txt

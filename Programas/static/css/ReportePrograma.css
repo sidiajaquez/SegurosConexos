@@ -1,0 +1,77 @@
+th{	   	
+	height:.7em;	
+}
+
+tr{
+	height:.7em;
+}
+
+#btnRegresar, .btn{
+   visibility: hidden;
+}
+
+.logo {
+	margin-right:50px;
+}
+
+.tbl_encabezado_reporte_programa_1 td {
+	text-align:center;
+    font-size: .7em;
+}
+
+.tbl_encabezado_reporte_programa_2 td {
+   font-size: .7em;
+}
+
+.tbl_encabezado_reporte_programa_1 th {   
+    font-size: .8em;
+    text-align:center;
+}
+
+.tbl_encabezado_reporte_programa_2 th {
+   text-align:center;
+   font-size: .8em;
+}
+
+.tbl_area_influencia td {
+   font-size: .7em;
+}
+
+.tbl_area_influencia th {
+   text-align:center;
+   font-size: .8em;
+}
+
+.tbl_cobertura td {
+   font-size: .7em;
+}
+
+.tbl_cobertura th {
+   text-align:center;
+   font-size: .8em;
+}
+
+.tbl_footer_pagina td {	
+   font-size: .7em;
+   text-align:center;
+}
+
+.tbl_footer_pagina th {
+   font-size: .8em;
+   text-align:center;
+}
+
+#titulo{
+   font-size: 1.8em;
+   text-align:center;
+}
+
+.pie{
+   visibility: hidden;
+}
+
+.subtitulo{
+   	font-size: .8em;
+	text-align:rigth;
+}
+

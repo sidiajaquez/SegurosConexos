@@ -1,0 +1,135 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para imprimir relación anexa al acta de verificacion {% endcomment %}
+
+{% block titulo %} Relación Anexa Acta de Verificación {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ReporteRelacionAnexa.css">  
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<div class="row" align="center">
+		<div class="span2">  
+			<img src="/static/img/fondo.jpg" height="50" width="90" align = "left">
+		</div>		
+		<div class="control-group span8">
+			<p>RELACIÓN ANEXA ACTA DE VERIFICACION</p>		
+			<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+			<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+			<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+		</div>
+	</div>
+	<table class="table-condensed">
+		<thead>
+			<tr>													
+				<th>FECHA</th>
+				<th>NUMERO DE SOLICITUD</th>			
+				<th>FECHA DE ACTA</th> 
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ FechaActual|date:"d/m/y" }}</td>			
+				<td style="text-align: center;">{{ InformacionSolicitud.FolioSolicitud }}</td>			
+				<td style="text-align: center;">{{ InformacionRelacionAnexaAV.FechaRelacionAnexaActaVerificacion|date:"d/m/y" }}</td>	
+			</tr>		
+		</tbody>
+	</table>
+	<br />
+	<table class="table table-condensed">
+		<thead>
+			<tr>													
+				<th>ASEGURADO</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ Asegurado.0.NombrePersona }}</td>
+				<td style="text-align: center;">{{ Asegurado.0.RfcPersona }}</td>
+				<td>{{ Asegurado.0.DireccionPersona }}</td>
+				<td style="text-align: center;">{{ Asegurado.0.TelefonoPersona }}</td>
+			</tr>		
+		</tbody>
+		<thead>
+			<tr>													
+				<th>CONTRATANTE</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ Contratante.0.NombrePersona }}</td>
+				<td style="text-align: center;">{{ Contratante.0.RfcPersona }}</td>
+				<td>{{ Contratante.0.DireccionPersona }}</td>
+				<td style="text-align: center;">{{ Contratante.0.TelefonoPersona }}</td>
+			</tr>
+		</tbody>		
+	</table>
+	<table class="table">
+		<thead>
+			<th>NOMBRE</th>
+			<th>MARCA</th>
+			<th>MODELO</th>
+			<th>NO. SERIE</th>
+			<th>DOCUMENTACION</th>
+			<th>FECHA</th>
+			<th>CANTIDAD</th>
+			<th>VALOR UNITARIO</th>
+			<th>SUMA ASEGURADA</th>
+		</thead>
+		<tfoot>
+			<tr>
+				<th id="tituloSumaAsegurada" colspan="8" style="text-align:right;font-size: 1.5em;">Suma Asegurada Solicitada:</th>
+				<th style="text-align: right;font-size: 1.5em;">{{ SumaAseguradaBienes }}</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			{% if DescripcionBienes %}
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td style="text-align: center;">{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td style="text-align: right;">{{ descripcionBien.Cantidad }}</td>
+						<td style="text-align: right;">{{ descripcionBien.ValorUnitario }}</td>
+						<td style="text-align: right;">{{ descripcionBien.SumaAsegurada }}</td>
+					</tr>
+				{% endfor %}					
+			{% endif %}
+		</tbody>
+	</table>
+	<center>
+		<table class="tblFirmas">
+			<tr>
+				<td style="width:20%;">______________________________</td><td></td>
+				<td style="width:20%;">______________________________</td><td></td>
+				<td style="width:20%;">______________________________</td>
+			</tr>
+			<tr>
+				<td style="text-align: center;">{{ Asegurado.0.NombrePersona }}</td><td></td>
+				<td style="text-align: center;">SUSCRIPTOR</td><td></td>
+				<td style="text-align: center;">GERENTE FONDO</td>
+			</tr>
+		</table>
+	</center>
+	<br />
+	<div class="row">
+		<div class="pull-right">
+			<button id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</button>
+			<button id="btnRegresar" name="btnRegresar" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i> Regresar</button>
+		</div>
+	</div>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ReporteRelacionAnexaActaVerificacion.js"></script> 
+{% endblock scriptjs %} 

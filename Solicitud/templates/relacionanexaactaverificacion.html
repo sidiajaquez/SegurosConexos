@@ -1,0 +1,612 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para crear la relación anexa al acta de verificación {% endcomment %}
+
+{% block titulo %} Relación Anexa al Acta de Verificación Solicitud {% endblock titulo %}
+
+{% block scriptcss %}
+	<link rel="stylesheet" href="/static/css/RelacionAnexaActaVerificacion.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Relación Anexa al Acta de Verificación</strong>
+	<form class="form-horizontal " id="FormularioRelacionAnexaActaVerificacion" method="post" action="" accept-charset="utf-8">
+		{% csrf_token %}
+		<input type='hidden' name='varIdRelacionAnexaActaVerificacion' id="varIdRelacionAnexaActaVerificacion" value='{{ informacionRelacionAnexa.IdRelacionAnexaActaVerificacion }}' />
+		<input type='hidden' name='varIdSolicitud' id="varIdSolicitud" value='{{ InformacionSolicitud.IdSolicitud }}' />		
+
+		<div class="accordion" id="accordion2">
+			<div class="accordion-group">													<!-- Grupo de Informacion General -->
+				<div class="accordion-heading">
+		      		<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+		        		<h4>Información General</h4>
+		      		</a>
+		    	</div>
+		    	<div id="collapseOne" class="accordion-body collapse in">
+		    		<div class="accordion-inner">
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">			
+									<label class="control-label">Número de Solicitud</label> 			<!-- Text input Número de solicitud -->
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ InformacionSolicitud.FolioSolicitud }}">
+									</div> 																<!-- Fin Número de solicitud -->
+								</div>			
+							</div>
+							<div class="span5">
+								<div class="control-group">			
+									<label class="control-label">Fecha Solicitud</label>				<!-- Text input Fecha de solicitud -->
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value='{{ InformacionSolicitud.FechaSolicitud|date:"d/M/Y" }}'>
+									</div> 																<!-- Fin Fecha Solicitud -->
+								</div>			
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<div class="control-group">
+									<label class="control-label">Solicitud</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ InformacionSolicitud.DeclaracionSolicitud }}">
+									</div>
+								</div>
+							</div>		
+						</div>
+		      		</div>
+		    	</div>
+		  	</div>															<!-- Fin grupo Informacion General -->
+		
+			<div class="accordion-group">									<!-- Grupo datos del Solicitante -->
+				<div class="accordion-heading">
+		      		<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+		        		<h4>Datos del Asegurado</h4>
+		      		</a>
+		    	</div>
+		    	<div id="collapseTwo" class="accordion-body collapse">
+		    		<div class="accordion-inner">
+		        		<div class="row">
+							<div class="span6">
+								<div class="control-group">						       <!-- Text input Nombre --> 
+									<label class="control-label">Asegurado</label>
+									<div class="controls">
+										<input class="input-large" type="text" disabled value="{{ Asegurado.0.NombrePersona }}">
+									</div>
+								</div>												  <!-- Fin Text input Nombre --> 
+							</div>
+							
+							<div class="span5">
+								<div class="control-group">						      <!-- Text input Rfc --> 
+									<label class="control-label">RFC</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Asegurado.0.RfcPersona }}">
+									</div>
+								</div>												  <!-- Fin Text input Rfc --> 	
+							</div>		
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Domicilio --> 
+									<label class="control-label">Domicilio</label>
+									<div class="controls">
+										<input type="text" class="input-xlarge" disabled value="{{ Asegurado.0.DireccionPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Domicilio --> 
+							</div>	
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input CP --> 
+									<label class="control-label">C.P.</label>
+									<div class="controls">
+										<input type="text" class="input-small" disabled value="{{ Asegurado.0.CPPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input CP --> 
+							</div>			
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Municipio --> 
+									<label class="control-label">Municipio</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Asegurado.0.MunicipioPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Municipio --> 
+							</div>	
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Estado --> 
+									<label class="control-label">Estado</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Asegurado.0.EstadoPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Estado --> 
+							</div>			
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						      				<!-- Text input Telefono --> 
+									<label class="control-label">Teléfono</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Asegurado.0.TelefonoPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Telefono --> 	
+							</div>	
+						</div>
+		      		</div>
+		    	</div>
+		  	</div>															<!-- Fin Grupo Datos del Solicitante -->
+	  		<div class="accordion-group">									<!-- Grupo datos del contratante -->
+	    		<div class="accordion-heading">
+	      			<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+						<h4>Datos del Contratante</h4>
+	      			</a>
+	    		</div>
+	    		<div id="collapseThree" class="accordion-body collapse">
+	      			<div class="accordion-inner">
+	        			<div class="row">
+							<div class="span6">
+								<div class="control-group">						       <!-- Text input Nombre --> 
+									<label class="control-label">Contratante</label>
+									<div class="controls">
+										<input class="input-large" type="text" disabled value="{{ Contratante.0.NombrePersona }}">
+									</div>
+								</div>												  <!-- Fin Text input Nombre --> 			
+							</div>
+							
+							<div class="span5">
+								<div class="control-group">						      <!-- Text input Rfc --> 
+									<label class="control-label">RFC</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Contratante.0.RfcPersona }}">
+									</div>
+								</div>												  <!-- Fin Text input Rfc --> 				
+							</div>
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Domicilio --> 
+									<label class="control-label">Domicilio</label>
+									<div class="controls">
+										<input type="text" class="input-xlarge" disabled value="{{ Contratante.0.DireccionPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Domicilio --> 
+							</div>	
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input CP --> 
+									<label class="control-label">C.P.</label>
+									<div class="controls">
+										<input type="text" class="input-small" disabled value="{{ Contratante.0.CPPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input CP --> 
+							</div>			
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Municipio --> 
+									<label class="control-label">Municipio</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Contratante.0.MunicipioPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Municipio --> 
+							</div>	
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Estado --> 
+									<label class="control-label">Estado</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Contratante.0.EstadoPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Estado --> 
+							</div>			
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						      				<!-- Text input Telefono --> 
+									<label class="control-label">Teléfono</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Contratante.0.TelefonoPersona }}">
+									</div>
+								</div>												  				<!-- Fin Text input Telefono --> 	
+							</div>	
+						</div>
+	      			</div>
+	    		</div>
+	  		</div>															<!-- Fin grupo datos del contratante -->
+			<div class="accordion-group">								<!-- Grupo Beneficiarios -->
+	    		<div class="accordion-heading">
+	      			<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+						<h4>Beneficiarios</h4>
+	      			</a>
+	    		</div>
+	    		<div id="collapseFour" class="accordion-body collapse">
+	      			<div class="accordion-inner">
+						<table class="table tblPersonaBeneficiarioSolicitud table-striped">														<!-- Tabla que muestra los beneficiarios -->
+							<thead>
+								<th>Nombre Beneficiario</th>
+								<th>Domicilio</th>
+								<th>Rfc</th>
+							</thead>
+							<tbody>
+								{% for beneficiario in Beneficiarios %}
+									<tr>
+										<td>{{ beneficiario.NombrePersonaBeneficiario }}</td>
+										<td>{{ beneficiario.DomicilioPersonaBeneficiario }}</td>
+										<td>{{ beneficiario.RfcPersonaBeneficiario }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>	        			
+	      			</div>
+	    		</div>
+	  		</div>														<!-- Fin Grupo Beneficiarios -->	  		
+	  		<div class="accordion-group">									<!-- Grupo tipo de seguro -->
+	    		<div class="accordion-heading">
+	      			<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+						<h4>Tipo de Seguro</h4>
+	      			</a>
+	    		</div>
+	    		<div id="collapseFive" class="accordion-body collapse">
+	      			<div class="accordion-inner">
+	      				<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Tipo Seguro --> 
+									<label class="control-label">Tipo</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ TipoSeguro }}">
+									</div>
+								</div>												  				<!-- Fin Text input Tipo seguro --> 
+							</div>
+							
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Estado --> 
+									<label class="control-label">Sub Tipo</label>
+									<div class="controls">
+										<input type="text" id="SubTipoSeguroSolicitud" class="input-medium" disabled value="{{ SubTipoSeguro }}">
+									</div>
+								</div>												  				<!-- Fin Text input Estado --> 
+							</div>	
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Moneda --> 
+									<label class="control-label">Moneda</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Moneda }}">
+									</div>
+								</div>												  				<!-- Fin Text input Moneda --> 
+							</div>
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Ejercicio --> 
+									<label class="control-label">Ejercicio</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ Ejercicio }}">
+									</div>
+								</div>												  				<!-- Fin Text input Ejercicio --> 
+							</div>			
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Contrato Reaseguro --> 
+									<label class="control-label">Contrato Reaseguro</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ NumeroContrato }}">
+									</div>
+								</div>												  				<!-- Fin Text input Contrato Reaseguro --> 
+							</div>
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Folio --> 
+									<label class="control-label">Folio</label>
+									<div class="controls">
+										<input type="text" class="input-medium" disabled value="{{ FolioPrograma }}">
+									</div>
+								</div>												  				<!-- Fin Text input Folio --> 
+							</div>						
+						</div>
+	        			<h5>Coberturas:</h5>
+	        			<div class="row coberturasSolicitud">
+							{% for cobertura in Coberturas %}
+								<span class="label label-info span3" style="margin-bottom:2px;"><i class="icon-ok icon-white"></i>
+								{{ cobertura.Descripcion }}
+								</span>
+							{% endfor %}		
+						</div>
+						
+						<p></p>
+	        			<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Unidades --> 
+									<label class="control-label">Unidades o Fletes en Transporte</label>
+									<div class="controls">
+										<input type="text" id="Unidades" class="input-medium" disabled value="{{ InformacionSolicitud.Unidades }}">
+									</div>
+								</div>												  				<!-- Fin Text input Unidades --> 
+							</div>
+							<div class="span5">
+								<div class="control-group">						       				<!-- Text input Valor por Unidad --> 
+									<label class="control-label">Valor por Unidad</label>
+									<div class="controls">
+										<input type="text" id="ValorPorUnidad" class="input-medium" disabled value="{{ InformacionSolicitud.ValorUnidad }}">
+									</div>
+								</div>												  				<!-- Fin Text input Valor por Unidad --> 
+							</div>		
+						</div>
+						<div class="row">
+							<div class="span6">
+								<div class="control-group">						       				<!-- Text input Suma asegurada solicitada --> 
+									<label class="control-label">Suma Asegurada Solicitada</label>
+									<div class="controls">
+										<input type="text" id="SumaAseguradaSolicitada" class="input-medium" disabled value="{{ SumaAseguradaSolicitada }}">
+									</div>
+								</div>												  				<!-- Fin Text input Suma asegurada solicitada --> 
+							</div>		
+						</div>
+	      			</div>
+	    		</div>
+	  		</div>														<!-- Fin grupo Tipo de Seguro -->
+			<div class="accordion-group">								<!-- Grupo Observaciones Solicitud -->
+	    		<div class="accordion-heading">
+	      			<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
+						<h4>Observaciones Solicitud</h4>
+	      			</a>
+	    		</div>
+	    		<div id="collapseSix" class="accordion-body collapse">
+	      			<div class="accordion-inner">
+	        			<textarea class="span11" disabled id="ObservacionesSolicitud">{{ InformacionSolicitud.Observaciones }}</textarea>
+	      			</div>
+	    		</div>
+	  		</div>														<!-- Fin Grupo Observaciones solicitud -->
+	  		<div class="accordion-group">								<!-- Grupo Observaciones del solicitante -->
+	    		<div class="accordion-heading">
+	      			<a class="accordion-toggle alert-danger" data-toggle="collapse" data-parent="#accordion2" href="#collapseTen">
+						<h4>Observaciones del Solicitante</h4>
+	      			</a>
+	    		</div>
+	    		<div id="collapseTen" class="accordion-body collapse">
+	      			<div class="accordion-inner">
+						<textarea class="span11" id="ObservacionesSolicitante" name="ObservacionesSolicitante" disabled>{{ ObservacionesSolicitante }}</textarea>
+	      			</div>
+	    		</div>
+	  		</div>														<!-- Fin Grupo Observaciones del solicitante -->
+		</div>
+
+		<div class="alert alert-danger">
+			<h4>Ubicación</h4>
+		</div>
+		<!-- Area de Influencia -->
+		<table style="display:none;" class="tblMunicipios">
+			<thead>
+				<tr><th>Municipio</th></tr>
+			</thead>
+			<tbody>
+				{% for municipio in MunicipiosProgramas %}
+					<tr><td>{{ municipio.Descripcion }}</td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<!-- Fin Area de Influencia -->
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input Latitud --> 
+					<label class="control-label">Ubicación Latitud</label>
+					<div class="controls">
+						<input class="input-medium" id="UbicacionBienLat" name="UbicacionBienLat" type="text" value="{{ informacionRelacionAnexa.UbicacionBienLat }}">
+					</div>
+				</div>												  				<!-- Fin Text input Latitud --> 
+			</div>
+			<div class="span5">
+				<div class="control-group">						       				<!-- Text input Longitud --> 
+					<label class="control-label">Ubicación Longitud</label>
+					<div class="controls">
+						<input class="input-medium" id="UbicacionBienLng" name="UbicacionBienLng" type="text" value="{{ informacionRelacionAnexa.UbicacionBienLng }}">
+					</div>
+				</div>												  				<!-- Fin Text input Longitud --> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">						       				<!-- Text input CP --> 
+					<label class="control-label">C.P.:</label>
+					<div class="controls">
+						<input class="input-small" id="CP" name="CP" type="text" value="{{ informacionRelacionAnexa.CP }}" readonly> <a href="#mdlBuscarCP" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarMdlCP"><i class="icon-search icon-white"></i></a>
+					</div>
+				</div>			
+			</div>
+			<!-- Modal for CP -->
+			<div id="mdlBuscarCP" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  <!-- Generación del modal que busca a las personas -->
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				   <h3 id="myModalLabel">Buscar CP</h3>
+				</div>
+			    <div class="modal-body">																								
+					<input type="text" class="input-small search-query" id="txtBuscarCP">
+					<button type="submit" class="btn" id="btnBuscarCP"><i class="icon-search"></i> Buscar</button>
+				 					
+					<p></p>
+					<table class="table tblBusquedaCP">
+						<thead>
+							<tr>
+								<th>C.P.</th>
+								<th>Asentamiento</th>
+								<th>Ciudad</th>
+								<th>Municipio</th>
+								<th>Estado</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button id ="btnCerrarMdlCP" class="btn" data-dismiss="modal" >Cerrar</button>
+				</div>												
+			</div>
+			<!-- Fin Modal for CP -->			
+		</div>
+		<div class="row">
+	 		<div id="map"></div>
+	    </div>
+
+		<p></p>
+		<div class="alert alert-danger">
+			<h4>Descripción del Bien</h4>
+		</div>
+		<div class="row">
+			<div class="control-group">											<!-- Text Area Descripcion Bien Asegurado -->
+				<label class="control-label" for="textarea"></label>
+				<div class="controls">
+					<textarea class="span9" id="DescripcionBienAsegurado" name="DescripcionBienAsegurado" cols="40" rows="10">{{ informacionRelacionAnexa.DescripcionBienAsegurado }}</textarea>
+				</div>
+			</div>
+		</div>
+
+		
+		<div class="alert alert-danger">
+			<h4>Descripción Detallada de los Bienes</h4>
+		</div>
+		
+		<input type='hidden' id="SumaAseguradaBienTemporal" value='' />
+		<!-- Button to trigger modal -->
+		<button href="#mdlDescripcionBien" role="button" class="btn btn-primary" data-toggle="modal" id="btnAgregarBienModal"><i class="icon-plus icon-white"></i> Agregar Bien</button>
+		
+		<!-- Modal Descripcion Equipo -->
+		<div id="mdlDescripcionBien" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">Descripción de Bienes</h3>
+			</div>
+			<div class="modal-body">
+				<input type='hidden' id="idBien" value='' />
+				<div class="control-group">
+					<label class="control-label">Nombre Equipo</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.NombreEquipo }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Marca</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Marca }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Modelo</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Modelo }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Serie</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Serie }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Fecha</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.FechaBien }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Documentación Evaluación</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.DocumentacionEvaluacion }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Cantidad</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.Cantidad }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Valor Unitario</label>
+					<div class="controls">
+						{{ formulario_descripcion_bien.ValorUnitario }}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				<a class="btn btn-primary" id="btnAgregarBien"><i class="icon-plus icon-white"></i> Agregar Bien</a>
+				<a class="btn btn-primary" id="btnAceptarBienEditable"><i class="icon-ok icon-white"></i> Aceptar Edición</a>
+			</div>
+		</div><!-- Termino del codigo para la generación del modal Descripcion de Equipo -->
+		<p></p>		
+		
+		<table class="table tblDescripcionDetalladaBien table-striped">
+			<thead>
+				<th style="display:none;">idEquipo</th>
+				<th>Nombre</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>No. Serie</th>
+				<th>Documentación</th>
+				<th>Fecha</th>
+				<th>Cantidad</th>
+				<th>Valor Unitario</th>
+				<th>Suma Asegurada</th>
+				<th></th>
+			</thead>
+			<tfoot>
+				<tr>
+					<th colspan="8" style="text-align:right;">Suma Asegurada:</th>
+					<th><input type="text" id="SumaAseguradaTotal" disabled class="input-medium" value="{{ SumaAseguradaBienes }}"></th>
+				</tr>
+			</tfoot>			
+			<tbody>
+				{% for descripcionBien in DescripcionBienes %}
+					<tr>
+						<td style="display:none;">{{ descripcionBien.IdBien }}</td>
+						<td>{{ descripcionBien.NombreEquipo }}</td>
+						<td>{{ descripcionBien.Marca }}</td>
+						<td>{{ descripcionBien.Modelo }}</td>
+						<td>{{ descripcionBien.Serie }}</td>
+						<td>{{ descripcionBien.DocumentacionEvaluacion }}</td>
+						<td>{{ descripcionBien.FechaBien|date:"d/m/Y" }}</td>
+						<td style="display:none;">{{ descripcionBien.CantidadOriginal }}</td>
+						<td style="display:none;">{{ descripcionBien.ValorUnitarioOriginal }}</td>
+						<td>{{ descripcionBien.Cantidad }}</td>
+						<td>{{ descripcionBien.ValorUnitario }}</td>
+						<td>{{ descripcionBien.SumaAsegurada }}</td>
+						<td>
+						{% if not TieneConstancia %}
+						{% if informacionRelacionAnexa.IdRelacionAnexaActaVerificacion %}
+						<a title="Eliminar Bien" onclick="eliminarBien($(this));"><i class="icon-remove"></i></a>
+						{% else %}
+							<div class="btn-group">
+  								<a class="btn btn-mini btn-primary"><i class="icon-edit icon-white"></i></a>
+  								<a class="btn btn-mini dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+  								<ul class="dropdown-menu">
+    								<li><a href="#mdlDescripcionBien" data-toggle="modal" onclick="editarBienModal($(this));"><i class="icon-pencil"></i> Editar</a></li>
+								    <li><a onclick="quitarBien($(this),1);"><i class="icon-trash"></i> Borrar</a></li>
+  								</ul>
+							</div>
+						{% endif %}
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>	        			
+
+		<hr />
+
+		<div class="row">	
+			<!-- Generación de botones del formulario -->
+			<div class="control-group pull-right">
+		  		<label class="control-label"></label>
+		  		<div class="controls">
+		  			<button id="btnVistaPrevia" class="btn btn-success" disabled>Vista Previa</button>
+		  			{% if not TieneConstancia %}
+		    		<button id="btnGuardarRelacionAnexaActaVerificacion" name="btnGuardarRelacionAnexaActaVerificacion" class="btn btn-success">Guardar</button>
+		    		{% endif %}
+		    		<button id="btnCancelarRelacionAnexaActaVerificacion" name="btnCancelarRelacionAnexaActaVerificacion" class="btn btn-danger">Cancelar</button>
+		  		</div>
+			</div> <!-- Fin generación de botones del formulario -->
+		</div>
+
+				
+	</form>
+{% endblock contenido %}
+
+{% block scriptjs %}
+	<script src="/static/js/RelacionAnexaActaVerificacion.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="/static/js/lib/gmaps.js"></script>
+{% endblock scriptjs %}

@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para imprimir cotizador {% endcomment %}
+
+{% block titulo %} Cotizador {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ReporteCotizador.css" media="print"> 
+{% endblock scriptcss %}
+
+{% block contenido %}
+<form class="form-horizontal " id="formulario_reporte_cotizador" method="post" action="" accept-charset="utf-8"> <!-- Generación el formulario para los cotizadores de aseguramiento. -->
+{% csrf_token %}
+	<fieldset>
+		<input type='hidden' name='varIdCotizador' id="varIdCotizador" value='' />
+		<div class="row" align="center">
+			<div class="span2">  
+				<img class="logo" src="/static/img/fondo.jpg" height="50" width="90" align = "left">	
+			</div>	
+			
+			<div class="control-group span8">
+				<p class="text-center" id="titulo">COTIZACIÓN PARA EL FONDO DE ASEGURAMIENTO</p>		
+				<span class="subtitulo text-center">FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+				<span class="subtitulo text-center">KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+				<span class="subtitulo text-center">FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+			</div>
+		</div>
+		
+		<table class="table tbl_cotizador table-condensed" border="1">
+			<thead>
+				<tr>
+					<th width="1%">FECHA</th>
+					<th width="8%">FOLIO COTIZADOR</th>
+					<th width="7%">% FONDO</th>
+					<th width="10%">% REASEGURO</th>
+					<th width="10%">PRIMA</th>					
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		
+		<table class="table tbl_cotizador_programa table-condensed" border="1">
+			<thead>
+				<tr>		
+					<th width="18%">FOLIO PROGRAMA</th>				
+					<th width="20%">MONEDA</th>
+					<th width="25%">TIPO DE SEGURO</th>
+					<th>SUB TIPO SEGURO</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		
+		<table class="table tbl_coberturas table-condensed" border="1">
+			<thead>
+				<tr>													
+					<th width="20%">COBERTURA</th>
+					<th width="8%">TARIFA</th>
+					<th width="8%">FONDO</th>
+					<th width="8%">REASEGURO</th>
+					<th width="8%">% REMOCIÓN</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table> 								
+	</fieldset>
+	
+	<footer>
+  		<table class="table tbl_footer_pagina table-condensed" border="1">
+			<thead>
+				<tr>													
+					<th>PRESIDENTE</th>
+					<th>SECRETARIO</th>
+					<th>TESORERO</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		
+		<div class="row">
+		<!-- Generación de botones del formulario -->
+		<div class="control-group pull-right">
+	  		<label class="control-label"></label>
+	  		<div class="controls">
+	  			<a id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</a>
+	    		<a id="btnRegresar" name="btnRegresar" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i> Regresar</a>
+	  		</div>
+		</div> <!-- Fin generación de botones del formulario -->
+	</div>
+	</footer>
+</form>
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ReporteCotizador.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

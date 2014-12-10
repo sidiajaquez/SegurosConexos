@@ -1,0 +1,178 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para alta de persona moral {% endcomment %}
+
+{% load direcciones_tags %}
+{% load telefonos_tags %}
+{% load buscadorPersonas_tags %}
+
+{% block titulo %} Persona Moral {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/PersonaMoral.css">
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<strong>Persona Moral</strong>
+	<form method="post" class="form-horizontal" action="" id="formulario_persona_moral" accept-charset="utf-8"> {% csrf_token %}
+	<fieldset>
+		<input type='hidden' name='varIdPersona' id="varIdPersona" value='' />
+		<!-- Form Name -->
+		<legend></legend>
+		
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label">RFC</label>
+		  <div class="controls">
+		    {{ formulario.Rfc }}
+		    <a href="#buscarPersona" role="button" class="btn btn-primary" data-toggle="modal" id="btnBuscarPersonaModal"><i class="icon-search icon-white"></i></a>
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label">Razón Social</label>
+		  <div class="controls">
+		    {{ formulario.RazonSocial }}
+		    
+		  </div>
+		</div>
+		
+		<div class="row">
+			<!-- Text input -->
+			<div class="control-group span4">
+			  <label class="control-label">Fecha Constitución</label>
+			  <div class="controls">
+			    {{ formulario.FechaNacimiento }}
+			    
+			  </div>
+			</div> 
+			
+			<!-- Prepended text-->
+			<div class="control-group span2">
+			  <label class="control-label">Email</label>
+			  <div class="controls">
+			    <div class="input-prepend">
+			      <span class="add-on">@</span>
+			      {{ formulario.Email }}
+			    </div>
+			    
+			  </div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">Socio</label>
+					<div class="controls">
+						{{ formulario.EsSocio }}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+	
+		<div class="tabbable tabs-right">
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#rA" data-toggle="tab">Socios</a></li>
+		    <li><a href="#rB" data-toggle="tab">Direcciones</a></li>
+		    <li><a href="#rC" data-toggle="tab">Teléfonos</a></li>
+		  </ul>
+		  <div class="tab-content">
+			<!-- Socios -->
+		    <div class="tab-pane active" id="rA">
+				<!-- Button to trigger modal -->
+			    <a class="btn btn-primary" href="#buscarSocioModal" data-toggle="modal" id="btnAgregarSocio"><i class="icon-user icon-white"></i> Agregar Socio</a>
+			     
+			    <!-- Modal -->
+			    <div id="buscarSocioModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				    <div class="modal-header">
+					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					    <h3 id="myModalLabel">Buscar Persona</h3>
+					    <br />
+					    <p>
+							<input type="text" class="input-medium search-query span4" id="txtBuscarSocio" placeholder="Buscar Persona">
+							<button type="submit" class="btn" id="BuscarSocio">Buscar</button>
+					    </p>
+				    </div>
+				    <div class="modal-body">
+		
+						<table class="table busquedaSocios table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nombre</th>
+									<th>Apellido Paterno</th>
+									<th>Apellido Materno</th>
+									<th>Rfc</th>
+								</tr>
+							</thead>
+							<tbody>		
+							</tbody>
+						</table>
+		
+				    </div>
+				    <div class="modal-footer">
+					    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    </div>
+			    </div>
+				
+				<p></p>
+				<table class="table sociosPersonaMoral">
+					<thead>
+						<tr>
+							<th style="display: none;">IdSocioMoral</th>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Apellido Paterno</th>
+							<th>Apellido Materno</th>
+							<th>Rfc</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table> 
+		    </div> <!-- Fin Socios -->
+		    
+		    <!-- Direcciones -->
+		    <div class="tab-pane" id="rB">
+		      {% show_direcciones %}
+		    </div> <!-- Fin Direcciones -->
+		    
+		    <!-- Telefonos -->
+		    <div class="tab-pane" id="rC">
+		      {% show_telefonos %}
+		    </div> <!-- Fin Telefonos -->
+		    
+		  </div>
+		</div> <!-- /tabbable -->
+		<!-- Llama al formulario modal para la busqueda de personas -->	
+		{% show_buscadorPersonas %}	
+				
+		<hr />
+		<div class="row">	
+			<!-- Button (Double) -->
+			<div class="control-group pull-right">
+			  <label class="control-label"></label>
+			  <div class="controls">			  	
+			    <a id="Guardar" name="Guardar" class="btn btn-success" >Guardar</a>
+			    <a id="Cancelar" name="Cancelar" class="btn btn-danger" type="reset">Cancelar</a>
+			  </div>
+			</div>
+		</div>
+	
+	</fieldset>
+	</form>
+
+{% endblock contenido %}
+
+{% block scriptjs %} 
+ 	<script src="/static/js/PersonaMoral.js"></script>
+ 	<script src="/static/js/Direcciones.js"></script>
+ 	<script src="/static/js/Telefonos.js"></script> 
+ 	<script src="/static/js/BuscadorPersonas.js"></script>
+ 	<script src="/static/js/jquery.validate.js"></script>
+{% endblock scriptjs %} 

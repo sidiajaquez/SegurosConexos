@@ -1,0 +1,151 @@
+{% extends 'index.html' %}
+
+{% comment %} Formulario para imprimir cotizador {% endcomment %}
+
+{% block titulo %} Cotizador {% endblock titulo %}
+
+{% block scriptcss %} 
+	<link rel="stylesheet" href="/static/css/ReporteSolicitud.css"> 
+{% endblock scriptcss %}
+
+{% block contenido %}
+	<input type='hidden' name='varIdSolicitud' id="varIdSolicitud" value='' />
+	<input type='hidden' name='varIdTipoPrograma' id="varIdTipoPrograma" value='' />
+	<div class="row" align="center">
+		<div class="span2">  
+			<img src="{{STATIC_URL}}img/fondo.jpg" height="50" width="90" align = "left">
+		</div>
+		<div class="control-group span8">
+			<p>SOLICITUD DE ASEGURAMIENTO</p>		
+			<span>FONDO DE ASEGURAMIENTO AGROPECUARIO FORTSCHRITT</span><br/>
+			<span>KM. 5 CARR. ALVARO OBREGON S/N MANITOBA CUAUHTEMOC</span><br/>
+			<span>FAA970421182 RGFA-0224-97-CHIH-320521-AG-PP</span><br/>								
+		</div>
+	</div>
+	<table class="tbl_solicitud table-condensed">
+		<thead>
+			<tr>
+				<th>FECHA</th>
+				<th>NÚMERO DE SOLICITUD</th>
+				<th>SOLICITUD</th>				
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<br />
+	<table class="table tbl_datos_solicitante table-condensed">
+		<thead>
+			<tr>													
+				<th>SOLICITANTE</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="table tbl_datos_asegurado table-condensed">
+		<thead>
+			<tr>
+				<th>ASEGURADO</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="table tbl_datos_contratante table-condensed">
+		<thead>
+			<tr>													
+				<th>CONTRATANTE</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+				<th>TELEFONO</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="table tbl_beneficiarios table-condensed">
+		<thead>
+			<tr>													
+				<th>NOMBRE BENEFICIARIO</th>
+				<th>RFC</th>
+				<th>DOMICILIO</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>		
+	
+	<table class="table tbl_tipo_seguro_1 table-condensed">
+		<thead>
+			<tr>													
+				<th>TIPO DE SEGURO</th>
+				<th>SUB TIPO</th>
+				<th>MONEDA</th>
+				<th>FOLIO</th>
+				<th>EJERCICIO</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="table tbl_tipo_seguro_2 table-condensed">
+		<thead>
+			<tr>													
+				<th>CONTRATO</th>
+				<th>UNIDADES O FLETES</th>
+				<th>VALOR</th>
+				<th>SUMA ASEGURADA</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>	
+	
+	<table class="table tbl_coberturas table-condensed">
+		<thead>
+			<tr>													
+				<th>COBERTURAS</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="table tbl_observacion table-condensed">
+		<thead>
+			<tr>													
+				<th>OBSERVACIONES</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+		
+	<center>
+		<br /><br /><span>______________________________</span><br />									
+		<span id="firmaSocio">SOCIO</span>
+	</center>
+
+	<div class="row">
+		<div class="pull-right">
+			<button id="btnImprimir" name="btnImprimir" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimir</button>
+			<button id="btnRegresar" name="btnRegresar" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i> Regresar</button>
+		</div>
+	</div>
+	
+{% endblock contenido %}
+
+{% block scriptjs %} 
+	<script src="/static/js/ReporteSolicitud.js"></script> 
+{% endblock scriptjs %} 

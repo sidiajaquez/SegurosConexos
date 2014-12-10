@@ -1,0 +1,10 @@
+-r base.txt #incluye los requerimientos del archivo base.txt
+
+django-dajax==0.9.2
+django-dajaxice==0.5.5
+html5lib==1.0b3
+pisa==3.0.33
+pyPdf==1.13
+reportlab==2.7
+xhtml2pdf==0.0.5
+openpyxl==2.1.0
